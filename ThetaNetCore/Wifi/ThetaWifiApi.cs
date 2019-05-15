@@ -8,7 +8,7 @@ using ThetaNetCore.Util;
 
 namespace ThetaNetCore.Wifi
 {
-	public class ThetaConnect
+	public class ThetaWifiApi
 	{
 		private const string THETA_URL = "http://192.168.1.1:80/";
 		private enum SEND_TYPE { GET, POST };

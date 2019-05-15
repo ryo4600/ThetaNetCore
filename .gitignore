@@ -3,3 +3,5 @@ ThetaNetCore/bin
 ThetaNetCore/obj
 ThetaNetSample/bin
 ThetaNetSample/obj
+.vs/ThetaNetCore/v16
+.vs/ThetaNetCore/DesignTimeBuild

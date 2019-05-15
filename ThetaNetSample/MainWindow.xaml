@@ -6,7 +6,24 @@
         xmlns:local="clr-namespace:ThetaNetSample"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="commandButtonStyle">
+            <Setter Property="Margin" Value="5,10" />
+            <Setter Property="MinWidth" Value="80" />
+        </Style>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <WrapPanel>
+            <Button Content="Init" Style="{StaticResource commandButtonStyle}" x:Name="btnInit" Click="BtnInit_Click"></Button>
+        </WrapPanel>
+        <TextBlock Text="Result" Grid.Row="1" Margin="5,5,0,0" />
+        <Border Grid.Row="2" BorderBrush="#888" BorderThickness="1" Margin="5">
+            <TextBlock x:Name="txtOutput" />
+        </Border>
     </Grid>
 </Window>

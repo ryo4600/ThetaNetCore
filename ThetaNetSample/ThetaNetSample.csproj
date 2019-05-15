@@ -94,5 +94,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ThetaNetCore\ThetaNetCore.csproj">
+      <Project>{69bb6066-149d-4ca7-b248-552746ba0fc0}</Project>
+      <Name>ThetaNetCore</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
