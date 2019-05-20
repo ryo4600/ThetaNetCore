@@ -5,25 +5,84 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ThetaNetSample"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Window.Resources>
-        <Style TargetType="Button" x:Key="commandButtonStyle">
-            <Setter Property="Margin" Value="5,10" />
-            <Setter Property="MinWidth" Value="80" />
-        </Style>
-    </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <WrapPanel>
-            <Button Content="Init" Style="{StaticResource commandButtonStyle}" x:Name="btnInit" Click="BtnInit_Click"></Button>
-        </WrapPanel>
-        <TextBlock Text="Result" Grid.Row="1" Margin="5,5,0,0" />
-        <Border Grid.Row="2" BorderBrush="#888" BorderThickness="1" Margin="5">
-            <TextBlock x:Name="txtOutput" />
-        </Border>
-    </Grid>
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing">
+	<Window.Resources>
+		<Style TargetType="Button" x:Key="commandButtonStyle">
+			<Setter Property="Margin" Value="5,10" />
+			<Setter Property="MinWidth" Value="80" />
+			<Setter Property="Padding" Value="10,2" />
+		</Style>
+	</Window.Resources>
+	<Grid IsEnabled="{Binding ElementName=pnlPrgress, Path=IsVisible, Converter={StaticResource InverseBooleanConverter}}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<WrapPanel>
+			<Button Content="Check Connection" Style="{StaticResource commandButtonStyle}" x:Name="btnInit" Click="BtnCheck_Click"></Button>
+			<StackPanel Orientation="Horizontal" x:Name="pnlController" IsEnabled="False">
+				<Button Content="Settings" Click="BtnSettings_Click" Style="{StaticResource commandButtonStyle}" />
+			</StackPanel>
+		</WrapPanel>
+		<TabControl Grid.Row="2" SelectionChanged="tabSelectionChanged">
+			<!-- Output tab -->
+			<TabItem Header="Output">
+				<Border Grid.Row="2" BorderBrush="#888" BorderThickness="1" Margin="5">
+					<TextBlock x:Name="txtOutput" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+				</Border>
+			</TabItem>
+
+			<!-- Preview tab -->
+			<TabItem x:Name="tabPreview" Header="Preview" IsEnabled="{Binding ElementName=pnlController, Path=IsEnabled}">
+				<Border>
+					<Grid>
+						<Image x:Name="imgPreview" />
+						<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0" Background="#4000">
+							<CheckBox x:Name="chkPreview" VerticalAlignment="Center" Content="Preview" Margin="10,0" Checked="chkPreview_CheckedChanged" 
+                                      Unchecked="chkPreview_CheckedChanged" IsChecked="True" Foreground="White" />
+							<Button x:Name="btnTakePicture" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Take picture" Style="{StaticResource commandButtonStyle}" 
+                                    Click="BtnTakePicture_Click" />
+						</StackPanel>
+					</Grid>
+				</Border>
+			</TabItem>
+
+			<!-- Decice Files tab -->
+			<TabItem x:Name="tabFiles" Header="DeviceFiles" IsEnabled="{Binding ElementName=pnlController, Path=IsEnabled}">
+				<Grid>
+					<DataGrid x:Name="lstFiles" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False"
+							  AutoGenerateColumns="False">
+						<DataGrid.Columns>
+							<DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
+							<DataGridTextColumn Binding="{Binding Path=FileUrl}" Header="FileUrl" />
+							<DataGridTextColumn Binding="{Binding Path=Size}" Header="Size" />
+							<DataGridTextColumn Binding="{Binding Path=DateTimeZone}" Header="DateTimeZone" />
+							<DataGridTextColumn Binding="{Binding Path=DateTime}" Header="DateTime" />
+							<DataGridTextColumn Binding="{Binding Path=Latitude}" Header="Latitude" />
+							<DataGridTextColumn Binding="{Binding Path=Longitude}" Header="Longitude" />
+							<DataGridTextColumn Binding="{Binding Path=Width}" Header="Width" />
+							<DataGridTextColumn Binding="{Binding Path=Height}" Header="Height" />
+							<DataGridTemplateColumn>
+								<DataGridTemplateColumn.CellTemplate>
+									<DataTemplate>
+										<Button Content="..." />
+									</DataTemplate>
+								</DataGridTemplateColumn.CellTemplate>
+							</DataGridTemplateColumn>
+						</DataGrid.Columns>
+					</DataGrid>
+					<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0" Background="#4000">
+						<Button x:Name="btnRefreshList" Click="BtnRefreshList_Click" />
+					</StackPanel>
+				</Grid>
+			</TabItem>
+		</TabControl>
+		<Border Grid.RowSpan="3" x:Name="pnlPrgress" Background="#8FFF" Visibility="Collapsed" >
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
+				<ProgressBar Width="200" Height="20" IsIndeterminate="True" Foreground="#FF3D92B2" />
+				<TextBlock x:Name="txtProgress" Text="Taking picture..." TextAlignment="Center" />
+			</StackPanel>
+		</Border>
+	</Grid>
 </Window>

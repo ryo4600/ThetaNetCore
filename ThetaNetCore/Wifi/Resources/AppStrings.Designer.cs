@@ -79,6 +79,15 @@ namespace ThetaNetCore.Wifi.Resources {
         }
         
         /// <summary>
+        ///   Failed to get image. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Err_GetImage {
+            get {
+                return ResourceManager.GetString("Err_GetImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sending request has failed. Status code = {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string Err_SendRequestFailed {

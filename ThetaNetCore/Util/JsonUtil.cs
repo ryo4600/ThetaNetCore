@@ -5,14 +5,17 @@ using System.Text;
 
 namespace ThetaNetCore.Util
 {
-	class JsonUtil
+	/// <summary>
+	/// Convert to and from an object instance to string
+	/// </summary>
+	public class JsonUtil
 	{
 		/// <summary>
 		/// Convert JSON Object to string.
 		/// </summary>
 		/// <param name="serializer"></param>
 		/// <returns></returns>
-		internal static string ToSring<T>(T dataToSend)
+		public static string ToSring<T>(T dataToSend)
 		{
 			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
 			using (MemoryStream memStream = new MemoryStream())
@@ -29,7 +32,7 @@ namespace ThetaNetCore.Util
 		/// <typeparam name="T"></typeparam>
 		/// <param name="strJson"></param>
 		/// <returns></returns>
-		internal static T ToObject<T>(String strJson) where T : class
+		public static T ToObject<T>(String strJson) where T : class
 		{
 			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
 			MemoryStream ms = new MemoryStream();
@@ -45,7 +48,7 @@ namespace ThetaNetCore.Util
 		/// <typeparam name="T"></typeparam>
 		/// <param name="strJson"></param>
 		/// <returns></returns>
-		internal static T ToObject<T>(Stream stream) where T : class
+		public static T ToObject<T>(Stream stream) where T : class
 		{
 			DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(T));
 			bool b = false;

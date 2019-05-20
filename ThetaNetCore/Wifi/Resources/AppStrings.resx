@@ -123,6 +123,9 @@
   <data name="Err_FirmwareVersion" xml:space="preserve">
     <value>Need a firmware update. </value>
   </data>
+  <data name="Err_GetImage" xml:space="preserve">
+    <value>Failed to get image.</value>
+  </data>
   <data name="Err_SendRequestFailed" xml:space="preserve">
     <value>Sending request has failed. Status code = {0}</value>
   </data>

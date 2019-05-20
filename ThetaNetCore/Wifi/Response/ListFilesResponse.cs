@@ -81,15 +81,20 @@ namespace ThetaNetCore.Wifi
 		/// This can be acquired when "maxThumbSize" is enabled.
 		///  </summary>
 		[DataMember(Name = "thumbnail")]
-		public String EncodedThumbnail { get; set; }
+		public String Thumbnail { get; set; }
 
 		/// <summary>
 		/// Decoded image data from EncodedThumbnail
 		/// </summary>
 		[IgnoreDataMember]
-		public byte[] Thumbnail
+		public byte[] ThumbnailData
 		{
-			get { return Convert.FromBase64String(EncodedThumbnail); }
+			get
+			{
+				if (Thumbnail == null)
+					return null;
+				return Convert.FromBase64String(Thumbnail);
+			}
 		}
 
 		///// <summary>

@@ -123,6 +123,9 @@
   <data name="Err_FirmwareVersion" xml:space="preserve">
     <value>ファームウェアの更新が必要です</value>
   </data>
+  <data name="Err_GetImage" xml:space="preserve">
+    <value>イメージの取得に失敗しました</value>
+  </data>
   <data name="Err_SendRequestFailed" xml:space="preserve">
     <value>リクエストの送信に失敗しました。 Status code = {0}</value>
   </data>

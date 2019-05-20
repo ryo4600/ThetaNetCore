@@ -9,7 +9,7 @@ using System.Windows;
 namespace ThetaNetSample
 {
 	/// <summary>
-	/// App.xaml の相互作用ロジック
+	/// App.xaml
 	/// </summary>
 	public partial class App : Application
 	{
