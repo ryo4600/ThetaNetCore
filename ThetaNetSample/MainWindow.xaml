@@ -51,8 +51,13 @@
 			<!-- Decice Files tab -->
 			<TabItem x:Name="tabFiles" Header="DeviceFiles" IsEnabled="{Binding ElementName=pnlController, Path=IsEnabled}">
 				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition Width="6" />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
 					<DataGrid x:Name="lstFiles" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False"
-							  AutoGenerateColumns="False">
+							  AutoGenerateColumns="False" SelectionChanged="lstFiles_SelectionChanged">
 						<DataGrid.Columns>
 							<DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
 							<DataGridTextColumn Binding="{Binding Path=FileUrl}" Header="FileUrl" />
@@ -63,21 +68,18 @@
 							<DataGridTextColumn Binding="{Binding Path=Longitude}" Header="Longitude" />
 							<DataGridTextColumn Binding="{Binding Path=Width}" Header="Width" />
 							<DataGridTextColumn Binding="{Binding Path=Height}" Header="Height" />
-							<DataGridTemplateColumn>
-								<DataGridTemplateColumn.CellTemplate>
-									<DataTemplate>
-										<Button Content="..." />
-									</DataTemplate>
-								</DataGridTemplateColumn.CellTemplate>
-							</DataGridTemplateColumn>
 						</DataGrid.Columns>
 					</DataGrid>
-					<StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0" Background="#4000">
+					<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0" Background="#4000">
 						<Button x:Name="btnRefreshList" Click="BtnRefreshList_Click" />
 					</StackPanel>
+					<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
+					<Image x:Name="imgPictureView" Grid.Column="2" Source="{Binding ThumbnailData}" />
 				</Grid>
 			</TabItem>
 		</TabControl>
+		
+		<!-- Indicates taking picture in progress -->
 		<Border Grid.RowSpan="3" x:Name="pnlPrgress" Background="#8FFF" Visibility="Collapsed" >
 			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
 				<ProgressBar Width="200" Height="20" IsIndeterminate="True" Foreground="#FF3D92B2" />

@@ -301,26 +301,33 @@ namespace ThetaNetSample
 					break;
 			}
 
-			// Load file images ... 
-			// Usually you want to delay this step
-			for (var i = 0; i < entries.Count; i++)
+			lstFiles.DataContext = entries;
+
+		}
+
+		/// <summary>
+		/// Selection of file list is changed
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private async void lstFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			var anEntry = lstFiles.SelectedItem as FileEntry;
+			if (anEntry != null && anEntry.Thumbnail == null)
 			{
-				var anEntry = entries[i];
-				var param = new ListFilesParam() { FileType = ThetaFileType.Image, EntryCount = 1, Detail = true, StartPosition = i };
+				var param = new ListFilesParam() { FileType = ThetaFileType.Image, EntryCount = 1, Detail = true, StartPosition = lstFiles.SelectedIndex };
 				try
 				{
 					var res = await _theta.ThetaApi.ListFilesAsync(param);
-					if (res.Entries.Length == 0)
-						continue;
-					entries[i] = res.Entries[0];
-
+					if (res.Entries.Length != 0)
+						anEntry = res.Entries[0];
 				}
 				catch
 				{
 				}
 			}
-			lstFiles.DataContext = entries;
 
+			imgPictureView.DataContext = anEntry;
 		}
 	}
 }
