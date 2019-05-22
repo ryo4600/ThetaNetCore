@@ -255,8 +255,8 @@ namespace ThetaNetSample
 		/// <summary>
 		/// Take picture completed
 		/// </summary>
-		/// <param name="obj"></param>
-		private void ThetaApi_OnTakePictureCompleted(string obj)
+		/// <param name="fileName"></param>
+		private void ThetaApi_OnTakePictureCompleted(string fileName)
 		{
 			this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate
 			{
@@ -267,8 +267,8 @@ namespace ThetaNetSample
 		/// <summary>
 		/// Take picture failed
 		/// </summary>
-		/// <param name="obj"></param>
-		private void ThetaApi_OnTakePictureFailed(Exception obj)
+		/// <param name="ex"></param>
+		private void ThetaApi_OnTakePictureFailed(Exception ex)
 		{
 			this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate
 			{
