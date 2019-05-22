@@ -295,21 +295,32 @@ namespace ThetaNetCore.Wifi
 		}
 
 		/// <summary>
-		/// Download file from the camera
+		/// Get a binary image data from the camera
+		/// </summary>
+		/// <param name="fileUrl"></param>
+		/// <returns></returns>
+		/// <exception cref="SerializationException"></exception>
+		/// <exception cref="ThetaException"></exception> 
+		async public Task<Stream> GetImageAsync(String fileUrl)
+		{
+			var response = await DownloadFileAsync(fileUrl);
+			CheckResponse(response);
+			return response.GetResponseStream();
+		}
+
+		/// <summary>
+		/// Download file
 		/// </summary>
 		/// <param name="uri"></param>
 		/// <returns></returns>
-		async public static Task<Stream> DownloadFileAsync(String uri)
+		async private static Task<HttpWebResponse> DownloadFileAsync(String uri)
 		{
 			HttpWebRequest request = System.Net.WebRequest.Create(uri) as HttpWebRequest;
 			request.Method = "GET";
 
-			using (var response = await request.GetResponseAsync() as HttpWebResponse)
-			{
-				CheckResponse(response);
-				return response.GetResponseStream();
-			}
+			return await request.GetResponseAsync() as HttpWebResponse;
 		}
+
 	}
 
 }

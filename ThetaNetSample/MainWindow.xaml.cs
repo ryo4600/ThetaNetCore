@@ -43,9 +43,13 @@ namespace ThetaNetSample
 				this.Height = settings.FormHeight;
 			}
 
+			txtSavePath.Text = settings.SavePath;
+
 			_theta.ImageReady += ThetaApi_ImageReady;
 			_theta.OnTakePictureCompleted += ThetaApi_OnTakePictureCompleted;
 			_theta.OnTakePictureFailed += ThetaApi_OnTakePictureFailed;
+
+			UpdateDownloadButton();
 		}
 
 		/// <summary>
@@ -62,6 +66,7 @@ namespace ThetaNetSample
 				settings.FormWidth = this.Width;
 				settings.FormHeight = this.Height;
 			}
+			settings.SavePath = txtSavePath.Text;
 			settings.Save();
 
 			_theta.ImageReady -= ThetaApi_ImageReady;
@@ -328,6 +333,75 @@ namespace ThetaNetSample
 			}
 
 			imgPictureView.DataContext = anEntry;
+			UpdateDownloadButton();
+		}
+
+
+		/// <summary>
+		/// Choose save path (...) is clicked
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void BtnPath_Click(object sender, RoutedEventArgs e)
+		{
+			var dlg = new System.Windows.Forms.FolderBrowserDialog();
+			if (!String.IsNullOrWhiteSpace(txtSavePath.Text))
+				dlg.SelectedPath = txtSavePath.Text;
+
+			if(dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			{
+				txtSavePath.Text = dlg.SelectedPath;
+			}
+
+		}
+
+		/// <summary>
+		/// Save path text changed event
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void TxtSavePath_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			UpdateDownloadButton();
+		}
+
+		/// <summary>
+		/// Update state of the "download" button
+		/// </summary>
+		private void UpdateDownloadButton()
+		{
+			btnDownload.IsEnabled = Directory.Exists(txtSavePath.Text) && imgPictureView.DataContext != null;
+		}
+
+		/// <summary>
+		/// Download button is clicked
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private async void BtnDownload_Click(object sender, RoutedEventArgs e)
+		{
+			var anEntry = imgPictureView.DataContext as FileEntry;
+
+			// Get a read stream
+			using (Stream stream = await _theta.ThetaApi.GetImageAsync(anEntry.FileUrl))
+			{
+				var path = Path.Combine(txtSavePath.Text, anEntry.Name);
+				var size = anEntry.Size;
+				var newFile = new FileInfo(path);
+				using (var aStream = newFile.Open(FileMode.OpenOrCreate))
+				{
+					int readSize = 1000;
+					var readBuffer = new byte[readSize];
+					int totalRead = 0;
+					for (int i = 0; i < (int)Math.Ceiling(size / (double)readSize); i++)
+					{
+						var numRead = await stream.ReadAsync(readBuffer, 0, readSize);
+
+						aStream.Write(readBuffer, 0, numRead);
+						totalRead += numRead;
+					}
+				}
+			}
 		}
 	}
 }
