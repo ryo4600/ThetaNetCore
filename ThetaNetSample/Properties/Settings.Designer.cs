@@ -58,5 +58,17 @@ namespace ThetaNetSample.Properties {
                 this["SavePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ImageBrowsePath {
+            get {
+                return ((string)(this["ImageBrowsePath"]));
+            }
+            set {
+                this["ImageBrowsePath"] = value;
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ThetaNetSample"
+		xmlns:view3d="clr-namespace:SphereViewWpf;assembly=SphereViewWpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing">
 	<Window.Resources>
@@ -49,7 +50,7 @@
 			</TabItem>
 
 			<!-- Decice Files tab -->
-			<TabItem x:Name="tabFiles" Header="DeviceFiles" IsEnabled="{Binding ElementName=pnlController, Path=IsEnabled}">
+			<TabItem x:Name="tabFiles" Header="InCamera" IsEnabled="{Binding ElementName=pnlController, Path=IsEnabled}">
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition />
@@ -95,6 +96,27 @@
 							<Button x:Name="btnDownload" Grid.Column="3" Content="Download" Margin="5" Padding="5,0" Click="BtnDownload_Click" />
 						</Grid>
 					</Grid>
+				</Grid>
+			</TabItem>
+			<TabItem Header="InPC">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition Width="6" />
+						<ColumnDefinition />
+					</Grid.ColumnDefinitions>
+					<Grid>
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition />
+						</Grid.RowDefinitions>
+						<Button Content="Open" HorizontalAlignment="Left" Style="{StaticResource commandButtonStyle}" Click="btnFolder_Click" />
+						<ListView Grid.Row="1" x:Name="lstPcFiles" ItemsSource="{Binding}" SelectionChanged="LstPcFiles_SelectionChanged">
+
+						</ListView>
+					</Grid>
+					<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+					<view3d:SphereViewCtrl x:Name="viewSphere" Grid.Column="2" />
 				</Grid>
 			</TabItem>
 		</TabControl>
