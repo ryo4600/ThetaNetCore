@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="ThetaWinApp.Controls.DeviceConnectCtrl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ThetaWinApp.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<WrapPanel Margin="10,5">
+			<Button Content="Check Connection" Style="{StaticResource commandButtonStyle}" x:Name="btnInit" Click="BtnCheck_Click"></Button>
+			<StackPanel Orientation="Horizontal" x:Name="pnlController" IsEnabled="False">
+				<Button Content="Settings" Click="BtnSettings_Click" Style="{StaticResource commandButtonStyle}" />
+			</StackPanel>
+		</WrapPanel>
+
+		<Border Grid.Row="1" BorderBrush="#888" BorderThickness="1" Margin="5">
+			<TextBlock x:Name="txtOutput" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+		</Border>
+	</Grid>
+</UserControl>

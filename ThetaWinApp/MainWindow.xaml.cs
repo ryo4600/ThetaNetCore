@@ -10,9 +10,9 @@ using System.Windows.Media.Imaging;
 using ThetaNetCore;
 using ThetaNetCore.Util;
 using ThetaNetCore.Wifi;
-using ThetaNetSample.Properties;
+using ThetaWinApp.Properties;
 
-namespace ThetaNetSample
+namespace ThetaWinApp
 {
 	/// <summary>
 	/// Main window
@@ -27,6 +27,12 @@ namespace ThetaNetSample
 		public MainWindow()
 		{
 			InitializeComponent();
+
+			ctrlDeviceConnect.ConnectionEstablished += () =>
+			{
+				imgPreview.IsEnabled = true;
+			};
+			ctrlDeviceConnect.Theta = _theta;
 		}
 
 		/// <summary>
@@ -38,7 +44,7 @@ namespace ThetaNetSample
 		private void Window_Loaded(object sender, RoutedEventArgs e)
 		{
 			var settings = Settings.Default;
-			if(settings.FormWidth > 0)
+			if (settings.FormWidth > 0)
 			{
 				this.Width = settings.FormWidth;
 				this.Height = settings.FormHeight;
@@ -62,7 +68,7 @@ namespace ThetaNetSample
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			var settings = Settings.Default;
-			if(this.WindowState == WindowState.Normal)
+			if (this.WindowState == WindowState.Normal)
 			{
 				settings.FormWidth = this.Width;
 				settings.FormHeight = this.Height;
@@ -77,74 +83,6 @@ namespace ThetaNetSample
 		}
 
 		/// <summary>
-		/// Common method to create a message when an exception is caught.
-		/// </summary>
-		/// <param name="ex"></param>
-		/// <returns></returns>
-		private String HandleException(Exception ex)
-		{
-			StringBuilder builder = new StringBuilder();
-			builder.AppendLine(ex.Message);
-			if (ex.InnerException != null)
-			{
-				builder.AppendLine(ex.InnerException.Message);
-			}
-
-			return builder.ToString();
-
-		}
-
-		/// <summary>
-		/// Check Connection button is clicked
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private async void BtnCheck_Click(object sender, RoutedEventArgs e)
-		{
-			string result;
-			try
-			{
-				await _theta.CheckConnection();
-				pnlController.IsEnabled = true;
-				result = "Connection OK";
-			}
-			catch (ThetaWifiApiException apiex)
-			{
-				// Theta API erros... 
-				result = HandleException(apiex);
-				pnlController.IsEnabled = false;
-			}
-			catch (ThetaWifiConnectException connex)
-			{
-				// Connecton error...
-				result = HandleException(connex);
-				pnlController.IsEnabled = false;
-			}
-
-			txtOutput.Text += result + "\n";
-		}
-
-		/// <summary>
-		/// Settings button is clicked
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private async void BtnSettings_Click(object sender, RoutedEventArgs e)
-		{
-			String result;
-			try
-			{
-				var status = await _theta.ThetaApi.StateAsync();
-				result = JsonUtil.ToSring(status);
-			}
-			catch (ThetaWifiApiException apiex)
-			{
-				result = HandleException(apiex);
-			}
-			txtOutput.Text += result + "\n";
-		}
-
-		/// <summary>
 		/// Tab selection changed
 		/// </summary>
 		/// <param name="sender"></param>
@@ -154,7 +92,7 @@ namespace ThetaNetSample
 			var selItem = ((TabControl)sender).SelectedItem;
 			if (selItem == tabPreview)
 				TogglePreview(true);
-			else if(selItem == tabFiles)
+			else if (selItem == tabFiles)
 			{
 				if (lstFiles.DataContext == null)
 					await ReloadAllFiles();
@@ -180,7 +118,7 @@ namespace ThetaNetSample
 		public void TogglePreview(bool startPreview)
 		{
 			// prevent an event before initialization
-			if (!pnlController.IsEnabled)
+			if (!tabPreview.IsEnabled)
 				return;
 
 			if (chkPreview.IsChecked.Value && startPreview)
@@ -210,7 +148,7 @@ namespace ThetaNetSample
 				}
 				catch (Exception ex)
 				{
-					HandleException(ex);
+//					HandleException(ex);
 				}
 
 			}));
@@ -349,7 +287,7 @@ namespace ThetaNetSample
 			if (!String.IsNullOrWhiteSpace(txtSavePath.Text))
 				dlg.SelectedPath = txtSavePath.Text;
 
-			if(dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
 				txtSavePath.Text = dlg.SelectedPath;
 			}
@@ -418,7 +356,7 @@ namespace ThetaNetSample
 				if (!String.IsNullOrEmpty(settings.ImageBrowsePath))
 					dlg.SelectedPath = settings.ImageBrowsePath;
 
-				if( dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+				if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 				{
 					settings.ImageBrowsePath = dlg.SelectedPath;
 					settings.Save();
@@ -438,7 +376,7 @@ namespace ThetaNetSample
 			DirectoryInfo di = new DirectoryInfo(selectedPath);
 			if (di.Exists)
 			{
-				var files = di.EnumerateFiles().Where(file =>file.Extension.Equals(".jpg", StringComparison.CurrentCultureIgnoreCase)	||
+				var files = di.EnumerateFiles().Where(file => file.Extension.Equals(".jpg", StringComparison.CurrentCultureIgnoreCase) ||
 								file.Extension.Equals(".jpeg", StringComparison.CurrentCultureIgnoreCase));
 				if (files != null && files.Count() > 0)
 				{

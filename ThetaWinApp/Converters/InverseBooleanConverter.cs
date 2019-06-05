@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 
-namespace ThetaNetSample.Converters
+namespace ThetaWinApp.Converters
 {
 	[ValueConversion(typeof(bool), typeof(bool))]
 	public class InverseBooleanConverter : IValueConverter
