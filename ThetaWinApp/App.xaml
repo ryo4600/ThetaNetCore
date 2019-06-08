@@ -4,12 +4,20 @@
              xmlns:local="clr-namespace:ThetaWinApp"
 			 xmlns:conv="clr-namespace:ThetaWinApp.Converters"
              StartupUri="MainWindow.xaml">
-    <Application.Resources>
-		<conv:InverseBooleanConverter x:Key="InverseBooleanConverter" />
-		<Style TargetType="Button" x:Key="commandButtonStyle">
-			<Setter Property="Margin" Value="5,10" />
-			<Setter Property="MinWidth" Value="80" />
-			<Setter Property="Padding" Value="10,2" />
-		</Style>
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+			<conv:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+			<Style TargetType="Button" x:Key="commandButtonStyle">
+				<Setter Property="Margin" Value="5,10" />
+				<Setter Property="MinWidth" Value="80" />
+				<Setter Property="Padding" Value="10,2" />
+			</Style>
+		</ResourceDictionary>
 	</Application.Resources>
 </Application>

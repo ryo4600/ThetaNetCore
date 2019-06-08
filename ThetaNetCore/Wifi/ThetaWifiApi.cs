@@ -4,6 +4,7 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using ThetaNetCore.Resources;
 using ThetaNetCore.Util;
 
 namespace ThetaNetCore.Wifi
@@ -63,7 +64,7 @@ namespace ThetaNetCore.Wifi
 						throw new ThetaWifiApiException(errRes);
 					}
 				default:
-					throw new Exception(String.Format(Wifi.Resources.AppStrings.Err_SendRequestFailed, response.StatusCode));
+					throw new Exception(String.Format(WifiStrings.Err_SendRequestFailed, response.StatusCode));
 			}
 		}
 

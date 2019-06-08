@@ -4,8 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ThetaWinApp.Controls"
+			 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+	<UserControl.Resources>
+	</UserControl.Resources>
     <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
@@ -21,5 +24,8 @@
 		<Border Grid.Row="1" BorderBrush="#888" BorderThickness="1" Margin="5">
 			<TextBlock x:Name="txtOutput" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
 		</Border>
+		<xctk:BusyIndicator x:Name="busyIndicator" IsBusy="False" BusyContent="Downloading email..." Grid.RowSpan="99" >
+			<ContentControl />
+		</xctk:BusyIndicator>
 	</Grid>
 </UserControl>

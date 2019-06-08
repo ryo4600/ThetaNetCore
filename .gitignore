@@ -1,8 +1,11 @@
 
 ThetaNetCore/bin
 ThetaNetCore/obj
+ThetaNetSample/bin
+ThetaNetSample/obj
 ThetaWinApp/bin
 ThetaWinApp/obj
+packages
 .vs/ThetaNetCore/v16
 .vs/ThetaNetCore/DesignTimeBuild
 SphereViewWpf/bin

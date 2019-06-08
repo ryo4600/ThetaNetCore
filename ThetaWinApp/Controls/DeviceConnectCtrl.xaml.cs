@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ThetaNetCore.Util;
 using ThetaNetCore.Wifi;
+using ThetaWinApp.Resources;
+using tkMessageBox = Xceed.Wpf.Toolkit.MessageBox;
 
 namespace ThetaWinApp.Controls
 {
@@ -40,7 +34,7 @@ namespace ThetaWinApp.Controls
 		/// </summary>
 		/// <param name="ex"></param>
 		/// <returns></returns>
-		private String HandleException(Exception ex)
+		private void HandleError(Exception ex, String title = "Error")
 		{
 			StringBuilder builder = new StringBuilder();
 			builder.AppendLine(ex.Message);
@@ -48,8 +42,8 @@ namespace ThetaWinApp.Controls
 			{
 				builder.AppendLine(ex.InnerException.Message);
 			}
-
-			return builder.ToString();
+			var msg = builder.ToString();
+			MessageBox.Show(msg, AppStrings.Err_Connection_Title, MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 		/// <summary>
@@ -59,29 +53,33 @@ namespace ThetaWinApp.Controls
 		/// <param name="e"></param>
 		private async void BtnCheck_Click(object sender, RoutedEventArgs e)
 		{
-			string result;
 			try
 			{
-				await _theta.CheckConnection();
-				pnlController.IsEnabled = true;
-				result = "Connection OK";
+				pnlController.IsEnabled = false;
+				busyIndicator.IsBusy = true;
 
+				busyIndicator.BusyContent = AppStrings.Msg_TryConnecting;
+
+				await _theta.CheckConnection();
+
+				pnlController.IsEnabled = true;
 				ConnectionEstablished?.Invoke();
 			}
 			catch (ThetaWifiApiException apiex)
 			{
 				// Theta API erros... 
-				result = HandleException(apiex);
-				pnlController.IsEnabled = false;
+				HandleError(apiex, AppStrings.Err_Connection_Title);
+
 			}
 			catch (ThetaWifiConnectException connex)
 			{
 				// Connecton error...
-				result = HandleException(connex);
-				pnlController.IsEnabled = false;
+				HandleError(connex, AppStrings.Err_Connection_Title);
 			}
-
-			txtOutput.Text += result + "\n";
+			finally
+			{
+				busyIndicator.IsBusy = false;
+			}
 		}
 
 		/// <summary>
@@ -96,14 +94,13 @@ namespace ThetaWinApp.Controls
 			{
 				var status = await _theta.ThetaApi.StateAsync();
 				result = JsonUtil.ToSring(status);
+				txtOutput.Text += result + "\n";
 			}
 			catch (ThetaWifiApiException apiex)
 			{
-				result = HandleException(apiex);
+				HandleError(apiex);
 			}
-			txtOutput.Text += result + "\n";
 		}
-
 
 	}
 }

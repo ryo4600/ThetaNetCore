@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using ThetaNetCore.Wifi.Resources;
+using ThetaNetCore.Resources;
 
 namespace ThetaNetCore.Wifi
 {
@@ -49,7 +49,7 @@ namespace ThetaNetCore.Wifi
 				// This library needs v2.1 support
 				if (info.ApiLevel == null || !info.ApiLevel.Contains(2))
 				{
-					throw new ApplicationException(AppStrings.Err_FirmwareVersion);
+					throw new ApplicationException(WifiStrings.Err_FirmwareVersion);
 
 				}
 
@@ -63,11 +63,11 @@ namespace ThetaNetCore.Wifi
 			}
 			catch (System.Net.WebException wex)
 			{
-				throw new ThetaWifiConnectException(AppStrings.Err_ConnectionFailed, wex);
+				throw new ThetaWifiConnectException(WifiStrings.Err_ConnectionFailed, wex);
 			}
 			catch (SerializationException sex)
 			{
-				throw new ThetaWifiConnectException(AppStrings.Err_ConnectionFailed, sex);
+				throw new ThetaWifiConnectException(WifiStrings.Err_ConnectionFailed, sex);
 			}
 		}
 
@@ -162,7 +162,7 @@ namespace ThetaNetCore.Wifi
 						}
 						catch (Exception ex)
 						{
-							throw new ThetaWifiConnectException(AppStrings.Err_GetImage, ex);
+							throw new ThetaWifiConnectException(WifiStrings.Err_GetImage, ex);
 						}
 					}
 				}
