@@ -1,128 +1,61 @@
-﻿<Window x:Class="ThetaWinApp.MainWindow"
+﻿<metro:MetroWindow x:Class="ThetaWinApp.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ThetaWinApp"
 		xmlns:ctrl="clr-namespace:ThetaWinApp.Controls"
-		xmlns:view3d="clr-namespace:SphereViewWpf;assembly=SphereViewWpf"
-		xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        TextElement.Foreground="{StaticResource  MaterialDesignBody}"
-        TextElement.FontWeight="Regular"
-        TextElement.FontSize="13"
-        TextOptions.TextFormattingMode="Ideal"
-        TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
 		mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing">
-	<Window.Resources>
-	</Window.Resources>
+        Title="ThetaWinApp" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing">
+	<metro:MetroWindow.Resources>
+	</metro:MetroWindow.Resources>
 	<Grid IsEnabled="{Binding ElementName=pnlPrgress, Path=IsVisible, Converter={StaticResource InverseBooleanConverter}}" >
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="Auto" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
-		<TabControl Grid.Row="2" SelectionChanged="tabSelectionChanged">
-			<!-- Output tab -->
-			<TabItem Header="Connect">
-				<ctrl:DeviceConnectCtrl x:Name="ctrlDeviceConnect" />
-			</TabItem>
 
-			<!-- Preview tab -->
-			<TabItem x:Name="tabPreview" Header="Preview" IsEnabled="False">
-				<Border>
-					<Grid>
-						<Image x:Name="imgPreview" />
-						<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0" Background="#4000">
-							<CheckBox x:Name="chkPreview" VerticalAlignment="Center" Content="Preview" Margin="10,0" Checked="chkPreview_CheckedChanged" 
-                                      Unchecked="chkPreview_CheckedChanged" IsChecked="True" Foreground="White" />
-							<Button x:Name="btnTakePicture" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Take picture" Style="{StaticResource commandButtonStyle}" 
-                                    Click="BtnTakePicture_Click" />
-						</StackPanel>
-					</Grid>
-				</Border>
-			</TabItem>
+		<!-- Contents: visibility changes on menu selection -->
+		<Grid Grid.Row="1" Grid.Column="1" x:Name="ctrlsContainer">
+			<ctrl:HomeCtrl x:Name="ctrlHome" Visibility="Collapsed" Tag="Home" />
+			<ctrl:DeviceConnectCtrl x:Name="ctrlDeviceConnect" Tag="Camera" />
+			<local:PCViewCtrl x:Name="ctrlPC" Visibility="Collapsed" Tag="PC" />
+		</Grid>
 
-			<!-- Decice Files tab -->
-			<TabItem x:Name="tabFiles" Header="InCamera" IsEnabled="{Binding ElementName=tabPreview, Path=IsEnabled}">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition />
-						<ColumnDefinition Width="6" />
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
-					<DataGrid x:Name="lstFiles" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False"
-							  AutoGenerateColumns="False" SelectionChanged="lstFiles_SelectionChanged">
-						<DataGrid.Columns>
-							<DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
-							<DataGridTextColumn Binding="{Binding Path=FileUrl}" Header="FileUrl" />
-							<DataGridTextColumn Binding="{Binding Path=Size}" Header="Size" />
-							<DataGridTextColumn Binding="{Binding Path=DateTimeZone}" Header="DateTimeZone" />
-							<DataGridTextColumn Binding="{Binding Path=DateTime}" Header="DateTime" />
-							<DataGridTextColumn Binding="{Binding Path=Latitude}" Header="Latitude" />
-							<DataGridTextColumn Binding="{Binding Path=Longitude}" Header="Longitude" />
-							<DataGridTextColumn Binding="{Binding Path=Width}" Header="Width" />
-							<DataGridTextColumn Binding="{Binding Path=Height}" Header="Height" />
-						</DataGrid.Columns>
-					</DataGrid>
-					<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0" Background="#4000">
-						<Button x:Name="btnRefreshList" Click="BtnRefreshList_Click" />
-					</StackPanel>
-					<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
-					<Grid  Grid.Column="2">
-						<Grid.RowDefinitions>
-							<RowDefinition />
-							<RowDefinition Height="6" />
-							<RowDefinition Height="Auto" />
-						</Grid.RowDefinitions>
-						<Image x:Name="imgPictureView" Source="{Binding ThumbnailData}" />
-						<GridSplitter Grid.Row="1" VerticalAlignment="Stretch" />
-						<Grid Grid.Row="2">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition />
-								<ColumnDefinition Width="Auto" />
-								<ColumnDefinition Width="Auto" />
-							</Grid.ColumnDefinitions>
-							<TextBlock Text="Path" Margin="5,0" VerticalAlignment="Center" />
-							<TextBox x:Name="txtSavePath" Grid.Column="1" VerticalAlignment="Center" TextChanged="TxtSavePath_TextChanged" />
-							<Button Grid.Column="2" Content="..." MinWidth="30" Margin="5" Padding="5,0" Click="BtnPath_Click" />
-							<Button x:Name="btnDownload" Grid.Column="3" Content="Download" Margin="5" Padding="5,0" Click="BtnDownload_Click" />
-						</Grid>
-					</Grid>
-				</Grid>
-			</TabItem>
-			<TabItem Header="InPC">
-				<Grid>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition />
-						<ColumnDefinition Width="6" />
-						<ColumnDefinition />
-					</Grid.ColumnDefinitions>
-					<Grid>
-						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto"/>
-							<RowDefinition />
-						</Grid.RowDefinitions>
-						<Button Content="Open" HorizontalAlignment="Left" Style="{StaticResource commandButtonStyle}" Click="btnFolder_Click" />
-						<ListView Grid.Row="1" x:Name="lstPcFiles" ItemsSource="{Binding}" SelectionChanged="LstPcFiles_SelectionChanged">
-
-						</ListView>
-					</Grid>
-					<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-					<view3d:SphereViewCtrl x:Name="viewSphere" Grid.Column="2" />
-				</Grid>
-			</TabItem>
-		</TabControl>
-
-		<!-- Indicates taking picture in progress -->
-		<Border Grid.RowSpan="3" x:Name="pnlPrgress" Background="#8FFF" Visibility="Collapsed" >
-			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
-				<ProgressBar Width="200" Height="20" IsIndeterminate="True" Foreground="#FF3D92B2" />
-				<TextBlock x:Name="txtProgress" Text="Taking picture..." TextAlignment="Center" />
-			</StackPanel>
-		</Border>
+		<!-- Hamburger menu-->
+		<materialDesign:ColorZone Grid.ColumnSpan="2" Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2" Mode="PrimaryMid" DockPanel.Dock="Top" 
+								  x:Name="topBar" Foreground="{DynamicResource AccentColorBrush4 }">
+			<Grid>
+				<ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False" x:Name="mnuHamburger" HorizontalAlignment="Left"/>
+				<TextBlock HorizontalAlignment="Center" Text="{Binding ElementName=lstDrawerMenu, Path=SelectedItem.Title}" VerticalAlignment="Center" FontSize="28" Margin="10,0" />
+			</Grid>
+		</materialDesign:ColorZone>
+		
+		<!-- Menu part -->
+		<materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=mnuHamburger, Path=IsChecked}" Grid.Row="1" Grid.ColumnSpan="2">
+			<materialDesign:DrawerHost.LeftDrawerContent>
+				<materialDesign:ColorZone Padding="0" Mode="Light" materialDesign:ShadowAssist.ShadowDepth="Depth2" VerticalAlignment="Stretch" >
+					<Border Padding="1" Background="{Binding ElementName=topBar, Path=Background}" VerticalAlignment="Stretch" >
+						<ListBox x:Name="lstDrawerMenu" SelectedIndex="0" Background="White"
+								 ItemsSource="{Binding}" DataContext="{StaticResource DrawerItems}"
+								 PreviewMouseLeftButtonUp="UIElement_OnPreviewMouseLeftButtonUp" Foreground="{Binding ElementName=topBar,Path=Background}"
+								 SelectionChanged="LstDrawerMenu_SelectionChanged">
+							<ListBox.ItemTemplate>
+								<DataTemplate>
+									<StackPanel Orientation="Horizontal" Margin="10" Cursor="Hand" Background="Transparent">
+										<materialDesign:PackIcon Kind="{Binding PackIconKind}" Width="25" Height="25" Margin="10,10,0,10" />
+										<TextBlock Text="{Binding Title}" VerticalAlignment="Center" Margin="10, 10,20,10" />
+									</StackPanel>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+					</Border>
+				</materialDesign:ColorZone>
+			</materialDesign:DrawerHost.LeftDrawerContent>
+		</materialDesign:DrawerHost>
 	</Grid>
-</Window>
+</metro:MetroWindow>
