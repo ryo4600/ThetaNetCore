@@ -30,9 +30,6 @@
 					<Border Grid.Row="1" BorderBrush="#888" BorderThickness="1" Margin="5">
 						<TextBlock x:Name="txtOutput" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
 					</Border>
-					<xctk:BusyIndicator x:Name="busyIndicator" IsBusy="False" BusyContent="Downloading email..." Grid.RowSpan="99" >
-						<ContentControl />
-					</xctk:BusyIndicator>
 				</Grid>
 			</TabItem>
 
@@ -104,21 +101,23 @@
 
 		<materialDesign:Snackbar Message="hello 1" IsActive="False" x:Name="SnackbarOne" />
 
-		<materialDesign:DialogHost x:Name="dlgErr" DataContext="aaaaaaaaaaaaaaaa">
-			<materialDesign:DialogHost.DialogContent>
+		<Grid Background="#4FFF" x:Name="dlgErr" Visibility="Collapsed" DataContext="aaaa">
+			<materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth3" HorizontalAlignment="Center" VerticalAlignment="Center" >
 				<StackPanel Margin="10">
 					<TextBlock Text="{Binding}" Margin="10" MaxWidth="300" TextWrapping="Wrap" Foreground="Red" />
-					<Button Content="Close" HorizontalAlignment="Right" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" />
+					<Button Content="Close" HorizontalAlignment="Right" Click="btnClose_Click" />
 				</StackPanel>
-			</materialDesign:DialogHost.DialogContent>
-		</materialDesign:DialogHost>
-		
+			</materialDesign:Card>
+		</Grid>
+
 		<!-- Indicates taking picture in progress -->
-		<Border Grid.RowSpan="3" x:Name="pnlPrgress" Background="#8FFF" Visibility="Collapsed" >
-			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical">
-				<ProgressBar Width="200" Height="20" IsIndeterminate="True" Foreground="#FF3D92B2" />
-				<TextBlock x:Name="txtProgress" Text="Taking picture..." TextAlignment="Center" />
-			</StackPanel>
+		<Border Grid.RowSpan="3" x:Name="pnlPrgress" Background="#4FFF" Visibility="Collapsed" DataContext="aaaa" >
+			<materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth3" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10">
+				<StackPanel Orientation="Horizontal">
+					<ProgressBar Width="20"  IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Margin="10,0" />
+					<TextBlock x:Name="txtProgress" Text="{Binding}" />
+				</StackPanel>
+			</materialDesign:Card>
 		</Border>
 
 	</Grid>

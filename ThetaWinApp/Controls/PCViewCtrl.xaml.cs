@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ThetaWinApp.Properties;
 
-namespace ThetaWinApp
+namespace ThetaWinApp.Controls
 {
 	/// <summary>
 	/// User control to list files in PC and view them

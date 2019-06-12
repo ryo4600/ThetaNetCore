@@ -1,12 +1,15 @@
 ﻿using MahApps.Metro.Controls;
 using MaterialDesignThemes.Wpf;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using ThetaWinApp.Controls;
 using ThetaWinApp.Info;
 using ThetaWinApp.Properties;
 
@@ -17,6 +20,10 @@ namespace ThetaWinApp
 	/// </summary>
 	public partial class MainWindow : MetroWindow
 	{
+		#region Members & Properties
+		List<UserControl> ctrls = new List<UserControl>();
+		#endregion
+
 		/// <summary>
 		/// Constructor
 		/// </summary>
@@ -40,7 +47,12 @@ namespace ThetaWinApp
 				this.Height = settings.FormHeight;
 			}
 
-			ctrlHome.MenuSelected += (item) => { lstDrawerMenu.SelectedItem = item; } ;
+			var ctrlHome = new HomeCtrl() { Tag = "Home" };
+			ctrlHome.MenuSelected += (item) => { lstDrawerMenu.SelectedItem = item; };
+			ctrls.Add(ctrlHome);
+			ctrls.Add(new DeviceConnectCtrl() { Tag = "Camera" });
+			ctrls.Add(new PCViewCtrl() { Tag = "PC" });
+			UpdateContents();
 		}
 
 		/// <summary>
@@ -84,15 +96,23 @@ namespace ThetaWinApp
 			if (DesignerProperties.GetIsInDesignMode(this))
 				return;
 
-			String navigateTo = (lstDrawerMenu.SelectedItem as NavigateMenuItem)?.NavigateTo;
-			
-
-			foreach(var ctrl in ctrlsContainer.Children)
-			{
-				var elem = ctrl as FrameworkElement;
-				elem.Visibility = elem.Tag.ToString() == navigateTo ? Visibility.Visible : Visibility.Collapsed;
-			}
+			UpdateContents();
 		}
 
+		/// <summary>
+		/// Decide which contents to show based on the menu selection
+		/// </summary>
+		private void UpdateContents()
+		{
+			String navigateTo = (lstDrawerMenu.SelectedItem as NavigateMenuItem)?.NavigateTo;
+			foreach (var ctrl in ctrls)
+			{
+				if (ctrl.Tag.ToString() == navigateTo)
+				{
+					ctrlsContainer.Content = ctrl;
+					break;
+				}
+			}
+		}
 	}
 }

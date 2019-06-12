@@ -92,9 +92,8 @@ namespace ThetaWinApp.Controls
 			try
 			{
 				pnlController.IsEnabled = false;
-				busyIndicator.IsBusy = true;
-
-				busyIndicator.BusyContent = AppStrings.Msg_TryConnecting;
+				pnlPrgress.Visibility = Visibility.Visible;
+				pnlPrgress.DataContext = AppStrings.Msg_TryConnecting;
 
 				await _theta.CheckConnection();
 
@@ -117,7 +116,7 @@ namespace ThetaWinApp.Controls
 			}
 			finally
 			{
-				busyIndicator.IsBusy = false;
+				pnlPrgress.Visibility = Visibility.Collapsed;
 			}
 		}
 
@@ -150,9 +149,18 @@ namespace ThetaWinApp.Controls
 
 			var msg = builder.ToString();
 			dlgErr.DataContext = msg;
-			dlgErr.IsOpen = true;
+			dlgErr.Visibility = Visibility.Visible;
 		}
 
+		/// <summary>
+		/// Close button of error
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnClose_Click(object sender, RoutedEventArgs e)
+		{
+			dlgErr.Visibility = Visibility.Collapsed;
+		}
 
 		/// <summary>
 		/// Settings button is clicked

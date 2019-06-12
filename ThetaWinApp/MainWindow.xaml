@@ -19,12 +19,9 @@
 			<RowDefinition />
 		</Grid.RowDefinitions>
 
-		<!-- Contents: visibility changes on menu selection -->
-		<Grid Grid.Row="1" Grid.Column="1" x:Name="ctrlsContainer">
-			<ctrl:HomeCtrl x:Name="ctrlHome" Visibility="Collapsed" Tag="Home" />
-			<ctrl:DeviceConnectCtrl x:Name="ctrlDeviceConnect" Tag="Camera" />
-			<local:PCViewCtrl x:Name="ctrlPC" Visibility="Collapsed" Tag="PC" />
-		</Grid>
+		<!-- Contents is added heare from codes -->
+		<metro:TransitioningContentControl x:Name="ctrlsContainer" Grid.Row="1" Transition="RightReplace">
+		</metro:TransitioningContentControl>
 
 		<!-- Hamburger menu-->
 		<materialDesign:ColorZone Grid.ColumnSpan="2" Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2" Mode="PrimaryMid" DockPanel.Dock="Top" 
