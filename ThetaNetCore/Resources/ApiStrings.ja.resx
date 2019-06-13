@@ -117,55 +117,82 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Err_Connection_Title" xml:space="preserve">
-    <value>接続エラー</value>
+  <data name="BatteryState_Charged" xml:space="preserve">
+    <value>充電完了</value>
   </data>
-  <data name="Header_CameraStatus" xml:space="preserve">
-    <value>カメラ状態</value>
+  <data name="BatteryState_Charging" xml:space="preserve">
+    <value>充電中</value>
   </data>
-  <data name="Header_Photos" xml:space="preserve">
-    <value>写真</value>
+  <data name="BatteryState_Disconnect" xml:space="preserve">
+    <value>充電していない</value>
   </data>
-  <data name="Header_Shooting" xml:space="preserve">
-    <value>撮影</value>
+  <data name="CameraError_BatteryChargeFail" xml:space="preserve">
+    <value>充電異常</value>
   </data>
-  <data name="Menu_Title_Camera" xml:space="preserve">
-    <value>カメラ</value>
+  <data name="CameraError_BatteryHighTemperature" xml:space="preserve">
+    <value>電池温度エラー</value>
   </data>
-  <data name="Menu_Title_Home" xml:space="preserve">
-    <value>ホーム</value>
+  <data name="CameraError_CantUseThisCard" xml:space="preserve">
+    <value>メディア不良</value>
   </data>
-  <data name="Menu_Title_PC" xml:space="preserve">
-    <value>PC</value>
+  <data name="CameraError_CaptureHwFailed" xml:space="preserve">
+    <value>撮影系ハードウェアの異常検出</value>
   </data>
-  <data name="Msg_ConnectionOK" xml:space="preserve">
-    <value>接続の確認ができました</value>
+  <data name="CameraError_CardAccessFail" xml:space="preserve">
+    <value>SDメモリカードのアクセスエラー</value>
   </data>
-  <data name="Msg_TryConnecting" xml:space="preserve">
-    <value>接続 確認中 …</value>
+  <data name="CameraError_CardDetectFail" xml:space="preserve">
+    <value>SDメモリカードが未装着</value>
   </data>
-  <data name="Title_BatteryLevel" xml:space="preserve">
-    <value>バッテリー残量</value>
+  <data name="CameraError_CompassCalibration" xml:space="preserve">
+    <value>電子コンパスに誤差が発生</value>
   </data>
-  <data name="Title_BatteryStatus" xml:space="preserve">
-    <value>充電状態</value>
+  <data name="CameraError_FileNumberError" xml:space="preserve">
+    <value>ファイル番号の制限を超えている</value>
   </data>
-  <data name="Title_CameraError" xml:space="preserve">
-    <value>本体エラー</value>
+  <data name="CameraError_FormatCard" xml:space="preserve">
+    <value>SDメモリカードのフォーマットエラー</value>
   </data>
-  <data name="Title_CaptureStatus" xml:space="preserve">
-    <value>連続撮影状態</value>
+  <data name="CameraError_FormatInternalMem" xml:space="preserve">
+    <value>内蔵メモリのフォーマットエラー</value>
   </data>
-  <data name="Title_CheckConnection" xml:space="preserve">
-    <value>接続チェック</value>
+  <data name="CameraError_HighTemperature" xml:space="preserve">
+    <value>(基盤)温度エラー</value>
   </data>
-  <data name="Title_RecordableTime" xml:space="preserve">
-    <value>動画の残り撮影時間(秒)</value>
+  <data name="CameraError_InternalMemAccessFail" xml:space="preserve">
+    <value>内蔵メモリのアクセスエラー</value>
   </data>
-  <data name="Title_RecordedTime" xml:space="preserve">
-    <value>動画の撮影時間(秒)</value>
+  <data name="CameraError_NoDateSetting" xml:space="preserve">
+    <value>カメラの内蔵時計が未設定</value>
   </data>
-  <data name="Title_Status" xml:space="preserve">
-    <value>状態</value>
+  <data name="CameraError_NoMemory" xml:space="preserve">
+    <value>メモリー容量不足</value>
+  </data>
+  <data name="CameraError_None" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="CameraError_UnexpectedError" xml:space="preserve">
+    <value>未定義エラー</value>
+  </data>
+  <data name="CameraError_Unknown" xml:space="preserve">
+    <value>UNKNOWN</value>
+  </data>
+  <data name="CameraError_WritingData" xml:space="preserve">
+    <value>データ書き込み中</value>
+  </data>
+  <data name="CaptureStatus_BracketShooting" xml:space="preserve">
+    <value>マルチブラケット撮影中</value>
+  </data>
+  <data name="CaptureStatus_Idle" xml:space="preserve">
+    <value>撮影待機中</value>
+  </data>
+  <data name="CaptureStatus_SelfTimer" xml:space="preserve">
+    <value>セルフタイマー作動中</value>
+  </data>
+  <data name="CaptureStatus_Shooting" xml:space="preserve">
+    <value>連続撮影中</value>
+  </data>
+  <data name="Invalid_Value" xml:space="preserve">
+    <value>不正な値</value>
   </data>
 </root>

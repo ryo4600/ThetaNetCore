@@ -91,33 +91,52 @@ namespace ThetaWinApp.Controls
 		{
 			try
 			{
-				pnlController.IsEnabled = false;
+				pnlStatus.IsEnabled = false;
 				pnlPrgress.Visibility = Visibility.Visible;
 				pnlPrgress.DataContext = AppStrings.Msg_TryConnecting;
 
 				await _theta.CheckConnection();
 
-				pnlController.IsEnabled = true;
+				pnlStatus.IsEnabled = true;
 				tabPreview.Visibility = Visibility.Visible;
+
+				pnlPrgress.Visibility = Visibility.Collapsed;
+
+				await LoadStatus();
 
 				await ShowMessage(AppStrings.Msg_ConnectionOK);
 			}
 			catch (ThetaWifiApiException apiex)
 			{
 				// Theta API erros... 
+				pnlPrgress.Visibility = Visibility.Collapsed;
 				HandleError(apiex, AppStrings.Err_Connection_Title);
 				tabPreview.Visibility = Visibility.Collapsed;
 			}
 			catch (ThetaWifiConnectException connex)
 			{
 				// Connecton error...
+				pnlPrgress.Visibility = Visibility.Collapsed;
 				HandleError(connex, AppStrings.Err_Connection_Title);
 				tabPreview.Visibility = Visibility.Collapsed;
 			}
 			finally
 			{
-				pnlPrgress.Visibility = Visibility.Collapsed;
 			}
+		}
+
+		private async Task LoadStatus()
+		{
+			var status = await _theta.ThetaApi.StateAsync();
+			pnlStatus.DataContext = status;
+			//var keyVals = new List<KeyValuePair<string, object>>();
+			//keyVals.Add(new KeyValuePair<string, object>(AppStrings.Title_BatteryLevel, status.State.BatteryLevel));
+			//keyVals.Add(new KeyValuePair<string, object>(AppStrings.Title_BatteryStatus, status.State.BatteryStateFriendly));
+			//keyVals.Add(new KeyValuePair<string, object>(AppStrings.Title_CaptureStatus, status.State.CaptureStatus));
+			//keyVals.Add(new KeyValuePair<string, object>(AppStrings.Title_RecordedTime, status.State.RecordedTime));
+			//keyVals.Add(new KeyValuePair<string, object>(AppStrings.Title_RecordableTime, status.State.RecordableTime));
+			//keyVals.Add(new KeyValuePair<string, object>(AppStrings.Title_CameraError, status.State.CameraError));
+			//pnlStatus.DataContext = keyVals;
 		}
 
 		/// <summary>
@@ -169,12 +188,10 @@ namespace ThetaWinApp.Controls
 		/// <param name="e"></param>
 		private async void BtnSettings_Click(object sender, RoutedEventArgs e)
 		{
-			String result;
 			try
 			{
 				var status = await _theta.ThetaApi.StateAsync();
-				result = JsonUtil.ToSring(status);
-				txtOutput.Text += result + "\n";
+				pnlStatus.DataContext = status;
 			}
 			catch (ThetaWifiApiException apiex)
 			{

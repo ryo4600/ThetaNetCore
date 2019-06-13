@@ -6,6 +6,7 @@
 		     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ThetaWinApp.Controls"
+			 xmlns:strings="clr-namespace:ThetaWinApp.Resources"
 			 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
@@ -13,28 +14,71 @@
 	</UserControl.Resources>
 	<Grid>
 		<TabControl Grid.Row="2" SelectionChanged="tabSelectionChanged">
-			<!-- Output tab -->
-			<TabItem Header="Connect">
+			<!-- Connect tab -->
+			<TabItem Header="{x:Static strings:AppStrings.Header_CameraStatus}">
 				<Grid>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition />
-					</Grid.RowDefinitions>
-					<WrapPanel Margin="10,5">
-						<Button Content="Check Connection" x:Name="btnInit" Click="BtnCheck_Click"></Button>
-						<StackPanel Orientation="Horizontal" x:Name="pnlController" IsEnabled="False">
-							<Button Content="Settings" Click="BtnSettings_Click" />
-						</StackPanel>
-					</WrapPanel>
+					<GroupBox Grid.Row="1" Margin="5" Padding="15"
+							  Header="{x:Static strings:AppStrings.Title_Status}" FontSize="24"
+							  Style="{StaticResource MaterialDesignGroupBox}" materialDesign:ShadowAssist.ShadowDepth="Depth3">
+						<Grid x:Name="pnlStatus" IsEnabled="False">
+							<Grid.Resources>
+								<Style TargetType="TextBlock">
+									<Setter Property="FontSize" Value="14" />
+									<Setter Property="VerticalAlignment" Value="Center" />
+									<Setter Property="Margin" Value="10, 5" />
+								</Style>
+								<Style TargetType="TextBox">
+									<Setter Property="VerticalAlignment" Value="Center" />
+									<Setter Property="FontSize" Value="14" />
+									<Setter Property="IsReadOnly" Value="True" />
+									<Setter Property="BorderThickness" Value="0,0,0,1" />
+									<Setter Property="MinWidth" Value="200" />
+								</Style>
 
-					<Border Grid.Row="1" BorderBrush="#888" BorderThickness="1" Margin="5">
-						<TextBlock x:Name="txtOutput" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" />
-					</Border>
+							</Grid.Resources>
+							<!--<ListView x:Name="lstStatus" ItemsSource="{Binding Items1}">
+								<ListView.View>
+									<GridView>
+										<GridViewColumn DisplayMemberBinding="{Binding Key}" Header="Category" />
+										<GridViewColumn DisplayMemberBinding="{Binding Value}" Header="Value" />
+										--><!--<GridViewColumn DisplayMemberBinding="{Binding Description}" Header="Description" />--><!--
+									</GridView>
+								</ListView.View>
+							</ListView>-->
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+							<TextBlock Text="{x:Static strings:AppStrings.Title_BatteryLevel}" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_BatteryStatus}" Grid.Row="1" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_CaptureStatus}" Grid.Row="2" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_RecordedTime}" Grid.Row="3" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_RecordableTime}" Grid.Row="4" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_CameraError}" Grid.Row="5" />
+
+							<TextBox Text="{Binding State.BatteryLevel, Mode=OneWay}" Grid.Column="1" TextAlignment="Right" />
+							<TextBox Text="{Binding State.BatteryStateFriendly, Mode=OneWay}" Grid.Row="1" Grid.Column="1" TextAlignment="Center" />
+							<TextBox Text="{Binding State.CaptureStatusFriendly, Mode=OneWay}" Grid.Row="2" Grid.Column="1" TextAlignment="Center" />
+							<TextBox Text="{Binding State.RecordedTime, Mode=OneWay}" Grid.Row="3" Grid.Column="1" TextAlignment="Right" />
+							<TextBox Text="{Binding State.RecordableTime, Mode=OneWay}" Grid.Row="4" Grid.Column="1" TextAlignment="Right" />
+							<TextBox Text="{Binding State.CameraErrorFriendly, Mode=OneWay}" Grid.Row="5" Grid.Column="1" TextAlignment="Center" />
+						</Grid>
+					</GroupBox>
+					<Button Content="{x:Static strings:AppStrings.Title_CheckConnection}" Background="{DynamicResource AccentColorBrush4}" x:Name="btnInit" Click="BtnCheck_Click"
+							HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10"></Button>
 				</Grid>
 			</TabItem>
 
 			<!-- Preview tab -->
-			<TabItem x:Name="tabPreview" Header="Preview" Visibility="Collapsed">
+			<TabItem x:Name="tabPreview" Header="{x:Static strings:AppStrings.Header_Shooting}" Visibility="Collapsed">
 				<Border>
 					<Grid>
 						<Image x:Name="imgPreview" />
@@ -49,7 +93,7 @@
 			</TabItem>
 
 			<!-- Decice Files tab -->
-			<TabItem x:Name="tabFiles" Header="InCamera" Visibility="{Binding ElementName=tabPreview, Path=Visibility}">
+			<TabItem x:Name="tabFiles" Header="{x:Static strings:AppStrings.Header_Photos}" Visibility="{Binding ElementName=tabPreview, Path=Visibility}">
 				<Grid>
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition />

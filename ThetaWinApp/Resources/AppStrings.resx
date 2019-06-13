@@ -120,6 +120,15 @@
   <data name="Err_Connection_Title" xml:space="preserve">
     <value>Connection error</value>
   </data>
+  <data name="Header_CameraStatus" xml:space="preserve">
+    <value>Camera Status</value>
+  </data>
+  <data name="Header_Photos" xml:space="preserve">
+    <value>Photos</value>
+  </data>
+  <data name="Header_Shooting" xml:space="preserve">
+    <value>Shooting</value>
+  </data>
   <data name="Menu_Title_Camera" xml:space="preserve">
     <value>Camera</value>
   </data>
@@ -134,5 +143,29 @@
   </data>
   <data name="Msg_TryConnecting" xml:space="preserve">
     <value>Try connecting...</value>
+  </data>
+  <data name="Title_BatteryLevel" xml:space="preserve">
+    <value>Battery Level</value>
+  </data>
+  <data name="Title_BatteryStatus" xml:space="preserve">
+    <value>Battery Status</value>
+  </data>
+  <data name="Title_CameraError" xml:space="preserve">
+    <value>Camera Error</value>
+  </data>
+  <data name="Title_CaptureStatus" xml:space="preserve">
+    <value>Capture Status</value>
+  </data>
+  <data name="Title_CheckConnection" xml:space="preserve">
+    <value>Check Connection</value>
+  </data>
+  <data name="Title_RecordableTime" xml:space="preserve">
+    <value>Recordable Time (sec)</value>
+  </data>
+  <data name="Title_RecordedTime" xml:space="preserve">
+    <value>Recorded Time (sec)</value>
+  </data>
+  <data name="Title_Status" xml:space="preserve">
+    <value>Status</value>
   </data>
 </root>

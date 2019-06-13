@@ -117,55 +117,82 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Err_Connection_Title" xml:space="preserve">
-    <value>接続エラー</value>
+  <data name="BatteryState_Charged" xml:space="preserve">
+    <value>charged</value>
   </data>
-  <data name="Header_CameraStatus" xml:space="preserve">
-    <value>カメラ状態</value>
+  <data name="BatteryState_Charging" xml:space="preserve">
+    <value>charging</value>
   </data>
-  <data name="Header_Photos" xml:space="preserve">
-    <value>写真</value>
+  <data name="BatteryState_Disconnect" xml:space="preserve">
+    <value>disconnect</value>
   </data>
-  <data name="Header_Shooting" xml:space="preserve">
-    <value>撮影</value>
+  <data name="CameraError_BatteryChargeFail" xml:space="preserve">
+    <value>Battery charge failure</value>
   </data>
-  <data name="Menu_Title_Camera" xml:space="preserve">
-    <value>カメラ</value>
+  <data name="CameraError_BatteryHighTemperature" xml:space="preserve">
+    <value>High battery temperature</value>
   </data>
-  <data name="Menu_Title_Home" xml:space="preserve">
-    <value>ホーム</value>
+  <data name="CameraError_CantUseThisCard" xml:space="preserve">
+    <value>Media format error</value>
   </data>
-  <data name="Menu_Title_PC" xml:space="preserve">
-    <value>PC</value>
+  <data name="CameraError_CaptureHwFailed" xml:space="preserve">
+    <value>Hardware problem</value>
   </data>
-  <data name="Msg_ConnectionOK" xml:space="preserve">
-    <value>接続の確認ができました</value>
+  <data name="CameraError_CardAccessFail" xml:space="preserve">
+    <value>Could not access SD memory card</value>
   </data>
-  <data name="Msg_TryConnecting" xml:space="preserve">
-    <value>接続 確認中 …</value>
+  <data name="CameraError_CardDetectFail" xml:space="preserve">
+    <value>SD card in not set</value>
   </data>
-  <data name="Title_BatteryLevel" xml:space="preserve">
-    <value>バッテリー残量</value>
+  <data name="CameraError_CompassCalibration" xml:space="preserve">
+    <value>Needs a compass calibration</value>
   </data>
-  <data name="Title_BatteryStatus" xml:space="preserve">
-    <value>充電状態</value>
+  <data name="CameraError_FileNumberError" xml:space="preserve">
+    <value>File number exceeded the limit</value>
   </data>
-  <data name="Title_CameraError" xml:space="preserve">
-    <value>本体エラー</value>
+  <data name="CameraError_FormatCard" xml:space="preserve">
+    <value>SD card memory format error</value>
   </data>
-  <data name="Title_CaptureStatus" xml:space="preserve">
-    <value>連続撮影状態</value>
+  <data name="CameraError_FormatInternalMem" xml:space="preserve">
+    <value>Internal memory format error</value>
   </data>
-  <data name="Title_CheckConnection" xml:space="preserve">
-    <value>接続チェック</value>
+  <data name="CameraError_HighTemperature" xml:space="preserve">
+    <value>High board temperature</value>
   </data>
-  <data name="Title_RecordableTime" xml:space="preserve">
-    <value>動画の残り撮影時間(秒)</value>
+  <data name="CameraError_InternalMemAccessFail" xml:space="preserve">
+    <value>Could not access internal memory</value>
   </data>
-  <data name="Title_RecordedTime" xml:space="preserve">
-    <value>動画の撮影時間(秒)</value>
+  <data name="CameraError_NoDateSetting" xml:space="preserve">
+    <value>Date time is not being set</value>
   </data>
-  <data name="Title_Status" xml:space="preserve">
-    <value>状態</value>
+  <data name="CameraError_NoMemory" xml:space="preserve">
+    <value>Insufficient memory</value>
+  </data>
+  <data name="CameraError_None" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="CameraError_UnexpectedError" xml:space="preserve">
+    <value>Unexpected error</value>
+  </data>
+  <data name="CameraError_Unknown" xml:space="preserve">
+    <value>UNKNOWN</value>
+  </data>
+  <data name="CameraError_WritingData" xml:space="preserve">
+    <value>Error while writing</value>
+  </data>
+  <data name="CaptureStatus_BracketShooting" xml:space="preserve">
+    <value>bracket shooting</value>
+  </data>
+  <data name="CaptureStatus_Idle" xml:space="preserve">
+    <value>idle</value>
+  </data>
+  <data name="CaptureStatus_SelfTimer" xml:space="preserve">
+    <value>self-timer countdown</value>
+  </data>
+  <data name="CaptureStatus_Shooting" xml:space="preserve">
+    <value>shooting</value>
+  </data>
+  <data name="Invalid_Value" xml:space="preserve">
+    <value>invalid value</value>
   </data>
 </root>
