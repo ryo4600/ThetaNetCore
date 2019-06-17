@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 	<Grid>
-		<ListBox x:Name="lstTiles" ItemsSource="{Binding}" DataContext="{StaticResource DrawerItems}" >
+		<ListBox x:Name="lstTiles" ItemsSource="{Binding}" DataContext="{StaticResource DrawerItems}" HorizontalAlignment="Center" VerticalAlignment="Center" >
 			<ListBox.ItemsPanel>
 				<ItemsPanelTemplate>
 					<WrapPanel Orientation="Horizontal" />

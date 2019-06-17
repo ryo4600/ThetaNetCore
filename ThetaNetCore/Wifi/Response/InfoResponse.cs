@@ -10,7 +10,7 @@ namespace ThetaNetCore.Wifi
 		/// Manufacturer
 		/// </summary>
 		[DataMember(Name = "manufacturer")]
-		public String Manufacture { get; set; }
+		public String Manufacturer { get; set; }
 
 		/// <summary>
 		/// Model
