@@ -50,8 +50,8 @@
 				<info:NavigateMenuItem Title="{x:Static strings:AppStrings.Menu_Title_PC}" PackIconKind="{x:Static materialDesign:PackIconKind.LaptopChromebook}" NavigateTo="PC" />
 			</info:NavigateMenuItems>
 
-
 			<conv:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+			<conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>

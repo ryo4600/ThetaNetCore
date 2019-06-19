@@ -88,9 +88,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\CameraCtrl.xaml.cs">
+      <DependentUpon>CameraCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CameraPhotoViewCtrl.xaml.cs">
+      <DependentUpon>CameraPhotoViewCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CameraTakePictCtrl.xaml.cs">
+      <DependentUpon>CameraTakePictCtrl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\HomeCtrl.xaml.cs">
       <DependentUpon>HomeCtrl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Info\NavigateMenuInfo.cs" />
     <Compile Include="Controls\PCViewCtrl.xaml.cs">
       <DependentUpon>PCViewCtrl.xaml</DependentUpon>
@@ -100,6 +110,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppStrings.resx</DependentUpon>
     </Compile>
+    <Page Include="Controls\CameraCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CameraPhotoViewCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CameraTakePictCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\DeviceConnectCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

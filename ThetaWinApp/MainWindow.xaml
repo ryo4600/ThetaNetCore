@@ -31,7 +31,7 @@
 				<TextBlock HorizontalAlignment="Center" Text="{Binding ElementName=lstDrawerMenu, Path=SelectedItem.Title}" VerticalAlignment="Center" FontSize="28" Margin="10,0" />
 			</Grid>
 		</materialDesign:ColorZone>
-		
+
 		<!-- Menu part -->
 		<materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=mnuHamburger, Path=IsChecked}" Grid.Row="1" Grid.ColumnSpan="2">
 			<materialDesign:DrawerHost.LeftDrawerContent>
@@ -43,9 +43,11 @@
 								 SelectionChanged="LstDrawerMenu_SelectionChanged">
 							<ListBox.ItemTemplate>
 								<DataTemplate>
-									<StackPanel Orientation="Horizontal" Margin="10" Cursor="Hand" Background="Transparent">
-										<materialDesign:PackIcon Kind="{Binding PackIconKind}" Width="25" Height="25" Margin="10,10,0,10" />
-										<TextBlock Text="{Binding Title}" VerticalAlignment="Center" Margin="10, 10,20,10" />
+									<StackPanel>
+										<StackPanel Orientation="Horizontal" Margin="10" Cursor="Hand" Background="Transparent">
+											<materialDesign:PackIcon Kind="{Binding PackIconKind}" Width="25" Height="25" Margin="10,10,0,10" />
+											<TextBlock Text="{Binding Title}" VerticalAlignment="Center" Margin="10, 10,20,10" />
+										</StackPanel>
 									</StackPanel>
 								</DataTemplate>
 							</ListBox.ItemTemplate>

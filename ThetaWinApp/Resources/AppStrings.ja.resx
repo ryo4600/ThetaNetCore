@@ -120,13 +120,13 @@
   <data name="Err_Connection_Title" xml:space="preserve">
     <value>接続エラー</value>
   </data>
-  <data name="Header_CameraStatus" xml:space="preserve">
-    <value>カメラ状態</value>
+  <data name="Header_CameraHome" xml:space="preserve">
+    <value>カメラホーム</value>
   </data>
   <data name="Header_Photos" xml:space="preserve">
     <value>写真</value>
   </data>
-  <data name="Header_Shooting" xml:space="preserve">
+  <data name="Header_TakePict" xml:space="preserve">
     <value>撮影</value>
   </data>
   <data name="Menu_Title_Camera" xml:space="preserve">

@@ -120,14 +120,14 @@
   <data name="Err_Connection_Title" xml:space="preserve">
     <value>Connection error</value>
   </data>
-  <data name="Header_CameraStatus" xml:space="preserve">
-    <value>Camera Status</value>
+  <data name="Header_CameraHome" xml:space="preserve">
+    <value>Camera Home</value>
   </data>
   <data name="Header_Photos" xml:space="preserve">
     <value>Photos</value>
   </data>
-  <data name="Header_Shooting" xml:space="preserve">
-    <value>Shooting</value>
+  <data name="Header_TakePict" xml:space="preserve">
+    <value>Take Pict.</value>
   </data>
   <data name="Menu_Title_Camera" xml:space="preserve">
     <value>Camera</value>

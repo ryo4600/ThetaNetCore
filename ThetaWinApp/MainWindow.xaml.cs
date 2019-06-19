@@ -50,7 +50,7 @@ namespace ThetaWinApp
 			var ctrlHome = new HomeCtrl() { Tag = "Home" };
 			ctrlHome.MenuSelected += (item) => { lstDrawerMenu.SelectedItem = item; };
 			ctrls.Add(ctrlHome);
-			ctrls.Add(new DeviceConnectCtrl() { Tag = "Camera" });
+			ctrls.Add(new CameraCtrl() { Tag = "Camera" });
 			ctrls.Add(new PCViewCtrl() { Tag = "PC" });
 			UpdateContents();
 		}
