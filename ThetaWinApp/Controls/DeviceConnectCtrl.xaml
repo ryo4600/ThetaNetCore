@@ -7,23 +7,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ThetaWinApp.Controls"
 			 xmlns:strings="clr-namespace:ThetaWinApp.Resources"
+			 xmlns:sphere="clr-namespace:SphereViewWpf;assembly=SphereViewWpf"
 			 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
 	<UserControl.Resources>
-		<DataTemplate>
-			
-		</DataTemplate>
 	</UserControl.Resources>
 	<Grid>
 		<TabControl Grid.Row="2" SelectionChanged="tabSelectionChanged">
 			<!-- Connect tab -->
-			<TabItem Header="{x:Static strings:AppStrings.Header_CameraStatus}" HeaderTemplate="{StaticResource }">
-				<TabItem.HeaderTemplate>
-					<DataTemplate>
-						<TextBlock Text="{Binding}" />
-					</DataTemplate>
-				</TabItem.HeaderTemplate>
+			<TabItem Header="{x:Static strings:AppStrings.Header_CameraStatus}">
 				<Grid>
 					<Grid.Resources>
 						<Style TargetType="TextBlock" x:Key="CategoryTitle">
@@ -129,12 +122,37 @@
 			<TabItem x:Name="tabPreview" Header="{x:Static strings:AppStrings.Header_Shooting}" Visibility="Collapsed">
 				<Border>
 					<Grid>
-						<Image x:Name="imgPreview" />
-						<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0" Background="#4000">
+						<sphere:SphereViewCtrl x:Name="imgPreview" />
+						<StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15">
+							<Button x:Name="btnSettings" Style="{StaticResource MaterialDesignFloatingActionButton}"
+									ToolTip="MaterialDesignFloatingActionButton" Click="BtnTakePicture_Click">
+								<materialDesign:PackIcon Kind="Settings"  Height="28" Width="28" />
+							</Button>
+						</StackPanel>
+						<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="15" Background="#4000">
 							<CheckBox x:Name="chkPreview" VerticalAlignment="Center" Content="Preview" Margin="10,0" Checked="chkPreview_CheckedChanged" 
                                       Unchecked="chkPreview_CheckedChanged" IsChecked="True" Foreground="White" />
-							<Button x:Name="btnTakePicture" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="Take picture"  
-                                    Click="BtnTakePicture_Click" />
+							<!--<materialDesign:PopupBox Style="{StaticResource MaterialDesignMultiFloatingActionPopupBox}" PlacementMode="LeftAndAlignBottomEdges">
+								<materialDesign:PopupBox.ToggleCheckedContent>
+									<materialDesign:PackIcon Kind="Pencil" Width="24" Height="24" />
+								</materialDesign:PopupBox.ToggleCheckedContent>
+								<StackPanel>
+									<Button ToolTip="One">
+										1
+									</Button>
+									<Button ToolTip="Two" IsEnabled="False">
+										2
+									</Button>
+									<Button ToolTip="Three">
+										3
+									</Button>
+								</StackPanel>
+							</materialDesign:PopupBox>-->
+							<Button x:Name="btnTakePicture" Style="{StaticResource MaterialDesignFloatingActionButton}"
+									ToolTip="MaterialDesignFloatingActionButton" Click="BtnTakePicture_Click">
+								<materialDesign:PackIcon Kind="Camera"  Height="28" Width="28" />
+							</Button>
+
 						</StackPanel>
 					</Grid>
 				</Border>
