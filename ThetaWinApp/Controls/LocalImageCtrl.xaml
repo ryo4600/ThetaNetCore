@@ -1,0 +1,44 @@
+﻿<UserControl
+    x:Class="ThetaWinApp.Controls.LocalImageCtrl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ThetaToGo.Ctrl"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="150"
+    d:DesignWidth="200" DataContextChanged="UserControl_DataContextChanged">
+
+	<Border BorderBrush="#8888" BorderThickness="1" Padding="1" Background="White">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+
+			<!-- Left Part -->
+			<Grid Margin="2,5,2,0">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<TextBlock Text="{Binding TimeTaken, FallbackValue=YYYYMMDDhhmm}" />
+				<Border Grid.Row="1" BorderBrush="#888" BorderThickness="1" Margin="0" MouseLeftButtonUp="Border_MouseLeftButtonUp">
+					<Image Source="{Binding ThumbImage}" Stretch="UniformToFill" Width="180" Height="90"  />
+				</Border>
+				<TextBlock Grid.Row="2" Text="{Binding FileName, FallbackValue=Title}" Style="{StaticResource ListItemTitleStyle}" HorizontalAlignment="Right" FontSize="11" />
+				<Button Click="btnDelete_Click" HorizontalAlignment="Right" Background="Transparent" x:Name="ButtonArea">
+					<Image Source="ms-appx:///Images/Trash can - 02.png" Style="{StaticResource ListIconImageStyle}" Height="16" Margin="-4"/>
+				</Button>
+			</Grid>
+
+			<!-- Right Part -->
+			<!--<Grid Grid.Row="0" x:Name="ButtonArea" Margin="5,2" VerticalAlignment="Top">
+				<Button x:Name="_btnView" Click="btnView_Click" Background="Transparent" >
+					<Image Source="ms-appx:///Images/View.png" Style="{StaticResource ListIconImageStyle}"/>
+				</Button>
+			</Grid>-->
+		</Grid>
+	</Border>
+</UserControl>

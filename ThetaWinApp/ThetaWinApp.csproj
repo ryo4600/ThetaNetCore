@@ -97,10 +97,22 @@
     <Compile Include="Controls\CameraTakePictCtrl.xaml.cs">
       <DependentUpon>CameraTakePictCtrl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DeviceImageCtrl.xaml.cs">
+      <DependentUpon>DeviceImageCtrl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\HomeCtrl.xaml.cs">
       <DependentUpon>HomeCtrl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LocalImageCtrl.xaml.cs">
+      <DependentUpon>LocalImageCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LocalImageListCtrl.xaml.cs">
+      <DependentUpon>LocalImageListCtrl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\FileGroupHeaderConverter.cs" />
+    <Compile Include="Info\FileEntryWrapper.cs" />
+    <Compile Include="Info\ImageFileWrapper.cs" />
     <Compile Include="Info\NavigateMenuInfo.cs" />
     <Compile Include="Controls\PCViewCtrl.xaml.cs">
       <DependentUpon>PCViewCtrl.xaml</DependentUpon>
@@ -126,9 +138,21 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\DeviceImageCtrl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\HomeCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LocalImageCtrl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LocalImageListCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -1,0 +1,120 @@
+﻿<UserControl
+    x:Class="ThetaToGo.Ctrl.DeviceImageListCtrl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ThetaToGo.Ctrl"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+	x:Name="_root"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+			<ColumnDefinition Width="Auto" />
+		</Grid.ColumnDefinitions>
+
+		<StackPanel Orientation="Horizontal">
+			<Image Source="ms-appx:///Images/theta_list.png" Height="20" Margin="10,0" />
+			<TextBlock x:Name="_txtFilter" Text="Filter" VerticalAlignment="Center" Margin="5,0,15,0" x:Uid="Txt_Filter" Foreground="{Binding ElementName=_root, Path=Foreground}" />
+			<ComboBox x:Name="_cmbFilter" MinWidth="80" SelectionChanged="_cmbFilter_SelectionChanged" >
+				<ComboBoxItem Content="None" x:Uid="CmbItem_None" />
+				<ComboBoxItem Content="Not copied" Tag="1" x:Uid="CmbItem_NotCopied" IsSelected="True" />
+				<!--<ComboBoxItem Content="Copied" Tag="2" x:Uid="CmbItem_Copied" />-->
+			</ComboBox>
+			<TextBlock x:Name="_txtLoadProgress" Text="" Margin="10,0" VerticalAlignment="Center" />
+		</StackPanel>
+
+		<ListView x:Name="_fileList" ItemsSource="{Binding}" ScrollViewer.HorizontalScrollMode="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+				 MinWidth="300"  SelectionMode="None" Background="#CFFF" Grid.Row="1"  HorizontalContentAlignment="Stretch">
+
+			<!-- Group Header -->
+			<!--<ListView.GroupStyle>
+				<GroupStyle>
+					<GroupStyle.HeaderTemplate>
+						<DataTemplate>
+							<Border Padding="2" >
+								<TextBlock FontWeight="Bold" FontSize="18" Text="{Binding Value, Converter={StaticResource FileGroupHeaderConverter}}" Foreground="#222"/>
+							</Border>
+						</DataTemplate>
+					</GroupStyle.HeaderTemplate>
+				</GroupStyle>
+			</ListView.GroupStyle>-->
+
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<Grid Margin="0,5">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto" />
+							<RowDefinition />
+						</Grid.RowDefinitions>
+						<Border Padding="2" BorderBrush="#8888" BorderThickness="0,1,0,0" Margin="2">
+							<TextBlock FontWeight="Bold" FontSize="18" Text="{Binding Title}" Foreground="#222" />
+						</Border>
+						<ListView ItemsSource="{Binding Files}" Grid.Row="1"  SelectionMode="None">
+							<ListView.ItemsPanel>
+								<ItemsPanelTemplate>
+									<ItemsWrapGrid Orientation="Horizontal" />
+								</ItemsPanelTemplate>
+							</ListView.ItemsPanel>
+							<ListView.ItemContainerStyle>
+								<Style TargetType="ListViewItem">
+									<Setter Property="Padding" Value="2,3"/>
+									<Setter Property="Margin" Value="0"/>
+								</Style>
+							</ListView.ItemContainerStyle>
+							<!-- Items -->
+							<ListView.ItemTemplate>
+								<DataTemplate>
+									<local:DeviceImageCtrl DownloadRequested="DeviceImageCtrl_DownloadRequested" DeleteRequested="DeviceImageCtrl_DeleteRequested" />
+								</DataTemplate>
+							</ListView.ItemTemplate>
+						</ListView>
+					</Grid>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+
+		<!-- Delete area -->
+		<Grid Grid.Column="1" Visibility="{Binding Path=Count, Converter={StaticResource ZeroToVisibilityConverter}}" x:Name="_deleteArea" Margin="2"
+			  Grid.RowSpan="2">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+
+			<Grid Grid.Row="1">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<Button Content="Delete" Click="btnDelete_Click" x:Uid="Button_Delete" Margin="5,5,2.5,5" Background="#99FFFFFF" />
+				<Button Content="Cancel" Click="btnCancel_Click" x:Uid="Button_Cancel" Grid.Column="1" Margin="2.5,5,5,5" Background="#99FFFFFF" />
+			</Grid>
+
+			<Border Background="{Binding ElementName=_root, Path=Background}" Opacity="0.2" />
+			<TextBlock FontSize="18" Text="Delete List" x:Uid="Title_DeleteList" Foreground="{Binding ElementName=_root, Path=Foreground}" Margin="10,5" />
+
+			<ListView SelectionMode="None" x:Name="_lstDelete" ItemsSource="{Binding}" Grid.Row="2" Background="{Binding ElementName=_fileList, Path=Background}">
+				<ListView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<StackPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+					</ItemsPanelTemplate>
+				</ListView.ItemsPanel>
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<local:DeviceImageCtrl ShowButtons="false" />
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
+
+		</Grid>
+
+	</Grid>
+</UserControl>
