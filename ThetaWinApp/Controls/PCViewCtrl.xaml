@@ -4,10 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ThetaWinApp"
+			 xmlns:ctrl="clr-namespace:ThetaWinApp.Controls"
+			 xmlns:strings="clr-namespace:ThetaWinApp.Resources"
 			 xmlns:view3d="clr-namespace:SphereViewWpf;assembly=SphereViewWpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+	<Grid>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
 			<ColumnDefinition Width="6" />
@@ -18,9 +20,48 @@
 				<RowDefinition Height="Auto"/>
 				<RowDefinition />
 			</Grid.RowDefinitions>
-			<Button Content="Open" HorizontalAlignment="Left" Click="btnFolder_Click" />
-			<ListView Grid.Row="1" x:Name="lstPcFiles" ItemsSource="{Binding}" SelectionChanged="LstPcFiles_SelectionChanged">
-
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto" />
+					<ColumnDefinition />
+					<ColumnDefinition Width="Auto" />
+				</Grid.ColumnDefinitions>
+				<TextBlock Text="{x:Static strings:AppStrings.Title_Folder}" VerticalAlignment="Bottom" Margin="5" />
+				<TextBox x:Name="txtFolder" Grid.Column="1" Margin="5" IsReadOnly="True" TextChanged="TxtFolder_TextChanged" />
+				<Button Content="..." HorizontalAlignment="Left" Click="btnFolder_Click" Grid.Column="2" Margin="5" />
+			</Grid>
+			<!-- List view group by date-->
+			<ListView Grid.Row="1" x:Name="lstPcFiles" ItemsSource="{Binding}" SelectionChanged="LstPcFiles_SelectionChanged"
+					  SelectionMode="Single" Background="#CF0F" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+				<ListView.GroupStyle>
+					<GroupStyle>
+						<GroupStyle.HeaderTemplate>
+							<DataTemplate>
+								<Border Margin="5" BorderBrush="#4888" BorderThickness="0,0,0,1">
+									<TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}" />
+								</Border>
+							</DataTemplate>
+						</GroupStyle.HeaderTemplate>
+					</GroupStyle>
+				</ListView.GroupStyle>
+				<ListView.ItemsPanel>
+					<ItemsPanelTemplate>
+						<WrapPanel Orientation="Horizontal" />
+					</ItemsPanelTemplate>
+				</ListView.ItemsPanel>
+				<ListView.ItemContainerStyle>
+					<Style TargetType="ListViewItem">
+						<Setter Property="Padding" Value="2,3"/>
+						<Setter Property="Margin" Value="0"/>
+					</Style>
+				</ListView.ItemContainerStyle>
+				<!-- Items -->
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<ctrl:LocalImageCtrl />
+						<!-- DeleteRequested="DeviceImageCtrl_DeleteRequested" ViewImageRequested="LocalImageCtrl_ViewImageRequested" ControlLoaded="LocalImageCtrl_Loaded" /-->
+					</DataTemplate>
+				</ListView.ItemTemplate>
 			</ListView>
 		</Grid>
 		<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />

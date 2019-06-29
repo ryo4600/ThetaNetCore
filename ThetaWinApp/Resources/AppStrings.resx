@@ -138,6 +138,9 @@
   <data name="Menu_Title_PC" xml:space="preserve">
     <value>PC</value>
   </data>
+  <data name="Menu_Title_Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="Msg_ConnectionOK" xml:space="preserve">
     <value>Connection OK</value>
   </data>
@@ -161,6 +164,9 @@
   </data>
   <data name="Title_Firmware" xml:space="preserve">
     <value>Firmware Version</value>
+  </data>
+  <data name="Title_Folder" xml:space="preserve">
+    <value>Picture Folder</value>
   </data>
   <data name="Title_GPS" xml:space="preserve">
     <value>Support GPS</value>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,7 +15,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
+using ThetaWinApp.Info;
 using ThetaWinApp.Properties;
+using static ThetaWinApp.Controls.LocalImageListCtrl;
 
 namespace ThetaWinApp.Controls
 {
@@ -22,9 +27,26 @@ namespace ThetaWinApp.Controls
 	/// </summary>
 	public partial class PCViewCtrl : UserControl
 	{
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public PCViewCtrl()
 		{
 			InitializeComponent();
+
+			this.Loaded += PCViewCtrl_Loaded;
+		}
+
+		/// <summary>
+		/// Loaded event
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void PCViewCtrl_Loaded(object sender, RoutedEventArgs e)
+		{
+			var settings = Settings.Default;
+			if (!String.IsNullOrEmpty(settings.ImageBrowsePath))
+				txtFolder.Text = settings.ImageBrowsePath;
 		}
 
 		/// <summary>
@@ -45,8 +67,22 @@ namespace ThetaWinApp.Controls
 					settings.ImageBrowsePath = dlg.SelectedPath;
 					settings.Save();
 
-					SetImageFiles(dlg.SelectedPath);
+					txtFolder.Text = dlg.SelectedPath;
 				}
+			}
+		}
+
+		/// <summary>
+		/// Text of folder box has changed
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void TxtFolder_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			var path = txtFolder.Text;
+			if (Directory.Exists(path))
+			{
+				SetImageFiles(path);
 			}
 		}
 
@@ -56,19 +92,29 @@ namespace ThetaWinApp.Controls
 		/// <param name="selectedPath"></param>
 		private void SetImageFiles(string selectedPath)
 		{
-			List<FileInfo> foundFiles = new List<FileInfo>();
-			DirectoryInfo di = new DirectoryInfo(selectedPath);
-			if (di.Exists)
+			Task.Factory.StartNew(new Action(() =>
 			{
-				var files = di.EnumerateFiles().Where(file => file.Extension.Equals(".jpg", StringComparison.CurrentCultureIgnoreCase) ||
-								file.Extension.Equals(".jpeg", StringComparison.CurrentCultureIgnoreCase));
-				if (files != null && files.Count() > 0)
+				var foundFiles = new List<ImageFileWrapper>();
+				DirectoryInfo di = new DirectoryInfo(selectedPath);
+				if (di.Exists)
 				{
-					foundFiles.AddRange(files.ToList());
+					var files = di.EnumerateFiles().Where(file => file.Extension.Equals(".jpg", StringComparison.CurrentCultureIgnoreCase) ||
+									file.Extension.Equals(".jpeg", StringComparison.CurrentCultureIgnoreCase));
+					if (files != null && files.Count() > 0)
+					{
+						foreach (var aFile in files)
+							foundFiles.Add(new ImageFileWrapper() { File = aFile });
+					}
 				}
-			}
-
-			lstPcFiles.DataContext = foundFiles;
+				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+				{
+					var view = (CollectionView)CollectionViewSource.GetDefaultView(foundFiles);
+					var groupDesc = new PropertyGroupDescription("DateString");
+					groupDesc.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
+					view.GroupDescriptions.Add(groupDesc);
+					lstPcFiles.DataContext = foundFiles;
+				}));
+			}));
 		}
 
 		/// <summary>
@@ -91,7 +137,6 @@ namespace ThetaWinApp.Controls
 
 			viewSphere.Source = Image;
 		}
-
 
 	}
 }

@@ -5,7 +5,6 @@
 			 xmlns:info="clr-namespace:ThetaWinApp.Info"
 	 		 xmlns:strings="clr-namespace:ThetaWinApp.Resources"
 	         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-
 			 xmlns:conv="clr-namespace:ThetaWinApp.Converters"
              StartupUri="MainWindow.xaml">
 	<Application.Resources>
@@ -48,6 +47,7 @@
 				<info:NavigateMenuItem Title="{x:Static strings:AppStrings.Menu_Title_Home}" PackIconKind="{x:Static materialDesign:PackIconKind.HomeVariant}" NavigateTo="Home" />
 				<info:NavigateMenuItem Title="{x:Static strings:AppStrings.Menu_Title_Camera}" PackIconKind="{x:Static materialDesign:PackIconKind.Camera}" NavigateTo="Camera" />
 				<info:NavigateMenuItem Title="{x:Static strings:AppStrings.Menu_Title_PC}" PackIconKind="{x:Static materialDesign:PackIconKind.LaptopChromebook}" NavigateTo="PC" />
+				<info:NavigateMenuItem Title="{x:Static strings:AppStrings.Menu_Title_Settings}" PackIconKind="{x:Static materialDesign:PackIconKind.Gear}" NavigateTo="Settings" />
 			</info:NavigateMenuItems>
 
 			<conv:InverseBooleanConverter x:Key="InverseBooleanConverter" />

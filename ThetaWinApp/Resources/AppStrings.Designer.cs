@@ -124,6 +124,15 @@ namespace ThetaWinApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Menu_Title_Settings {
+            get {
+                return ResourceManager.GetString("Menu_Title_Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connection OK.
         /// </summary>
         public static string Msg_ConnectionOK {
@@ -192,6 +201,15 @@ namespace ThetaWinApp.Resources {
         public static string Title_Firmware {
             get {
                 return ResourceManager.GetString("Title_Firmware", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picture Folder.
+        /// </summary>
+        public static string Title_Folder {
+            get {
+                return ResourceManager.GetString("Title_Folder", resourceCulture);
             }
         }
         

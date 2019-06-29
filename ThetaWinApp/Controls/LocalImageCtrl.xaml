@@ -23,13 +23,13 @@
 					<RowDefinition Height="Auto" />
 					<RowDefinition />
 				</Grid.RowDefinitions>
-				<TextBlock Text="{Binding TimeTaken, FallbackValue=YYYYMMDDhhmm}" />
+				<TextBlock Text="{Binding TimeString}" />
 				<Border Grid.Row="1" BorderBrush="#888" BorderThickness="1" Margin="0" MouseLeftButtonUp="Border_MouseLeftButtonUp">
 					<Image Source="{Binding ThumbImage}" Stretch="UniformToFill" Width="180" Height="90"  />
 				</Border>
-				<TextBlock Grid.Row="2" Text="{Binding FileName, FallbackValue=Title}" Style="{StaticResource ListItemTitleStyle}" HorizontalAlignment="Right" FontSize="11" />
+				<TextBlock Grid.Row="2" Text="{Binding FileName, FallbackValue=Title}" HorizontalAlignment="Right" FontSize="11" />
 				<Button Click="btnDelete_Click" HorizontalAlignment="Right" Background="Transparent" x:Name="ButtonArea">
-					<Image Source="ms-appx:///Images/Trash can - 02.png" Style="{StaticResource ListIconImageStyle}" Height="16" Margin="-4"/>
+					<Image Source="/ThetaWinApp;component/Images/Garbage.png" Height="16" Margin="-4"/>
 				</Button>
 			</Grid>
 

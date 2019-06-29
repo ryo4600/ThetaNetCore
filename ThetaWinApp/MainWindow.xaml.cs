@@ -52,6 +52,7 @@ namespace ThetaWinApp
 			ctrls.Add(ctrlHome);
 			ctrls.Add(new CameraCtrl() { Tag = "Camera" });
 			ctrls.Add(new PCViewCtrl() { Tag = "PC" });
+			ctrls.Add(new SettingsCtrl() { Tag = "Settings" });
 			UpdateContents();
 		}
 

@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using ThetaWinApp.Info;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
@@ -66,20 +68,18 @@ namespace ThetaWinApp.Controls
 
 			Task.Factory.StartNew(new Action(async () =>
 			{
-				await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+				await this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action( () =>
 				{
-					SendMessage(MyResources.Resources.GetString("Msg_FindingImageFiles"));
-				});
+					SendMessage("FindingImageFiles");
+				}));
 				var entries = new List<ImageFileWrapper>();
-				var query = ImageFolder.CreateFileQueryWithOptions(new QueryOptions(
-					CommonFileQuery.OrderByName, new List<string>() { ".jpg" }));
-				var files = await query.GetFilesAsync();
+				var files = ImageFolder.EnumerateFiles("*.jpg");
 				foreach (var aFile in files)
 				{
 					entries.Add(new ImageFileWrapper() { File = aFile });
 				}
 
-				await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+				await this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(async() =>
 				{
 					//_imageList = new SortedDictionary<string, ObservableCollection<Info.ImageFileWrapper>>(new ReverseComparer<String>(StringComparer.CurrentCultureIgnoreCase));
 
@@ -101,13 +101,13 @@ namespace ThetaWinApp.Controls
 
 					var imageList = new ObservableCollection<FileDateGroup>();
 					_fileList.DataContext = imageList;
-					SendMessage(MyResources.Resources.GetString("Msg_GroupingAndSorting"));
+					SendMessage("GroupingAndSorting");
 
-					var groups = (from a in entries orderby a.TimeTaken descending group a by a.CompareDate).ToArray();
+					var groups = (from a in entries orderby a.DateTaken descending group a by a.DateTaken).ToArray();
 					foreach (var g in groups)
 					{
 						var wrappers = new ObservableCollection<ImageFileWrapper>();
-						imageList.Add(new FileDateGroup() { Title = g.Key, Files = wrappers });
+						imageList.Add(new FileDateGroup() { Title = g.Key.ToShortTimeString(), Files = wrappers });
 						foreach (var item in g)
 						{
 							wrappers.Add(item);
@@ -115,10 +115,10 @@ namespace ThetaWinApp.Controls
 						}
 					}
 
-					SendMessage(MyResources.Resources.GetString("Msg_LoadingThumbnails"));
+					SendMessage("LoadingThumbnails");
 					SendMessage("");
 
-				});
+				}));
 			}));
 		}
 
@@ -139,19 +139,19 @@ namespace ThetaWinApp.Controls
 		/// <param name="anEntry"></param>
 		async private Task DownloadThumbnails(ImageFileWrapper anEntry)
 		{
-			var thumb = await anEntry.File.GetThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.PicturesView);
-			if (thumb != null)
-			{
-				BitmapImage bitmapImage = new BitmapImage();
-				bitmapImage.SetSource(thumb);
-				anEntry.ThumbImage = bitmapImage;
-			}
-			else
-			{
-				BitmapImage bitmapImage = new BitmapImage();
-				bitmapImage.SetSource(await anEntry.File.OpenAsync(FileAccessMode.Read));
-				anEntry.ThumbImage = bitmapImage;
-			}
+			//var thumb = await anEntry.File.GetThumbnailAsync(Windows.Storage.FileProperties.ThumbnailMode.PicturesView);
+			//if (thumb != null)
+			//{
+			//	BitmapImage bitmapImage = new BitmapImage();
+			//	bitmapImage.SetSource(thumb);
+			//	anEntry.ThumbImage = bitmapImage;
+			//}
+			//else
+			//{
+			//	BitmapImage bitmapImage = new BitmapImage();
+			//	bitmapImage.SetSource(await anEntry.File.OpenAsync(FileAccessMode.Read));
+			//	anEntry.ThumbImage = bitmapImage;
+			//}
 		}
 
 		/// <summary>
@@ -185,26 +185,20 @@ namespace ThetaWinApp.Controls
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void btnDelete_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+		private void btnDelete_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-			Task.Factory.StartNew(new Action(async () =>
+			foreach (var wrapper in _deleteList.ToArray())
 			{
-				foreach (var wrapper in _deleteList.ToArray())
+				try
 				{
-					try
-					{
-						await wrapper.File.DeleteAsync();
-						await this.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-						{
-							_deleteList.Remove(wrapper);
-						});
-					}
-					catch (Exception ex)
-					{
-						LogManager.Instance.AddOperationErrorLog(MyResources.LogOperations.GetString("DeleteLocalFile"), ex, this.Dispatcher);
-					}
+					wrapper.File.Delete();
+					_deleteList.Remove(wrapper);
 				}
-			}));
+				catch (Exception ex)
+				{
+					//LogManager.Instance.AddOperationErrorLog(MyResources.LogOperations.GetString("DeleteLocalFile"), ex, this.Dispatcher);
+				}
+			}
 		}
 
 		/// <summary>
@@ -212,7 +206,7 @@ namespace ThetaWinApp.Controls
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void btnCancel_Click(object sender, RoutedEventArgs e)
+		private void btnCancel_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
 			ListImages();
 		}
@@ -265,7 +259,6 @@ namespace ThetaWinApp.Controls
 			public String Title { get; set; }
 			public ObservableCollection<ImageFileWrapper> Files { get; set; }
 		}
-
 
 	}
 }

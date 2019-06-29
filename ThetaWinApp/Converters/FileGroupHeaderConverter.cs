@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows.Data;
 using ThetaWinApp.Info;
 
-namespace ThetaToGo.Converter
+namespace ThetaWinApp.Converters
 {
 	/// <summary>
 	/// 
@@ -20,7 +20,7 @@ namespace ThetaToGo.Converter
 			if (wrappers.Count == 0)
 				return "empty";
 
-			return wrappers[0].SimpleDate;
+			return wrappers[0].DateTaken;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

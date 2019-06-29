@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using System.IO;
 using System.Windows.Media.Imaging;
 using ThetaNetCore.Common;
 
@@ -6,8 +8,9 @@ namespace ThetaWinApp.Info
 {
 	public class ImageFileWrapper : BindableBase
 	{
-		/*
-		public StorageFile File { get; set; }
+
+		private FileInfo _file;
+		public FileInfo File { get => _file; set => _file = value;  }
 
 		private BitmapSource _thumbImage = null;
 		public BitmapSource ThumbImage
@@ -21,52 +24,73 @@ namespace ThetaWinApp.Info
 			get { return File.Name; }
 		}
 
+		private Image _img;
+
 		DateTime? _dt = null;
-		public DateTime TimeTaken
+		public DateTime DateTaken
 		{
 			get
 			{
 				if (_dt == null)
 				{
-					var props = File.Properties.GetImagePropertiesAsync().AsTask().Result;
-					_dt = props.DateTaken.DateTime;
+					using (var img = Image.FromFile(_file.FullName))
+					{
+						foreach (var anItem in img.PropertyItems)
+						{
+							// Extract date the picture is taken.
+							if (anItem.Id == 0x9003 && anItem.Type == 2)
+							{
+								string val = System.Text.Encoding.ASCII.GetString(anItem.Value);
+								val = val.Trim(new char[] { '\0' });
+								_dt = DateTime.ParseExact(val, "yyyy:MM:dd HH:mm:ss", null);
+							}
+						}
+					}
 				}
 				return _dt.Value;
 			}
 		}
 
-		public String SimpleDate
+		public String DateString
 		{
 			get
 			{
-				var props = File.Properties.GetImagePropertiesAsync().AsTask().Result;
-				return new DateTimeFormatter("longdate").Format(props.DateTaken);
+				return DateTaken.ToShortDateString();
 			}
 		}
 
-		public String DateAndTime
+		public String TimeString
 		{
 			get
 			{
-				var props = File.Properties.GetImagePropertiesAsync().AsTask().Result;
-				var dt = props.DateTaken;
-				return dt.ToLocalTime().ToString();
+				return DateTaken.ToShortTimeString();
 			}
 		}
 
-		String _dateTaken = "";
-		public String CompareDate
-		{
-			get
-			{
-				if (String.IsNullOrEmpty(_dateTaken))
-				{
-					var props = File.Properties.GetImagePropertiesAsync().AsTask().Result;
-					_dateTaken = props.DateTaken.ToString("yyyy-MM-dd");
-				}
-				return _dateTaken;
+		//public String DateAndTime
+		//{
+		//	get
+		//	{
+		//		var props = File.Properties.GetImagePropertiesAsync().AsTask().Result;
+		//		var dt = props.DateTaken;
+		//		return dt.ToLocalTime().ToString();
+		//	}
+		//}
 
-			}
-		}*/
+		//String _dateTaken = "";
+		//public String CompareDate
+		//{
+		//	get
+		//	{
+		//		if (String.IsNullOrEmpty(_dateTaken))
+		//		{
+		//			var props = File.Properties.GetImagePropertiesAsync().AsTask().Result;
+		//			_dateTaken = props.DateTaken.ToString("yyyy-MM-dd");
+		//		}
+		//		return _dateTaken;
+
+		//	}
+		//}
+
 	}
 }
