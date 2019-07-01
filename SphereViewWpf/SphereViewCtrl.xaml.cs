@@ -1,6 +1,7 @@
 ﻿using SphereViewWpf.Utils;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -52,7 +53,7 @@ namespace SphereViewWpf
 		public SphereViewCtrl()
 		{
 			InitializeComponent();
-			_sphereMesh = GeomTools.CreateSphereMesh(40, 20, 10); 
+			_sphereMesh = GeomTools.CreateSphereMesh(40, 20, 10);
 
 			// Initialize background with no image
 			_textureBrush = new ImageBrush();
@@ -77,7 +78,9 @@ namespace SphereViewWpf
 			}
 		}
 
-		Point? _dragStartPos = null;
+		Point? _lastDragPos = null;
+		Point? _startDragPos = null;
+		DateTime _dragStartTime;
 
 		/// <summary>
 		/// Mouse down : start dragging
@@ -87,8 +90,10 @@ namespace SphereViewWpf
 		private void OnMouseDown(object sender, MouseButtonEventArgs e)
 		{
 			this.Cursor = Cursors.SizeAll;
-			_dragStartPos = e.GetPosition(_viewport);
+			_startDragPos = _lastDragPos = e.GetPosition(_viewport);
 			((FrameworkElement)sender).CaptureMouse();
+
+			_dragStartTime = DateTime.Now;
 		}
 
 		/// <summary>
@@ -96,11 +101,25 @@ namespace SphereViewWpf
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void OnMouseUp(object sender, MouseButtonEventArgs e)
+		async private void OnMouseUp(object sender, MouseButtonEventArgs e)
 		{
-			_dragStartPos = null;
+			var timeDiff = DateTime.Now - _dragStartTime;
+
+			var currPos = e.GetPosition(_viewport);
+			var deltaX = (currPos.X - _startDragPos.Value.X) / timeDiff.Milliseconds * 50;
+			var deltaY = (currPos.Y - _startDragPos.Value.Y) / timeDiff.Milliseconds * 50;
+
+			_lastDragPos = null;
 			((FrameworkElement)sender).ReleaseMouseCapture();
 			this.Cursor = Cursors.Arrow;
+
+			while ( Math.Abs(deltaX) > 0.1 && Math.Abs(deltaY) > 0.1)
+			{
+				deltaX *= 0.85;
+				deltaY *= 0.85;
+				DoRotate(deltaX, deltaY);
+				await Task.Delay(1);
+			}
 		}
 
 		/// <summary>
@@ -110,13 +129,34 @@ namespace SphereViewWpf
 		/// <param name="e"></param>
 		private void OnMouseMove(object sender, MouseEventArgs e)
 		{
-			if (_dragStartPos == null)
+			if (_lastDragPos == null)
 				return;
 
 			var currPos = e.GetPosition(_viewport);
-			var deltaX = currPos.X - _dragStartPos.Value.X;
-			var deltaY = currPos.Y - _dragStartPos.Value.Y;
 
+			var now = DateTime.Now;
+			if((now - _dragStartTime).Milliseconds > 500 )
+			{
+				_dragStartTime = now;
+				_startDragPos = currPos;
+
+			}
+
+			var deltaX = currPos.X - _lastDragPos.Value.X;
+			var deltaY = currPos.Y - _lastDragPos.Value.Y;
+
+			DoRotate(deltaX, deltaY);
+
+			_lastDragPos = currPos;
+		}
+
+		/// <summary>
+		/// Rotate the view
+		/// </summary>
+		/// <param name="deltaX"></param>
+		/// <param name="deltaY"></param>
+		private void DoRotate(double deltaX, double deltaY)
+		{
 			_angleTheta -= deltaX / this.ActualWidth * 180.0;
 			_anglePhi -= deltaY / this.ActualHeight * 90.0;
 
@@ -130,9 +170,7 @@ namespace SphereViewWpf
 			else if (_anglePhi > 179.99)
 				_anglePhi = 179.99;
 
-			_camera.LookDirection = GeomTools.CalcNormal( GeomTools.Deg2Rad(_angleTheta), GeomTools.Deg2Rad(_anglePhi));
-
-			_dragStartPos = currPos;
+			_camera.LookDirection = GeomTools.CalcNormal(GeomTools.Deg2Rad(_angleTheta), GeomTools.Deg2Rad(_anglePhi));
 		}
 
 		/// <summary>

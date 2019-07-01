@@ -191,7 +191,7 @@ namespace ThetaWinApp.Controls
             {
                 var items = lstPcFiles.ItemsSource as IEnumerable<ImageFileWrapper>;
                 var idx = lstPcFiles.SelectedIndex;
-                if (--idx > 0)
+                if (--idx >= 0)
                 {
                     lstPcFiles.SelectedIndex = idx;
                     ShowPhoto(lstPcFiles.SelectedItem as ImageFileWrapper);
