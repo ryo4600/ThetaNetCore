@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExifLib;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
@@ -10,21 +11,79 @@ namespace ThetaWinApp.Info
 	{
 
 		private FileInfo _file;
-		public FileInfo File { get => _file; set => _file = value;  }
+		public FileInfo File
+		{
+			get => _file;
+			set
+			{
+				_file = value;
+			}
+		}
 
 		private BitmapSource _thumbImage = null;
 		public BitmapSource ThumbImage
 		{
-			get { return _thumbImage; }
+			get {
+				if (_thumbImage == null)
+				{
+					_thumbImage = GetThumbnail(_file.FullName);
+				}
+
+				return _thumbImage;
+			}
 			set { SetProperty<BitmapSource>(ref _thumbImage, value); }
+		}
+
+		/// <summary>
+		/// Getting thambnail. <br /> This one is fast.
+		/// </summary>
+		/// <param name="MediaUrl"></param>
+		/// <returns></returns>
+		static private BitmapSource GetThumbnail(String MediaUrl)
+		{
+			BitmapSource ret = null;
+			BitmapMetadata meta = null;
+
+			try
+			{
+				BitmapFrame frame = BitmapFrame.Create(
+					new Uri(MediaUrl),
+					BitmapCreateOptions.DelayCreation,
+					BitmapCacheOption.None);
+
+				if (frame.Thumbnail == null)
+				{
+					BitmapImage image = new BitmapImage();
+					image.DecodePixelHeight = 90;
+					image.BeginInit();
+					image.UriSource = new Uri(MediaUrl);
+					image.CacheOption = BitmapCacheOption.None;
+					image.CreateOptions = BitmapCreateOptions.DelayCreation;
+					image.EndInit();
+
+					if (image.CanFreeze)
+						image.Freeze();
+
+					ret = image;
+				}
+				else
+				{
+					meta = frame.Metadata as BitmapMetadata;
+					ret = frame.Thumbnail;
+				}
+
+			}
+			catch (Exception ex)
+			{
+			}
+
+			return ret;
 		}
 
 		public String FileName
 		{
 			get { return File.Name; }
 		}
-
-		private Image _img;
 
 		DateTime? _dt = null;
 		public DateTime DateTaken
@@ -33,17 +92,14 @@ namespace ThetaWinApp.Info
 			{
 				if (_dt == null)
 				{
-					using (var img = Image.FromFile(_file.FullName))
+					using (ExifReader reader = new ExifReader(_file.FullName))
 					{
-						foreach (var anItem in img.PropertyItems)
+						// Extract the tag data using the ExifTags enumeration
+						DateTime datePictureTaken;
+						if (reader.GetTagValue<DateTime>(ExifTags.DateTimeDigitized,
+														out datePictureTaken))
 						{
-							// Extract date the picture is taken.
-							if (anItem.Id == 0x9003 && anItem.Type == 2)
-							{
-								string val = System.Text.Encoding.ASCII.GetString(anItem.Value);
-								val = val.Trim(new char[] { '\0' });
-								_dt = DateTime.ParseExact(val, "yyyy:MM:dd HH:mm:ss", null);
-							}
+							_dt = datePictureTaken;
 						}
 					}
 				}

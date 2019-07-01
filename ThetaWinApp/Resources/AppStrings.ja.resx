@@ -144,6 +144,12 @@
   <data name="Msg_ConnectionOK" xml:space="preserve">
     <value>接続の確認ができました</value>
   </data>
+  <data name="Msg_FileLoading" xml:space="preserve">
+    <value>ファイル読込み中: {0} / {1}</value>
+  </data>
+  <data name="Msg_FileSorting" xml:space="preserve">
+    <value>日付で並べ替え中</value>
+  </data>
   <data name="Msg_TryConnecting" xml:space="preserve">
     <value>接続 確認中 …</value>
   </data>

@@ -4,67 +4,78 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ThetaWinApp"
+			 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 			 xmlns:ctrl="clr-namespace:ThetaWinApp.Controls"
 			 xmlns:strings="clr-namespace:ThetaWinApp.Resources"
 			 xmlns:view3d="clr-namespace:SphereViewWpf;assembly=SphereViewWpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition />
-			<ColumnDefinition Width="6" />
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition />
+		</Grid.RowDefinitions>
 		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition />
-			</Grid.RowDefinitions>
-			<Grid>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-				<TextBlock Text="{x:Static strings:AppStrings.Title_Folder}" VerticalAlignment="Bottom" Margin="5" />
-				<TextBox x:Name="txtFolder" Grid.Column="1" Margin="5" IsReadOnly="True" TextChanged="TxtFolder_TextChanged" />
-				<Button Content="..." HorizontalAlignment="Left" Click="btnFolder_Click" Grid.Column="2" Margin="5" />
-			</Grid>
-			<!-- List view group by date-->
-			<ListView Grid.Row="1" x:Name="lstPcFiles" ItemsSource="{Binding}" SelectionChanged="LstPcFiles_SelectionChanged"
-					  SelectionMode="Single" Background="#CF0F" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
-				<ListView.GroupStyle>
-					<GroupStyle>
-						<GroupStyle.HeaderTemplate>
-							<DataTemplate>
-								<Border Margin="5" BorderBrush="#4888" BorderThickness="0,0,0,1">
-									<TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}" />
-								</Border>
-							</DataTemplate>
-						</GroupStyle.HeaderTemplate>
-					</GroupStyle>
-				</ListView.GroupStyle>
-				<ListView.ItemsPanel>
-					<ItemsPanelTemplate>
-						<WrapPanel Orientation="Horizontal" />
-					</ItemsPanelTemplate>
-				</ListView.ItemsPanel>
-				<ListView.ItemContainerStyle>
-					<Style TargetType="ListViewItem">
-						<Setter Property="Padding" Value="2,3"/>
-						<Setter Property="Margin" Value="0"/>
-					</Style>
-				</ListView.ItemContainerStyle>
-				<!-- Items -->
-				<ListView.ItemTemplate>
-					<DataTemplate>
-						<ctrl:LocalImageCtrl />
-						<!-- DeleteRequested="DeviceImageCtrl_DeleteRequested" ViewImageRequested="LocalImageCtrl_ViewImageRequested" ControlLoaded="LocalImageCtrl_Loaded" /-->
-					</DataTemplate>
-				</ListView.ItemTemplate>
-			</ListView>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+			<TextBlock Text="{x:Static strings:AppStrings.Title_Folder}" VerticalAlignment="Center" Margin="5" />
+			<TextBox x:Name="txtFolder" Grid.Column="1" Margin="5" IsReadOnly="True" TextChanged="TxtFolder_TextChanged" VerticalContentAlignment="Center" />
+			<Button Content="..." HorizontalAlignment="Left" Click="btnFolder_Click" Grid.Column="2" Margin="5" />
+			<StackPanel Grid.Column="3" HorizontalAlignment="Right" Margin="5,5" Orientation="Horizontal">
+				<!-- Year Filter -->
+				<ComboBox x:Name="cmbFilterYear" SelectionChanged="CmbFilterYear_SelectionChanged" Width="100" />
+				<!-- Edit mode switch-->
+				<ToggleButton x:Name="toggleEdit"  Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" ToolTip="Edt" IsChecked="False" 
+										  Checked="ToggleEdit_Checked" Unchecked="ToggleEdit_Checked">
+					<materialDesign:PackIcon Kind="SquareEditOutline" Height="21" Width="21" />
+				</ToggleButton>
+			</StackPanel>
 		</Grid>
-		<GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-		<view3d:SphereViewCtrl x:Name="viewSphere" Grid.Column="2" />
+		<Border Grid.Row="1" Background="{DynamicResource AccentColorBrush4}" Opacity="0.4" Visibility="{Binding ElementName=toggleEdit, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
+		<!-- List view group by date-->
+		<ListView Grid.Row="1" x:Name="lstPcFiles" ItemsSource="{Binding}" VirtualizingPanel.ScrollUnit="Pixel"
+					  SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+			<ListView.GroupStyle>
+				<GroupStyle>
+					<GroupStyle.HeaderTemplate>
+						<DataTemplate>
+							<Border Margin="5" BorderBrush="#4888" BorderThickness="0,0,0,1">
+								<TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}" />
+							</Border>
+						</DataTemplate>
+					</GroupStyle.HeaderTemplate>
+				</GroupStyle>
+			</ListView.GroupStyle>
+			<ListView.ItemsPanel>
+				<ItemsPanelTemplate>
+					<WrapPanel Orientation="Horizontal" Background="Transparent" />
+				</ItemsPanelTemplate>
+			</ListView.ItemsPanel>
+			<ListView.ItemContainerStyle>
+				<Style TargetType="ListViewItem">
+					<Setter Property="Padding" Value="2,3"/>
+					<Setter Property="Margin" Value="0"/>
+				</Style>
+			</ListView.ItemContainerStyle>
+			<!-- Items -->
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ctrl:LocalImageCtrl MouseLeftButtonUp="LocalImageCtrl_MouseLeftButtonUp" />
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+		<!-- Indicates taking picture in progress -->
+		<Border Grid.RowSpan="3" x:Name="pnlLoading" Background="#4FFF" Visibility="Collapsed" DataContext="aaaa" >
+			<materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth3" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10">
+				<StackPanel Orientation="Vertical">
+					<TextBlock x:Name="txtLoaing" Text="{Binding}" />
+					<ProgressBar x:Name="prgLoading" Height="10" Width="200" Margin="5,10" Maximum="100" />
+				</StackPanel>
+			</materialDesign:Card>
+		</Border>
 	</Grid>
 </UserControl>

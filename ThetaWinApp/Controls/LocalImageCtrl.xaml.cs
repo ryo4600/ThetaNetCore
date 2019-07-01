@@ -9,13 +9,6 @@ namespace ThetaWinApp.Controls
 {
 	public sealed partial class LocalImageCtrl : UserControl
 	{
-		#region events
-		public event Action<ImageFileWrapper> ControlLoaded = null;
-		public event Action<ImageFileWrapper> ViewImageRequested = null;
-		public event Action<ImageFileWrapper> DeleteRequested = null;
-
-		#endregion
-
 		public bool ShowButtons
 		{
 			get { return (bool)GetValue(ShowButtonsProperty); }
@@ -37,47 +30,5 @@ namespace ThetaWinApp.Controls
 		{
 			this.InitializeComponent();
 		}
-
-		/// <summary>
-		/// Download button is clicked
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void btnView_Click(object sender, RoutedEventArgs e)
-		{
-			if (ViewImageRequested != null)
-				ViewImageRequested(this.DataContext as ImageFileWrapper);
-		}
-
-		/// <summary>
-		/// Delete button is clicked
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void btnDelete_Click(object sender, RoutedEventArgs e)
-		{
-			if (DeleteRequested != null)
-				DeleteRequested(this.DataContext as ImageFileWrapper);
-		}
-
-		/// <summary>
-		/// DataContext Changed event
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void UserControl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-		{
-			if (ControlLoaded != null)
-				ControlLoaded(this.DataContext as ImageFileWrapper);
-		}
-
-
-		private void Border_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-		{
-			if (ViewImageRequested != null)
-				ViewImageRequested(this.DataContext as ImageFileWrapper);
-
-		}
-
 	}
 }

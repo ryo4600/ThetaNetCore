@@ -38,6 +38,9 @@
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.4.0.0-alpha0290\lib\net462\ControlzEx.dll</HintPath>
     </Reference>
+    <Reference Include="ExifLib, Version=1.7.0.0, Culture=neutral, PublicKeyToken=30284005913968db, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExifLib.1.7.0.0\lib\net45\ExifLib.dll</HintPath>
+    </Reference>
     <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.2.0.0-alpha0316\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
@@ -107,11 +110,11 @@
     <Compile Include="Controls\LocalImageCtrl.xaml.cs">
       <DependentUpon>LocalImageCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\LocalImageListCtrl.xaml.cs">
-      <DependentUpon>LocalImageListCtrl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\SettingsCtrl.xaml.cs">
       <DependentUpon>SettingsCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PhotoViewWnd.xaml.cs">
+      <DependentUpon>PhotoViewWnd.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\FileGroupHeaderConverter.cs" />
@@ -154,11 +157,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\LocalImageListCtrl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>XamlIntelliSenseFileGenerator</Generator>
-    </Page>
     <Page Include="Controls\SettingsCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PhotoViewWnd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -117,91 +117,82 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Err_Connection_Title" xml:space="preserve">
-    <value>Connection error</value>
+  <data name="BatteryState_Charged" xml:space="preserve">
+    <value>charged</value>
   </data>
-  <data name="Header_CameraHome" xml:space="preserve">
-    <value>Camera Home</value>
+  <data name="BatteryState_Charging" xml:space="preserve">
+    <value>charging</value>
   </data>
-  <data name="Header_Photos" xml:space="preserve">
-    <value>Photos</value>
+  <data name="BatteryState_Disconnect" xml:space="preserve">
+    <value>disconnect</value>
   </data>
-  <data name="Header_TakePict" xml:space="preserve">
-    <value>Take Pict.</value>
+  <data name="CameraError_BatteryChargeFail" xml:space="preserve">
+    <value>Battery charge failure</value>
   </data>
-  <data name="Menu_Title_Camera" xml:space="preserve">
-    <value>Camera</value>
+  <data name="CameraError_BatteryHighTemperature" xml:space="preserve">
+    <value>High battery temperature</value>
   </data>
-  <data name="Menu_Title_Home" xml:space="preserve">
-    <value>Home</value>
+  <data name="CameraError_CantUseThisCard" xml:space="preserve">
+    <value>Media format error</value>
   </data>
-  <data name="Menu_Title_PC" xml:space="preserve">
-    <value>PC</value>
+  <data name="CameraError_CaptureHwFailed" xml:space="preserve">
+    <value>Hardware problem</value>
   </data>
-  <data name="Menu_Title_Settings" xml:space="preserve">
-    <value>Settings</value>
+  <data name="CameraError_CardAccessFail" xml:space="preserve">
+    <value>Could not access SD memory card</value>
   </data>
-  <data name="Msg_ConnectionOK" xml:space="preserve">
-    <value>Connection OK</value>
+  <data name="CameraError_CardDetectFail" xml:space="preserve">
+    <value>SD card in not set</value>
   </data>
-  <data name="Msg_FileLoading" xml:space="preserve">
-    <value>Loading files : {0} / {1}</value>
+  <data name="CameraError_CompassCalibration" xml:space="preserve">
+    <value>Needs a compass calibration</value>
   </data>
-  <data name="Msg_FileSorting" xml:space="preserve">
-    <value>Sorting photos by dates</value>
+  <data name="CameraError_FileNumberError" xml:space="preserve">
+    <value>File number exceeded the limit</value>
   </data>
-  <data name="Msg_TryConnecting" xml:space="preserve">
-    <value>Try connecting...</value>
+  <data name="CameraError_FormatCard" xml:space="preserve">
+    <value>SD card memory format error</value>
   </data>
-  <data name="Title_BatteryLevel" xml:space="preserve">
-    <value>Battery Level</value>
+  <data name="CameraError_FormatInternalMem" xml:space="preserve">
+    <value>Internal memory format error</value>
   </data>
-  <data name="Title_BatteryStatus" xml:space="preserve">
-    <value>Battery Status</value>
+  <data name="CameraError_HighTemperature" xml:space="preserve">
+    <value>High board temperature</value>
   </data>
-  <data name="Title_CameraError" xml:space="preserve">
-    <value>Camera Error</value>
+  <data name="CameraError_InternalMemAccessFail" xml:space="preserve">
+    <value>Could not access internal memory</value>
   </data>
-  <data name="Title_CaptureStatus" xml:space="preserve">
-    <value>Capture Status</value>
+  <data name="CameraError_NoDateSetting" xml:space="preserve">
+    <value>Date time is not being set</value>
   </data>
-  <data name="Title_CheckConnection" xml:space="preserve">
-    <value>Check Connection</value>
+  <data name="CameraError_NoMemory" xml:space="preserve">
+    <value>Insufficient memory</value>
   </data>
-  <data name="Title_Firmware" xml:space="preserve">
-    <value>Firmware Version</value>
+  <data name="CameraError_None" xml:space="preserve">
+    <value>OK</value>
   </data>
-  <data name="Title_Folder" xml:space="preserve">
-    <value>Picture Folder</value>
+  <data name="CameraError_UnexpectedError" xml:space="preserve">
+    <value>Unexpected error</value>
   </data>
-  <data name="Title_GPS" xml:space="preserve">
-    <value>Support GPS</value>
+  <data name="CameraError_Unknown" xml:space="preserve">
+    <value>UNKNOWN</value>
   </data>
-  <data name="Title_Gyro" xml:space="preserve">
-    <value>Support Gyro</value>
+  <data name="CameraError_WritingData" xml:space="preserve">
+    <value>Error while writing</value>
   </data>
-  <data name="Title_Info" xml:space="preserve">
-    <value>Information</value>
+  <data name="CaptureStatus_BracketShooting" xml:space="preserve">
+    <value>bracket shooting</value>
   </data>
-  <data name="Title_Manufacturer" xml:space="preserve">
-    <value>Manufacturer</value>
+  <data name="CaptureStatus_Idle" xml:space="preserve">
+    <value>idle</value>
   </data>
-  <data name="Title_Model" xml:space="preserve">
-    <value>Model</value>
+  <data name="CaptureStatus_SelfTimer" xml:space="preserve">
+    <value>self-timer countdown</value>
   </data>
-  <data name="Title_RecordableTime" xml:space="preserve">
-    <value>Recordable Time (sec)</value>
+  <data name="CaptureStatus_Shooting" xml:space="preserve">
+    <value>shooting</value>
   </data>
-  <data name="Title_RecordedTime" xml:space="preserve">
-    <value>Recorded Time (sec)</value>
-  </data>
-  <data name="Title_SerialNumber" xml:space="preserve">
-    <value>Serial Number</value>
-  </data>
-  <data name="Title_Status" xml:space="preserve">
-    <value>Camera Statuses</value>
-  </data>
-  <data name="Title_Uptime" xml:space="preserve">
-    <value>Uptime (sec)</value>
+  <data name="Invalid_Value" xml:space="preserve">
+    <value>invalid value</value>
   </data>
 </root>
