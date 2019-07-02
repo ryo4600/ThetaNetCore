@@ -14,19 +14,19 @@ namespace ThetaWinApp.Controls
 		public event Action<FileEntryWrapper> DeleteRequested = null;
 		#endregion
 
-		public bool ShowButtons
-		{
-			get { return (bool)GetValue(ShowButtonsProperty); }
-			set
-			{
-				SetValue(ShowButtonsProperty, value);
-				ButtonArea.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
-			}
-		}
+		//public bool ShowButtons
+		//{
+		//	get { return (bool)GetValue(ShowButtonsProperty); }
+		//	set
+		//	{
+		//		SetValue(ShowButtonsProperty, value);
+		//		ButtonArea.Visibility = value ? Visibility.Visible : Visibility.Collapsed;
+		//	}
+		//}
 
-		// Using a DependencyProperty as the backing store for ShowButtons.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty ShowButtonsProperty =
-			DependencyProperty.Register("ShowButtons", typeof(bool), typeof(DeviceImageCtrl), new PropertyMetadata(true));
+		//// Using a DependencyProperty as the backing store for ShowButtons.  This enables animation, styling, binding, etc...
+		//public static readonly DependencyProperty ShowButtonsProperty =
+		//	DependencyProperty.Register("ShowButtons", typeof(bool), typeof(DeviceImageCtrl), new PropertyMetadata(true));
 
 		/// <summary>
 		/// Constructor
@@ -68,28 +68,28 @@ namespace ThetaWinApp.Controls
 		/// <param name="wrapper"></param>
 		private void UpdateButtonState(FileEntryWrapper wrapper)
 		{
-			if (wrapper == null)
-				return;
+			//if (wrapper == null)
+			//	return;
 
-			switch (wrapper.DownloadState)
-			{
-				case -1:
-					_btnDownload.Visibility = Visibility.Visible;
-					_imgCompleted.Visibility = Visibility.Collapsed;
-					_progress.Visibility = Visibility.Collapsed;
-					break;
-				case 100:
-					_btnDownload.Visibility = Visibility.Collapsed;
-					_imgCompleted.Visibility = Visibility.Visible;
-					_progress.Visibility = Visibility.Collapsed;
-					break;
-				default:
-					_btnDownload.Visibility = Visibility.Collapsed;
-					_imgCompleted.Visibility = Visibility.Collapsed;
-					_progress.Visibility = Visibility.Visible;
-					_progress.Value = wrapper.DownloadState;
-					break;
-			}
+			//switch (wrapper.DownloadState)
+			//{
+			//	case -1:
+			//		_btnDownload.Visibility = Visibility.Visible;
+			//		_imgCompleted.Visibility = Visibility.Collapsed;
+			//		_progress.Visibility = Visibility.Collapsed;
+			//		break;
+			//	case 100:
+			//		_btnDownload.Visibility = Visibility.Collapsed;
+			//		_imgCompleted.Visibility = Visibility.Visible;
+			//		_progress.Visibility = Visibility.Collapsed;
+			//		break;
+			//	default:
+			//		_btnDownload.Visibility = Visibility.Collapsed;
+			//		_imgCompleted.Visibility = Visibility.Collapsed;
+			//		_progress.Visibility = Visibility.Visible;
+			//		_progress.Value = wrapper.DownloadState;
+			//		break;
+			//}
 		}
 
 		/// <summary>

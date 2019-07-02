@@ -36,7 +36,7 @@
 				</Grid.RowDefinitions>
 				<Button Content="{x:Static strings:AppStrings.Title_CheckConnection}" Background="{DynamicResource AccentColorBrush4}" x:Name="btnInit" Click="BtnCheck_Click"
 							HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0, 10"></Button>
-				<ScrollViewer Grid.Row="1">
+				<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
 					<StackPanel>
 						<!-- Statuses -->
 						<TextBlock Text="{x:Static strings:AppStrings.Title_Status}" Margin="0,5" />

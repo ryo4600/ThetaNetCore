@@ -15,20 +15,13 @@
 			<ColumnDefinition Width="6" />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
-		<DataGrid x:Name="lstFiles" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False"
-							  AutoGenerateColumns="False" SelectionChanged="lstFiles_SelectionChanged">
-			<DataGrid.Columns>
-				<DataGridTextColumn Binding="{Binding Path=Name}" Header="Name" />
-				<DataGridTextColumn Binding="{Binding Path=FileUrl}" Header="FileUrl" />
-				<DataGridTextColumn Binding="{Binding Path=Size}" Header="Size" />
-				<DataGridTextColumn Binding="{Binding Path=DateTimeZone}" Header="DateTimeZone" />
-				<DataGridTextColumn Binding="{Binding Path=DateTime}" Header="DateTime" />
-				<DataGridTextColumn Binding="{Binding Path=Latitude}" Header="Latitude" />
-				<DataGridTextColumn Binding="{Binding Path=Longitude}" Header="Longitude" />
-				<DataGridTextColumn Binding="{Binding Path=Width}" Header="Width" />
-				<DataGridTextColumn Binding="{Binding Path=Height}" Header="Height" />
-			</DataGrid.Columns>
-		</DataGrid>
+		<ListView x:Name="lstFiles" ItemsSource="{Binding}" SelectionChanged="lstFiles_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <local:DeviceImageCtrl />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+		</ListView>
 		<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0" Background="#4000">
 			<Button x:Name="btnRefreshList" Click="BtnRefreshList_Click" />
 		</StackPanel>
