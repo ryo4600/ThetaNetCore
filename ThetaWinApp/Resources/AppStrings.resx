@@ -168,11 +168,11 @@
   <data name="Title_CheckConnection" xml:space="preserve">
     <value>Check Connection</value>
   </data>
+  <data name="Title_DownloadFolder" xml:space="preserve">
+    <value>Download Folder</value>
+  </data>
   <data name="Title_Firmware" xml:space="preserve">
     <value>Firmware Version</value>
-  </data>
-  <data name="Title_Folder" xml:space="preserve">
-    <value>Picture Folder</value>
   </data>
   <data name="Title_GPS" xml:space="preserve">
     <value>Support GPS</value>
@@ -188,6 +188,9 @@
   </data>
   <data name="Title_Model" xml:space="preserve">
     <value>Model</value>
+  </data>
+  <data name="Title_PhotoFolder" xml:space="preserve">
+    <value>Photo Folder</value>
   </data>
   <data name="Title_RecordableTime" xml:space="preserve">
     <value>Recordable Time (sec)</value>

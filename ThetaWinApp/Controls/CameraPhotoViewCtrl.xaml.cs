@@ -39,7 +39,7 @@ namespace ThetaWinApp.Controls
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
 			var settings = Settings.Default;
-			txtSavePath.Text = settings.SavePath;
+			txtFolder.Text = settings.DownloadPath;
 
 			UpdateDownloadButton();
 		}
@@ -51,10 +51,59 @@ namespace ThetaWinApp.Controls
 		/// <param name="e"></param>
 		private void UserControl_Unloaded(object sender, RoutedEventArgs e)
 		{
-			var settings = Settings.Default;
-			settings.SavePath = txtSavePath.Text;
-			settings.Save();
 		}
+
+		/// <summary>
+		/// "Open" folder button is clicked 
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnFolder_Click(object sender, RoutedEventArgs e)
+		{
+			var settings = Settings.Default;
+			using (var dlg = new System.Windows.Forms.FolderBrowserDialog())
+			{
+				if (!String.IsNullOrEmpty(settings.DownloadPath))
+					dlg.SelectedPath = settings.DownloadPath;
+
+				if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+				{
+					settings.DownloadPath = dlg.SelectedPath;
+					settings.Save();
+
+					txtFolder.Text = dlg.SelectedPath;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Edit mode checked/unchecked event
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ToggleEdit_Checked(object sender, RoutedEventArgs e)
+		{
+			lstFiles.SelectionMode = toggleEdit.IsChecked.Value ? SelectionMode.Extended : SelectionMode.Single;
+		}
+
+		/// <summary>
+		/// Text for Download path changed
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void TxtFolder_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			UpdateDownloadButton();
+		}
+
+		/// <summary>
+		/// Update state of the "download" button
+		/// </summary>
+		private void UpdateDownloadButton()
+		{
+			btnDownload.IsEnabled = Directory.Exists(txtFolder.Text) && lstFiles.DataContext != null;
+		}
+
 
 		/// <summary>
 		/// Refresh list button is clicked
@@ -115,46 +164,10 @@ namespace ThetaWinApp.Controls
 				}
 			}
 
-			imgPictureView.DataContext = anEntry;
+			thumbnailBiew.DataContext = anEntry;
 			UpdateDownloadButton();
 		}
 
-
-		/// <summary>
-		/// Choose save path (...) is clicked
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void BtnPath_Click(object sender, RoutedEventArgs e)
-		{
-			var dlg = new System.Windows.Forms.FolderBrowserDialog();
-			if (!String.IsNullOrWhiteSpace(txtSavePath.Text))
-				dlg.SelectedPath = txtSavePath.Text;
-
-			if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-			{
-				txtSavePath.Text = dlg.SelectedPath;
-			}
-
-		}
-
-		/// <summary>
-		/// Save path text changed event
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void TxtSavePath_TextChanged(object sender, TextChangedEventArgs e)
-		{
-			UpdateDownloadButton();
-		}
-
-		/// <summary>
-		/// Update state of the "download" button
-		/// </summary>
-		private void UpdateDownloadButton()
-		{
-			btnDownload.IsEnabled = Directory.Exists(txtSavePath.Text) && imgPictureView.DataContext != null;
-		}
 
 		/// <summary>
 		/// Download button is clicked
@@ -163,12 +176,12 @@ namespace ThetaWinApp.Controls
 		/// <param name="e"></param>
 		private async void BtnDownload_Click(object sender, RoutedEventArgs e)
 		{
-			var anEntry = imgPictureView.DataContext as FileEntry;
+			var anEntry = thumbnailBiew.DataContext as FileEntry;
 
 			// Get a read stream
 			using (Stream stream = await _theta.ThetaApi.GetImageAsync(anEntry.FileUrl))
 			{
-				var path = System.IO.Path.Combine(txtSavePath.Text, anEntry.Name);
+				var path = System.IO.Path.Combine(txtFolder.Text, anEntry.Name);
 				var size = anEntry.Size;
 				var newFile = new FileInfo(path);
 				using (var aStream = newFile.Open(FileMode.OpenOrCreate))

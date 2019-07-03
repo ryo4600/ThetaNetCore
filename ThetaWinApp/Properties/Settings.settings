@@ -8,10 +8,10 @@
     <Setting Name="FormHeight" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="SavePath" Type="System.String" Scope="User">
+    <Setting Name="DownloadPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="ImageBrowsePath" Type="System.String" Scope="User">
+    <Setting Name="PhotoPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

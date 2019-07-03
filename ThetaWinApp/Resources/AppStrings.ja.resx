@@ -168,11 +168,11 @@
   <data name="Title_CheckConnection" xml:space="preserve">
     <value>接続チェック</value>
   </data>
+  <data name="Title_DownloadFolder" xml:space="preserve">
+    <value>ダウンロードフォルダ</value>
+  </data>
   <data name="Title_Firmware" xml:space="preserve">
     <value>ファームウェアのバージョン</value>
-  </data>
-  <data name="Title_Folder" xml:space="preserve">
-    <value>写真フォルダ</value>
   </data>
   <data name="Title_GPS" xml:space="preserve">
     <value>GPSの有無</value>
@@ -188,6 +188,9 @@
   </data>
   <data name="Title_Model" xml:space="preserve">
     <value>型番</value>
+  </data>
+  <data name="Title_PhotoFolder" xml:space="preserve">
+    <value>写真フォルダ</value>
   </data>
   <data name="Title_RecordableTime" xml:space="preserve">
     <value>動画の残り撮影時間(秒)</value>

@@ -50,24 +50,24 @@ namespace ThetaWinApp.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SavePath {
+        public string DownloadPath {
             get {
-                return ((string)(this["SavePath"]));
+                return ((string)(this["DownloadPath"]));
             }
             set {
-                this["SavePath"] = value;
+                this["DownloadPath"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ImageBrowsePath {
+        public string PhotoPath {
             get {
-                return ((string)(this["ImageBrowsePath"]));
+                return ((string)(this["PhotoPath"]));
             }
             set {
-                this["ImageBrowsePath"] = value;
+                this["PhotoPath"] = value;
             }
         }
     }

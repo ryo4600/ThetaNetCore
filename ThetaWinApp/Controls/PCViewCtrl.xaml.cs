@@ -41,8 +41,8 @@ namespace ThetaWinApp.Controls
 		private void PCViewCtrl_Loaded(object sender, RoutedEventArgs e)
 		{
 			var settings = Settings.Default;
-			if (!String.IsNullOrEmpty(settings.ImageBrowsePath))
-				txtFolder.Text = settings.ImageBrowsePath;
+			if (!String.IsNullOrEmpty(settings.PhotoPath))
+				txtFolder.Text = settings.PhotoPath;
 		}
 
 		/// <summary>
@@ -55,12 +55,12 @@ namespace ThetaWinApp.Controls
 			var settings = Settings.Default;
 			using (var dlg = new System.Windows.Forms.FolderBrowserDialog())
 			{
-				if (!String.IsNullOrEmpty(settings.ImageBrowsePath))
-					dlg.SelectedPath = settings.ImageBrowsePath;
+				if (!String.IsNullOrEmpty(settings.PhotoPath))
+					dlg.SelectedPath = settings.PhotoPath;
 
 				if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 				{
-					settings.ImageBrowsePath = dlg.SelectedPath;
+					settings.PhotoPath = dlg.SelectedPath;
 					settings.Save();
 
 					txtFolder.Text = dlg.SelectedPath;
@@ -233,6 +233,15 @@ namespace ThetaWinApp.Controls
 			lstPcFiles.DataContext = filteredImgs;
 
 			pnlLoading.Visibility = Visibility.Collapsed;
+		}
+
+		private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+		{
+			if(!(bool)e.NewValue)
+			{
+				if (_photoWnd.Visibility == Visibility.Visible)
+					_photoWnd.Visibility = Visibility.Collapsed;
+			}
 		}
 	}
 }
