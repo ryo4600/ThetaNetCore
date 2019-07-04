@@ -1,7 +1,5 @@
-﻿using MaterialDesignThemes.Wpf.Transitions;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -129,24 +127,32 @@ namespace ThetaWinApp.Controls
 		private void ToggleEdit_Checked(object sender, RoutedEventArgs e)
 		{
 			lstPcFiles.SelectionMode = toggleEdit.IsChecked.Value ? SelectionMode.Extended : SelectionMode.Single;
+			if (_photoWnd != null)
+			{
+				if (toggleEdit.IsChecked.Value && _photoWnd.Visibility == Visibility.Visible)
+					_photoWnd.Visibility = Visibility.Collapsed;
+			}
 		}
 
 		/// <summary>
-		/// Image is clicked
+		/// Image is double clicked
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void LocalImageCtrl_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            var imgData = ((FrameworkElement)sender).DataContext as ImageFileWrapper;
-            ShowPhoto(imgData);
-        }
+		private void LocalImageCtrl_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			if (toggleEdit.IsChecked.Value)
+				return;
 
-        /// <summary>
-        /// Show selected image in the phot window
-        /// </summary>
-        /// <param name="imgData"></param>
-        private void ShowPhoto(ImageFileWrapper imgData)
+			var imgData = ((FrameworkElement)sender).DataContext as ImageFileWrapper;
+			ShowPhoto(imgData);
+		}
+
+		/// <summary>
+		/// Show selected image in the phot window
+		/// </summary>
+		/// <param name="imgData"></param>
+		private void ShowPhoto(ImageFileWrapper imgData)
         {
             var img = new BitmapImage();
             img.BeginInit();
@@ -235,6 +241,11 @@ namespace ThetaWinApp.Controls
 			pnlLoading.Visibility = Visibility.Collapsed;
 		}
 
+		/// <summary>
+		/// Visibility changed event. Hide photo window.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
 			if(!(bool)e.NewValue)
@@ -243,5 +254,6 @@ namespace ThetaWinApp.Controls
 					_photoWnd.Visibility = Visibility.Collapsed;
 			}
 		}
+
 	}
 }

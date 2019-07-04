@@ -9,6 +9,12 @@ namespace ThetaWinApp.Info
 {
 	public class ImageFileWrapper : BindableBase
 	{
+		private bool _isChecked = false;
+		public bool IsChecked
+		{
+			get => _isChecked;
+			set { SetProperty<bool>(ref _isChecked, value); }
+		}
 
 		private FileInfo _file;
 		public FileInfo File
@@ -122,6 +128,7 @@ namespace ThetaWinApp.Info
 				return DateTaken.ToShortTimeString();
 			}
 		}
+
 
 		//public String DateAndTime
 		//{

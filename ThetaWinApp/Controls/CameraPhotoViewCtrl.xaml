@@ -10,7 +10,7 @@
 			 xmlns:strings="clr-namespace:ThetaWinApp.Resources"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-			 Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded">
+			 Loaded="UserControl_Loaded" Unloaded="UserControl_Unloaded" IsVisibleChanged="UserControl_IsVisibleChanged">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -31,8 +31,11 @@
                 <Button x:Name="btnRefreshList" Click="BtnRefreshList_Click" Margin="5">
                     <materialDesign:PackIcon Kind="Refresh" Height="21" Width="21" />
                 </Button>
-                <Button x:Name="btnDownload" Click="BtnDownload_Click" Margin="5">
+                <Button x:Name="btnDownload" Click="BtnDownload_Click" Margin="5" Visibility="{Binding ElementName=toggleEdit, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <materialDesign:PackIcon Kind="Download" Height="21" Width="21" />
+                </Button>
+                <Button x:Name="btnDelete" Click="BtnDelete_Click" Margin="5" Visibility="{Binding ElementName=toggleEdit, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <materialDesign:PackIcon Kind="Garage" Height="21" Width="21" />
                 </Button>
                 <!-- Edit mode switch-->
                 <ToggleButton x:Name="toggleEdit"  Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" ToolTip="Edt" IsChecked="False" Margin="10,0"
@@ -42,21 +45,16 @@
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="6" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <ListView x:Name="lstFiles" ItemsSource="{Binding}" SelectionChanged="lstFiles_SelectionChanged">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <local:DeviceImageCtrl />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" />
-            <Image x:Name="thumbnailBiew" Source="{Binding ThumbnailData}" Grid.Column="2" />
-        </Grid>
+        <ListView Grid.Row="1" x:Name="lstFiles" ItemsSource="{Binding}" SelectionChanged="lstFiles_SelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <local:DeviceImageCtrl MouseDoubleClick="DeviceImageCtrl_MouseDoubleClick" />
+                        <CheckBox Visibility="{Binding ElementName=toggleEdit, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" Checked="{Binding IsChecked}"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

@@ -4,6 +4,9 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using System.Linq;
+
 using ThetaNetCore;
 using ThetaNetCore.Wifi;
 using ThetaWinApp.Properties;
@@ -15,6 +18,7 @@ namespace ThetaWinApp.Controls
 	/// </summary>
 	public partial class CameraPhotoViewCtrl : UserControl
 	{
+		PhotoViewWnd _photoWnd = null;
 		private ThetaWifiConnect _theta = null;
 
 		public CameraPhotoViewCtrl()
@@ -104,7 +108,6 @@ namespace ThetaWinApp.Controls
 			btnDownload.IsEnabled = Directory.Exists(txtFolder.Text) && lstFiles.DataContext != null;
 		}
 
-
 		/// <summary>
 		/// Refresh list button is clicked
 		/// </summary>
@@ -164,7 +167,7 @@ namespace ThetaWinApp.Controls
 				}
 			}
 
-			thumbnailBiew.DataContext = anEntry;
+			//thumbnailBiew.DataContext = anEntry;
 			UpdateDownloadButton();
 		}
 
@@ -176,29 +179,134 @@ namespace ThetaWinApp.Controls
 		/// <param name="e"></param>
 		private async void BtnDownload_Click(object sender, RoutedEventArgs e)
 		{
-			var anEntry = thumbnailBiew.DataContext as FileEntry;
+			//var anEntry = thumbnailBiew.DataContext as FileEntry;
 
-			// Get a read stream
-			using (Stream stream = await _theta.ThetaApi.GetImageAsync(anEntry.FileUrl))
+			//// Get a read stream
+			//using (Stream stream = await _theta.ThetaApi.GetImageAsync(anEntry.FileUrl))
+			//{
+			//	var path = System.IO.Path.Combine(txtFolder.Text, anEntry.Name);
+			//	var size = anEntry.Size;
+			//	var newFile = new FileInfo(path);
+			//	using (var aStream = newFile.Open(FileMode.OpenOrCreate))
+			//	{
+			//		int readSize = 1000;
+			//		var readBuffer = new byte[readSize];
+			//		int totalRead = 0;
+			//		for (int i = 0; i < (int)Math.Ceiling(size / (double)readSize); i++)
+			//		{
+			//			var numRead = await stream.ReadAsync(readBuffer, 0, readSize);
+
+			//			aStream.Write(readBuffer, 0, numRead);
+			//			totalRead += numRead;
+			//		}
+			//	}
+			//}
+		}
+
+		/// <summary>
+		/// Image is double clicked
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void DeviceImageCtrl_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		{
+			var anEntry = ((FrameworkElement)sender).DataContext as FileEntry;
+			ShowPhoto(anEntry);
+		}
+
+		/// <summary>
+		/// Show selected image in the phot window
+		/// </summary>
+		/// <param name="anEntry"></param>
+		async private void ShowPhoto(FileEntry anEntry)
+		{
+			if (anEntry != null && anEntry.Thumbnail == null)
 			{
-				var path = System.IO.Path.Combine(txtFolder.Text, anEntry.Name);
-				var size = anEntry.Size;
-				var newFile = new FileInfo(path);
-				using (var aStream = newFile.Open(FileMode.OpenOrCreate))
+				var param = new ListFilesParam() { FileType = ThetaFileType.Image, EntryCount = 1, Detail = true, StartPosition = lstFiles.SelectedIndex };
+				try
 				{
-					int readSize = 1000;
-					var readBuffer = new byte[readSize];
-					int totalRead = 0;
-					for (int i = 0; i < (int)Math.Ceiling(size / (double)readSize); i++)
-					{
-						var numRead = await stream.ReadAsync(readBuffer, 0, readSize);
-
-						aStream.Write(readBuffer, 0, numRead);
-						totalRead += numRead;
-					}
+					var res = await _theta.ThetaApi.ListFilesAsync(param);
+					if (res.Entries.Length != 0)
+						anEntry = res.Entries[0];
 				}
+				catch
+				{
+				}
+			}
+
+			var img = new BitmapImage();
+			img.BeginInit();
+			img.CacheOption = BitmapCacheOption.OnLoad;
+			img.UriSource = new Uri(anEntry.FileUrl);
+			img.EndInit();
+			img.Freeze();
+
+
+			if (_photoWnd == null)
+			{
+				CreatePhotWindow();
+			}
+
+			_photoWnd.SetImage(img);
+			_photoWnd.Visibility = Visibility.Visible;
+		}
+
+		/// <summary>
+		/// Create photo window
+		/// </summary>
+		private void CreatePhotWindow()
+		{
+			_photoWnd = new PhotoViewWnd();
+			_photoWnd.Owner = App.Current.MainWindow;
+			_photoWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+			_photoWnd.SaveWindowPosition = true;
+
+			_photoWnd.NextPhotoRequested += () =>
+			{
+				var items = lstFiles.ItemsSource as IEnumerable<FileEntry>;
+				var idx = lstFiles.SelectedIndex;
+				if (++idx < items.Count())
+				{
+					lstFiles.SelectedIndex = idx;
+					ShowPhoto(lstFiles.SelectedItem as FileEntry);
+				}
+			};
+
+			_photoWnd.PrevPhotoRequested += () =>
+			{
+				var items = lstFiles.ItemsSource as IEnumerable<FileEntry>;
+				var idx = lstFiles.SelectedIndex;
+				if (--idx >= 0)
+				{
+					lstFiles.SelectedIndex = idx;
+					ShowPhoto(lstFiles.SelectedItem as FileEntry);
+				}
+
+			};
+		}
+
+		/// <summary>
+		/// Visibility changed event. Hide photo window.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+		{
+			if (!(bool)e.NewValue)
+			{
+				if (_photoWnd.Visibility == Visibility.Visible)
+					_photoWnd.Visibility = Visibility.Collapsed;
 			}
 		}
 
+		/// <summary>
+		/// Delete button is clicked
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void BtnDelete_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }

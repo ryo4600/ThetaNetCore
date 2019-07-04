@@ -7,6 +7,13 @@ namespace ThetaWinApp.Info
 {
 	public class FileEntryWrapper : BindableBase
 	{
+		private bool _isChecked = false;
+		public bool IsChecked
+		{
+			get => _isChecked;
+			set { SetProperty<bool>(ref _isChecked, value); }
+		}
+
 		public FileEntry Data { get; set; }
 
 		private BitmapSource _thumbImage = null;
