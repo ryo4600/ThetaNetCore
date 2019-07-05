@@ -141,6 +141,12 @@
   <data name="Menu_Title_Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="Msg_ChooseFileToDelete" xml:space="preserve">
+    <value>Choose files to delete first.</value>
+  </data>
+  <data name="Msg_ConfirmToDelete" xml:space="preserve">
+    <value>Are you sure to delete these  {0} files?</value>
+  </data>
   <data name="Msg_ConnectionOK" xml:space="preserve">
     <value>Connection OK</value>
   </data>
@@ -167,6 +173,9 @@
   </data>
   <data name="Title_CheckConnection" xml:space="preserve">
     <value>Check Connection</value>
+  </data>
+  <data name="Title_ConfirmDelete" xml:space="preserve">
+    <value>Delte files</value>
   </data>
   <data name="Title_DownloadFolder" xml:space="preserve">
     <value>Download Folder</value>

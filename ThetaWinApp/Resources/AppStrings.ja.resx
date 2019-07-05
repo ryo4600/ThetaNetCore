@@ -141,6 +141,12 @@
   <data name="Menu_Title_Settings" xml:space="preserve">
     <value>設定</value>
   </data>
+  <data name="Msg_ChooseFileToDelete" xml:space="preserve">
+    <value>削除したいファイルを選択してください</value>
+  </data>
+  <data name="Msg_ConfirmToDelete" xml:space="preserve">
+    <value>選択した {0} 個のファイルを削除してもよろしいですか？</value>
+  </data>
   <data name="Msg_ConnectionOK" xml:space="preserve">
     <value>接続の確認ができました</value>
   </data>
@@ -167,6 +173,9 @@
   </data>
   <data name="Title_CheckConnection" xml:space="preserve">
     <value>接続チェック</value>
+  </data>
+  <data name="Title_ConfirmDelete" xml:space="preserve">
+    <value>ファイルの削除</value>
   </data>
   <data name="Title_DownloadFolder" xml:space="preserve">
     <value>ダウンロードフォルダ</value>

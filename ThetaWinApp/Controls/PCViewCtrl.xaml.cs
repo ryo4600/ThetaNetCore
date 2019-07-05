@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using ThetaWinApp.Info;
@@ -41,6 +42,20 @@ namespace ThetaWinApp.Controls
 			var settings = Settings.Default;
 			if (!String.IsNullOrEmpty(settings.PhotoPath))
 				txtFolder.Text = settings.PhotoPath;
+		}
+
+		/// <summary>
+		/// Visibility changed event. Hide photo window.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+		{
+			if (!(bool)e.NewValue)
+			{
+				if (_photoWnd != null && _photoWnd.Visibility == Visibility.Visible)
+					_photoWnd.Visibility = Visibility.Collapsed;
+			}
 		}
 
 		/// <summary>
@@ -110,13 +125,57 @@ namespace ThetaWinApp.Controls
 			}
 
 			var years = (from img in _imageFiles orderby img.DateTaken.Year descending select img.DateTaken.Year).Distinct();
-//			cmbFilterYear.DisplayMemberPath = "Name";
 			cmbFilterYear.ItemsSource = years;
 
 			if (years.Count() > 0)
 				cmbFilterYear.SelectedIndex = 0;
 			pnlLoading.Visibility = Visibility.Collapsed;
 
+		}
+
+		/// <summary>
+		/// Reload button is clicked
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void BtnReload_Click(object sender, RoutedEventArgs e)
+		{
+			SetImageFiles(txtFolder.Text);
+		}
+
+		/// <summary>
+		/// Year filter is selected
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CmbFilterYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (cmbFilterYear.SelectedItem != null)
+				SetFilteredImages();
+		}
+
+		/// <summary>
+		/// Set images filtered by year
+		/// </summary>
+		async private void SetFilteredImages()
+		{
+			var year = (int)cmbFilterYear.SelectedItem;
+			pnlLoading.Visibility = Visibility.Visible;
+			await Task.Delay(1);
+
+			var filteredImgs = from img in _imageFiles where img.DateTaken.Year == year select img;
+
+			var view = (CollectionView)CollectionViewSource.GetDefaultView(filteredImgs);
+			var groupDesc = new PropertyGroupDescription("DateString");
+			view.GroupDescriptions.Add(groupDesc);
+
+			txtLoaing.Text = AppStrings.Msg_FileSorting;
+			await Task.Delay(1);
+
+			groupDesc.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
+			lstPcFiles.DataContext = filteredImgs;
+
+			pnlLoading.Visibility = Visibility.Collapsed;
 		}
 
 		/// <summary>
@@ -131,6 +190,52 @@ namespace ThetaWinApp.Controls
 			{
 				if (toggleEdit.IsChecked.Value && _photoWnd.Visibility == Visibility.Visible)
 					_photoWnd.Visibility = Visibility.Collapsed;
+			}
+		}
+
+		/// <summary>
+		/// Delete button is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void BtnDelete_Click(object sender, RoutedEventArgs e)
+		{
+			var viewSource = lstPcFiles.ItemsSource as IEnumerable<ImageFileWrapper>;
+			var items = (from item in viewSource where item.IsChecked select item).ToArray();
+
+			if (items.Length == 0)
+			{
+				MessageBox.Show(AppStrings.Msg_ChooseFileToDelete, AppStrings.Title_ConfirmDelete);
+				return;
+			}
+
+			if (MessageBox.Show(String.Format(AppStrings.Msg_ConfirmToDelete, items.Length), AppStrings.Title_ConfirmDelete, MessageBoxButton.YesNo) == MessageBoxResult.No)
+			{
+				return;
+			}
+
+			for (int i = 0; i < items.Length; i++)
+			{
+				items[i].File.Delete();
+				_imageFiles.Remove(items[i]);
+			}
+
+			SetFilteredImages();
+		}
+
+		/// <summary>
+		/// Checked event for item in listview
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void chkListItem_Checked(object sender, RoutedEventArgs e)
+		{
+			var selItems = lstPcFiles.SelectedItems;
+			if (selItems.Count > 0)
+			{
+				var newVal = ((ToggleButton)sender).IsChecked.Value;
+				for (int i = 0; i < selItems.Count; i++)
+					((ImageFileWrapper)selItems[i]).IsChecked = newVal;
 			}
 		}
 
@@ -205,55 +310,6 @@ namespace ThetaWinApp.Controls
 
             };
         }
-
-        /// <summary>
-        /// Year filter is selected
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CmbFilterYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if(cmbFilterYear.SelectedItem != null)
-				SetFilteredImages((int)cmbFilterYear.SelectedItem);
-		}
-
-		/// <summary>
-		/// Set images filtered by year
-		/// </summary>
-		/// <param name="year"></param>
-		async private void SetFilteredImages(int year)
-		{
-			pnlLoading.Visibility = Visibility.Visible;
-			await Task.Delay(1);
-
-			var filteredImgs = from img in _imageFiles where img.DateTaken.Year == year select img;
-
-			var view = (CollectionView)CollectionViewSource.GetDefaultView(filteredImgs);
-			var groupDesc = new PropertyGroupDescription("DateString");
-			view.GroupDescriptions.Add(groupDesc);
-
-			txtLoaing.Text = AppStrings.Msg_FileSorting;
-			await Task.Delay(1);
-
-			groupDesc.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
-			lstPcFiles.DataContext = filteredImgs;
-
-			pnlLoading.Visibility = Visibility.Collapsed;
-		}
-
-		/// <summary>
-		/// Visibility changed event. Hide photo window.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
-		{
-			if(!(bool)e.NewValue)
-			{
-				if (_photoWnd.Visibility == Visibility.Visible)
-					_photoWnd.Visibility = Visibility.Collapsed;
-			}
-		}
 
 	}
 }

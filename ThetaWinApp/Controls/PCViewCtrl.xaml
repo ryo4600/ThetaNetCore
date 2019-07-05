@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid Margin="10,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition />
@@ -25,20 +25,27 @@
             <TextBlock Text="{x:Static strings:AppStrings.Title_PhotoFolder}" VerticalAlignment="Center" Margin="5" />
             <TextBox x:Name="txtFolder" Grid.Column="1" Margin="5" IsReadOnly="True" TextChanged="TxtFolder_TextChanged" VerticalContentAlignment="Center" />
             <Button Content="..." HorizontalAlignment="Left" Click="btnFolder_Click" Grid.Column="2" Margin="5" />
-            <!-- Year Filter -->
-            <ComboBox x:Name="cmbFilterYear" Grid.Column="3" SelectionChanged="CmbFilterYear_SelectionChanged" Width="100" HorizontalAlignment="Left" Margin="10,0" />
-            <StackPanel Grid.Column="3" HorizontalAlignment="Right" Margin="5,5" Orientation="Horizontal">
-                <!-- Edit mode switch-->
+            <!-- Year Filter, Reload -->
+            <StackPanel Grid.Column="3" HorizontalAlignment="Left" Margin="5,5" Orientation="Horizontal">
+                <Button x:Name="btnReload" Click="BtnReload_Click" Margin="5" Padding="5" ToolTip="Rescan files">
+                    <materialDesign:PackIcon Kind="Reload" Height="25" Width="25" />
+                </Button>
+                <ComboBox x:Name="cmbFilterYear" Grid.Column="3" SelectionChanged="CmbFilterYear_SelectionChanged" Width="100" HorizontalAlignment="Left" Margin="10,0" />
+            </StackPanel>
+            <!-- Edit mode -->
+            <StackPanel Grid.Column="3" HorizontalAlignment="Right" Margin="5" Orientation="Horizontal">
+                <Button x:Name="btnDelete" Click="BtnDelete_Click" Margin="5" Padding="5" Visibility="{Binding ElementName=toggleEdit, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <materialDesign:PackIcon Kind="TrashCan" Height="25" Width="25" />
+                </Button>
                 <ToggleButton x:Name="toggleEdit"  Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" ToolTip="Edt" IsChecked="False" 
 										  Checked="ToggleEdit_Checked" Unchecked="ToggleEdit_Checked">
-                    <materialDesign:PackIcon Kind="SquareEditOutline" Height="21" Width="21" />
+                    <materialDesign:PackIcon Kind="SquareEditOutline" Height="28" Width="28" />
                 </ToggleButton>
             </StackPanel>
         </Grid>
-        <Border Grid.Row="1" Background="{DynamicResource AccentColorBrush4}" Opacity="0.4" Visibility="{Binding ElementName=toggleEdit, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
         <!-- List view group by date-->
         <ListView Grid.Row="1" x:Name="lstPcFiles" ItemsSource="{Binding}" VirtualizingPanel.ScrollUnit="Pixel"
-					  SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+					  SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="10">
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
@@ -65,9 +72,10 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <ctrl:LocalImageCtrl MouseDoubleClick="LocalImageCtrl_MouseDoubleClick" />
-                        <CheckBox Visibility="{Binding ElementName=toggleEdit, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" 
-                                  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" IsChecked="{Binding IsChecked}" />
+                        <ctrl:LocalImageCtrl MouseLeftButtonUp="LocalImageCtrl_MouseDoubleClick" />
+                        <ToggleButton Visibility="{Binding ElementName=toggleEdit, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                  VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" IsChecked="{Binding IsChecked}"
+                                  Style="{StaticResource MaterialDesignActionLightToggleButton}" Checked="chkListItem_Checked" Unchecked="chkListItem_Checked" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

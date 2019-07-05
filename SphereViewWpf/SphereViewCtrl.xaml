@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SphereViewWpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-	<Border Background="Black">
+	<Grid Background="Black">
 		<Viewport3D Name="_viewport"
 					MouseDown="OnMouseDown" MouseUp="OnMouseUp" 
                     MouseMove="OnMouseMove" MouseWheel="OnMouseWheel">
@@ -26,5 +26,6 @@
 				</ModelVisual3D.Content>
 			</ModelVisual3D>
 		</Viewport3D>
-	</Border>
+        <Slider HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="150" Height="20" Minimum="1" Maximum="140" Value="{Binding ElementName=_camera, Path=FieldOfView}" />
+    </Grid>
 </UserControl>
