@@ -95,11 +95,11 @@
     <Compile Include="Controls\CameraCtrl.xaml.cs">
       <DependentUpon>CameraCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CameraPhotoViewCtrl.xaml.cs">
-      <DependentUpon>CameraPhotoViewCtrl.xaml</DependentUpon>
+    <Compile Include="Controls\DevicePhotoCtrl.xaml.cs">
+      <DependentUpon>DevicePhotoCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\CameraTakePictCtrl.xaml.cs">
-      <DependentUpon>CameraTakePictCtrl.xaml</DependentUpon>
+    <Compile Include="Controls\TakePictureCtrl.xaml.cs">
+      <DependentUpon>TakePictureCtrl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DeviceImageCtrl.xaml.cs">
       <DependentUpon>DeviceImageCtrl.xaml</DependentUpon>
@@ -129,15 +129,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppStrings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utils\ImageTools.cs" />
     <Page Include="Controls\CameraCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\CameraPhotoViewCtrl.xaml">
+    <Page Include="Controls\DevicePhotoCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\CameraTakePictCtrl.xaml">
+    <Page Include="Controls\TakePictureCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

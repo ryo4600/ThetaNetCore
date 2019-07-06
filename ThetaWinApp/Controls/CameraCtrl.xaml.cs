@@ -43,6 +43,9 @@ namespace ThetaWinApp.Controls
 		/// <param name="e"></param>
 		private void Radio_Checked(object sender, RoutedEventArgs e)
 		{
+			if (ctrlTakePict == null)
+				return;
+
 			ctrlTakePict.TogglePreview(sender == radioTakePict);
 			if (sender == radioPhotos)
 			{

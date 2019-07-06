@@ -120,6 +120,9 @@
   <data name="Err_Connection_Title" xml:space="preserve">
     <value>接続エラー</value>
   </data>
+  <data name="Err_PreviewImage" xml:space="preserve">
+    <value>プレビュー取得中にエラーが発生しました</value>
+  </data>
   <data name="Header_CameraHome" xml:space="preserve">
     <value>カメラホーム</value>
   </data>
@@ -200,6 +203,9 @@
   </data>
   <data name="Title_PhotoFolder" xml:space="preserve">
     <value>写真フォルダ</value>
+  </data>
+  <data name="Title_Preview" xml:space="preserve">
+    <value>プレビュー</value>
   </data>
   <data name="Title_RecordableTime" xml:space="preserve">
     <value>動画の残り撮影時間(秒)</value>

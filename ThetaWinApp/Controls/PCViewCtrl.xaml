@@ -25,15 +25,15 @@
             <TextBlock Text="{x:Static strings:AppStrings.Title_PhotoFolder}" VerticalAlignment="Center" Margin="5" />
             <TextBox x:Name="txtFolder" Grid.Column="1" Margin="5" IsReadOnly="True" TextChanged="TxtFolder_TextChanged" VerticalContentAlignment="Center" />
             <Button Content="..." HorizontalAlignment="Left" Click="btnFolder_Click" Grid.Column="2" Margin="5" />
-            <!-- Year Filter, Reload -->
-            <StackPanel Grid.Column="3" HorizontalAlignment="Left" Margin="5,5" Orientation="Horizontal">
+            <StackPanel Grid.Column="3" HorizontalAlignment="Left" Orientation="Horizontal">
+                <!-- Year Filter, Reload -->
                 <Button x:Name="btnReload" Click="BtnReload_Click" Margin="5" Padding="5" ToolTip="Rescan files">
                     <materialDesign:PackIcon Kind="Reload" Height="25" Width="25" />
                 </Button>
                 <ComboBox x:Name="cmbFilterYear" Grid.Column="3" SelectionChanged="CmbFilterYear_SelectionChanged" Width="100" HorizontalAlignment="Left" Margin="10,0" />
             </StackPanel>
-            <!-- Edit mode -->
             <StackPanel Grid.Column="3" HorizontalAlignment="Right" Margin="5" Orientation="Horizontal">
+                <!-- Edit mode -->
                 <Button x:Name="btnDelete" Click="BtnDelete_Click" Margin="5" Padding="5" Visibility="{Binding ElementName=toggleEdit, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <materialDesign:PackIcon Kind="TrashCan" Height="25" Width="25" />
                 </Button>
@@ -80,7 +80,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <!-- Indicates taking picture in progress -->
+        <!-- Indicates loading pictures in progress -->
         <Border Grid.RowSpan="3" x:Name="pnlLoading" Background="#4FFF" Visibility="Collapsed" DataContext="aaaa" >
             <materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth3" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10">
                 <StackPanel Orientation="Vertical">

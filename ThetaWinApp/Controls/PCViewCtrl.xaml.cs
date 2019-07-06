@@ -230,13 +230,13 @@ namespace ThetaWinApp.Controls
 		/// <param name="e"></param>
 		private void chkListItem_Checked(object sender, RoutedEventArgs e)
 		{
-			var selItems = lstPcFiles.SelectedItems;
-			if (selItems.Count > 0)
-			{
-				var newVal = ((ToggleButton)sender).IsChecked.Value;
-				for (int i = 0; i < selItems.Count; i++)
-					((ImageFileWrapper)selItems[i]).IsChecked = newVal;
-			}
+			//var selItems = lstPcFiles.SelectedItems;
+			//if (selItems.Count > 0)
+			//{
+			//	var newVal = ((ToggleButton)sender).IsChecked.Value;
+			//	for (int i = 0; i < selItems.Count; i++)
+			//		((ImageFileWrapper)selItems[i]).IsChecked = newVal;
+			//}
 		}
 
 		/// <summary>

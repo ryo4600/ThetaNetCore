@@ -10,18 +10,22 @@ using System.Linq;
 using ThetaNetCore;
 using ThetaNetCore.Wifi;
 using ThetaWinApp.Properties;
+using ThetaWinApp.Info;
+using ThetaWinApp.Resources;
+using System.Windows.Data;
+using System.ComponentModel;
 
 namespace ThetaWinApp.Controls
 {
 	/// <summary>
 	/// Control to view phots taken still in device
 	/// </summary>
-	public partial class CameraPhotoViewCtrl : UserControl
+	public partial class DevicePhotoCtrl : UserControl
 	{
 		PhotoViewWnd _photoWnd = null;
 		private ThetaWifiConnect _theta = null;
 
-		public CameraPhotoViewCtrl()
+		public DevicePhotoCtrl()
 		{
 			InitializeComponent();
 		}
@@ -113,10 +117,12 @@ namespace ThetaWinApp.Controls
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private async void BtnRefreshList_Click(object sender, RoutedEventArgs e)
+		private async void BtnRefresh_Click(object sender, RoutedEventArgs e)
 		{
 			await ReloadAllFiles();
 		}
+
+		Queue<FileEntryWrapper> _getThumbnailQueue = new Queue<FileEntryWrapper>();
 
 		/// <summary>
 		/// Reload all files
@@ -126,7 +132,7 @@ namespace ThetaWinApp.Controls
 			if (!force && lstFiles.DataContext != null)
 				return;
 
-			var entries = new List<FileEntry>();
+			var entries = new List<FileEntryWrapper>();
 			// Get xx files in each iteration. EntryCount and StartPosition is important.
 			while (true)
 			{
@@ -134,43 +140,95 @@ namespace ThetaWinApp.Controls
 				var res = await _theta.ThetaApi.ListFilesAsync(param);
 				foreach (var anEntry in res.Entries)
 				{
-					entries.Add(anEntry);
+					var wrapper = new FileEntryWrapper() { Data = anEntry, EntryNo = entries.Count };
+					entries.Add(wrapper);
+					_getThumbnailQueue.Enqueue(wrapper);
 				}
 
 				if (entries.Count >= res.TotalEntries)
 					break;
 			}
 
+			var view = (CollectionView)CollectionViewSource.GetDefaultView(entries);
+			var groupDesc = new PropertyGroupDescription("SimpleDate");
+			view.GroupDescriptions.Add(groupDesc);
+
+			await Task.Delay(1);
+
+			groupDesc.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
 			lstFiles.DataContext = entries;
 
+			GetThumbnails();
 		}
 
 		/// <summary>
-		/// Selection of file list is changed
+		/// Download thumbnails
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private async void lstFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		async private void GetThumbnails()
 		{
-			var anEntry = lstFiles.SelectedItem as FileEntry;
-			if (anEntry != null && anEntry.Thumbnail == null)
+			var thumbFolder = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ThetaImage", "thumbnails"));
+			thumbFolder.Create();
+
+			// Get list of thumbnails already downloaded
+			var existingFiles = thumbFolder.EnumerateFiles().Where(file => file.Extension.Equals(".jpg", StringComparison.CurrentCultureIgnoreCase) ||
+								file.Extension.Equals(".jpeg", StringComparison.CurrentCultureIgnoreCase)).ToList();
+
+			var localFiles = new Dictionary<string, FileInfo>();
+			foreach (var file in existingFiles)
+				localFiles.Add(file.Name, file);
+			
+			// For each entry...
+			while (_getThumbnailQueue.Count > 0)
 			{
-				var param = new ListFilesParam() { FileType = ThetaFileType.Image, EntryCount = 1, Detail = true, StartPosition = lstFiles.SelectedIndex };
-				try
+				var anEntry = _getThumbnailQueue.Dequeue();
+				if (localFiles.ContainsKey(anEntry.Data.Name))
 				{
-					var res = await _theta.ThetaApi.ListFilesAsync(param);
-					if (res.Entries.Length != 0)
-						anEntry = res.Entries[0];
+					// if the thumbnail is already downloaded, use that .
+					anEntry.LocalThumbFile = localFiles[anEntry.Data.Name].FullName;
+					localFiles.Remove(anEntry.Data.Name);
+
 				}
-				catch
+				else
 				{
+					// Otherwise get it from camera
+					var param = new ListFilesParam() { FileType = ThetaFileType.Image, EntryCount = 1, Detail = true, StartPosition = anEntry.EntryNo };
+					try
+					{
+						var res = await _theta.ThetaApi.ListFilesAsync(param);
+						if (res.Entries.Length == 0)
+							continue;
+						var result = res.Entries[0];
+
+						using (var memStream = new MemoryStream())
+						{
+							await memStream.WriteAsync(result.ThumbnailData, 0, result.ThumbnailData.Length);
+
+							var newFile = new FileInfo( Path.Combine(thumbFolder.FullName, anEntry.Data.Name));
+							using (Stream aStream = newFile.Open(FileMode.CreateNew, FileAccess.Write))
+							{
+								memStream.Seek(0, SeekOrigin.Begin);
+								memStream.CopyTo(aStream);
+							}
+
+							anEntry.LocalThumbFile = newFile.FullName;
+						}
+					}
+					catch (System.Net.WebException)
+					{
+						break;
+					}
+					catch (Exception ex)
+					{
+						continue;
+					}
 				}
+				await Task.Delay(1);
 			}
 
-			//thumbnailBiew.DataContext = anEntry;
-			UpdateDownloadButton();
+			// Delete files that are no longer exist inside the camera
+			foreach (var key in localFiles.Keys)
+				localFiles[key].Delete();
 		}
-
 
 		/// <summary>
 		/// Download button is clicked
@@ -210,28 +268,19 @@ namespace ThetaWinApp.Controls
 		/// <param name="e"></param>
 		private void DeviceImageCtrl_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
-			var anEntry = ((FrameworkElement)sender).DataContext as FileEntry;
-			ShowPhoto(anEntry);
+			var anEntry = ((FrameworkElement)sender).DataContext as FileEntryWrapper;
+			ShowPhoto(anEntry.Data);
 		}
 
 		/// <summary>
 		/// Show selected image in the phot window
 		/// </summary>
 		/// <param name="anEntry"></param>
-		async private void ShowPhoto(FileEntry anEntry)
+		private void ShowPhoto(FileEntry anEntry)
 		{
-			if (anEntry != null && anEntry.Thumbnail == null)
+			if (anEntry == null)
 			{
-				var param = new ListFilesParam() { FileType = ThetaFileType.Image, EntryCount = 1, Detail = true, StartPosition = lstFiles.SelectedIndex };
-				try
-				{
-					var res = await _theta.ThetaApi.ListFilesAsync(param);
-					if (res.Entries.Length != 0)
-						anEntry = res.Entries[0];
-				}
-				catch
-				{
-				}
+				return;
 			}
 
 			var img = new BitmapImage();
@@ -239,9 +288,7 @@ namespace ThetaWinApp.Controls
 			img.CacheOption = BitmapCacheOption.OnLoad;
 			img.UriSource = new Uri(anEntry.FileUrl);
 			img.EndInit();
-			img.Freeze();
-
-
+			
 			if (_photoWnd == null)
 			{
 				CreatePhotWindow();
@@ -263,25 +310,24 @@ namespace ThetaWinApp.Controls
 
 			_photoWnd.NextPhotoRequested += () =>
 			{
-				var items = lstFiles.ItemsSource as IEnumerable<FileEntry>;
+				var items = lstFiles.ItemsSource as IEnumerable<FileEntryWrapper>;
 				var idx = lstFiles.SelectedIndex;
 				if (++idx < items.Count())
 				{
 					lstFiles.SelectedIndex = idx;
-					ShowPhoto(lstFiles.SelectedItem as FileEntry);
+					ShowPhoto(((FileEntryWrapper)lstFiles.SelectedItem).Data);
 				}
 			};
 
 			_photoWnd.PrevPhotoRequested += () =>
 			{
-				var items = lstFiles.ItemsSource as IEnumerable<FileEntry>;
+				var items = lstFiles.ItemsSource as IEnumerable<FileEntryWrapper>;
 				var idx = lstFiles.SelectedIndex;
 				if (--idx >= 0)
 				{
 					lstFiles.SelectedIndex = idx;
-					ShowPhoto(lstFiles.SelectedItem as FileEntry);
+					ShowPhoto(((FileEntryWrapper)lstFiles.SelectedItem).Data);
 				}
-
 			};
 		}
 
@@ -294,9 +340,25 @@ namespace ThetaWinApp.Controls
 		{
 			if (!(bool)e.NewValue)
 			{
-				if (_photoWnd.Visibility == Visibility.Visible)
+				if (_photoWnd != null && _photoWnd.Visibility == Visibility.Visible)
 					_photoWnd.Visibility = Visibility.Collapsed;
 			}
+		}
+
+		/// <summary>
+		/// Checked event for item in listview
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void chkListItem_Checked(object sender, RoutedEventArgs e)
+		{
+			//var selItems = lstFiles.SelectedItems;
+			//if (selItems.Count > 0)
+			//{
+			//	var newVal = ((ToggleButton)sender).IsChecked.Value;
+			//	for (int i = 0; i < selItems.Count; i++)
+			//		((FileEntryWrapper)selItems[i]).IsChecked = newVal;
+			//}
 		}
 
 		/// <summary>
@@ -304,9 +366,28 @@ namespace ThetaWinApp.Controls
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void BtnDelete_Click(object sender, RoutedEventArgs e)
+		async private void BtnDelete_Click(object sender, RoutedEventArgs e)
 		{
+			var viewSource = lstFiles.ItemsSource as IEnumerable<FileEntryWrapper>;
+			var items = (from item in viewSource where item.IsChecked select item).ToArray();
 
+			if (items.Length == 0)
+			{
+				MessageBox.Show(AppStrings.Msg_ChooseFileToDelete, AppStrings.Title_ConfirmDelete);
+				return;
+			}
+
+			if (MessageBox.Show(String.Format(AppStrings.Msg_ConfirmToDelete, items.Length), AppStrings.Title_ConfirmDelete, MessageBoxButton.YesNo) == MessageBoxResult.No)
+			{
+				return;
+			}
+
+			for (int i = 0; i < items.Length; i++)
+			{
+				await _theta.ThetaApi.DeleteAsync(new string[] { items[i].Data.FileUrl });
+			}
+
+			await ReloadAllFiles();
 		}
 	}
 }

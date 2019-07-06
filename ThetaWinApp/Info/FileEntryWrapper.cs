@@ -2,6 +2,7 @@
 using System.Windows.Media.Imaging;
 using ThetaNetCore.Common;
 using ThetaNetCore.Wifi;
+using ThetaWinApp.Utils;
 
 namespace ThetaWinApp.Info
 {
@@ -23,9 +24,31 @@ namespace ThetaWinApp.Info
 			set { SetProperty<BitmapSource>(ref _thumbImage, value); }
 		}
 
+		private string _localThumbFile = "";
+		public String LocalThumbFile
+		{
+			get { return _localThumbFile; }
+			set
+			{
+				if (value == _localThumbFile)
+					return;
+
+				_localThumbFile = value;
+				if (value != null)
+				{
+					this.ThumbImage = ImageTools.LoadThumbnail(_localThumbFile);
+				}
+			}
+		}
+
 		public String SimpleDate
 		{
 			get { return Data.DateTime.Substring(0, 10).Replace(":", "-"); }
+		}
+
+		public String TimeString
+		{
+			get { return Data.DateTime.Substring(12); }
 		}
 
 		private int _downloadState = -1;

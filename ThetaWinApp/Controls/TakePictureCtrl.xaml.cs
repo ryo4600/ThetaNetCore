@@ -14,17 +14,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ThetaNetCore.Wifi;
+using ThetaWinApp.Resources;
 
 namespace ThetaWinApp.Controls
 {
 	/// <summary>
 	/// Control to preview camera image and take photos
 	/// </summary>
-	public partial class CameraTakePictCtrl : UserControl
+	public partial class TakePictureCtrl : UserControl
 	{
 		private ThetaWifiConnect _theta = null;
 
-		public CameraTakePictCtrl()
+		public TakePictureCtrl()
 		{
 			InitializeComponent();
 		}
@@ -101,10 +102,21 @@ namespace ThetaWinApp.Controls
 				}
 				catch (Exception ex)
 				{
-					// HandleException(ex);
+					String msg = AppStrings.Err_PreviewImage + "\n" + ex.Message;
+					ShowError(msg);
 				}
 
 			}));
+		}
+
+		/// <summary>
+		/// Show error message
+		/// </summary>
+		/// <param name="message"></param>
+		/// <param name="title"></param>
+		private void ShowError(String message, String title = "Error")
+		{
+			MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 		/// <summary>

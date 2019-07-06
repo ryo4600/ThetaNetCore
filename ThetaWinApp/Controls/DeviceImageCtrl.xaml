@@ -20,12 +20,12 @@
             <Border Grid.Row="1" BorderBrush="#888" BorderThickness="1" Margin="0">
                 <Image Source="{Binding ThumbImage}" Stretch="UniformToFill" Width="180" Height="90"  />
             </Border>
-            <TextBlock Grid.Row="2" Text="{Binding FileName, FallbackValue=Title}" HorizontalAlignment="Left" FontSize="11" />
+            <TextBlock Grid.Row="2" Text="{Binding Data.Name, FallbackValue=Title}" HorizontalAlignment="Left" FontSize="11" />
             <TextBlock Grid.Row="2" Text="{Binding TimeString}" HorizontalAlignment="Right" />
             <Button HorizontalAlignment="Right" Background="Transparent" x:Name="ButtonArea" Visibility="Collapsed">
                 <Image Source="/ThetaWinApp;component/Images/Garbage.png" Height="16" Margin="-8"/>
             </Button>
-            <ProgressBar x:Name="_progress" Minimum="0" Maximum="100" Grid.RowSpan="2" Value="{Binding DownloadState}" Width="120" />
+            <ProgressBar x:Name="_progress" Minimum="0" Maximum="100" Grid.RowSpan="2" Value="{Binding DownloadState}" Width="120" Visibility="Collapsed" />
         </Grid>
     </Border>
 

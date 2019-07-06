@@ -120,6 +120,9 @@
   <data name="Err_Connection_Title" xml:space="preserve">
     <value>Connection error</value>
   </data>
+  <data name="Err_PreviewImage" xml:space="preserve">
+    <value>Exception occurred while getting preview image</value>
+  </data>
   <data name="Header_CameraHome" xml:space="preserve">
     <value>Camera Home</value>
   </data>
@@ -200,6 +203,9 @@
   </data>
   <data name="Title_PhotoFolder" xml:space="preserve">
     <value>Photo Folder</value>
+  </data>
+  <data name="Title_Preview" xml:space="preserve">
+    <value>Preview</value>
   </data>
   <data name="Title_RecordableTime" xml:space="preserve">
     <value>Recordable Time (sec)</value>

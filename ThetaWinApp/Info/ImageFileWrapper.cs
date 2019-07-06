@@ -1,9 +1,9 @@
 ﻿using ExifLib;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Windows.Media.Imaging;
 using ThetaNetCore.Common;
+using ThetaWinApp.Utils;
 
 namespace ThetaWinApp.Info
 {
@@ -32,58 +32,12 @@ namespace ThetaWinApp.Info
 			get {
 				if (_thumbImage == null)
 				{
-					_thumbImage = GetThumbnail(_file.FullName);
+					_thumbImage = ImageTools.LoadThumbnail(_file.FullName);
 				}
 
 				return _thumbImage;
 			}
 			set { SetProperty<BitmapSource>(ref _thumbImage, value); }
-		}
-
-		/// <summary>
-		/// Getting thambnail. <br /> This one is fast.
-		/// </summary>
-		/// <param name="MediaUrl"></param>
-		/// <returns></returns>
-		static private BitmapSource GetThumbnail(String MediaUrl)
-		{
-			BitmapSource ret = null;
-			BitmapMetadata meta = null;
-
-			try
-			{
-				BitmapFrame frame = BitmapFrame.Create(
-					new Uri(MediaUrl),
-					BitmapCreateOptions.DelayCreation,
-					BitmapCacheOption.None);
-
-				if (frame.Thumbnail == null)
-				{
-					BitmapImage image = new BitmapImage();
-					image.DecodePixelHeight = 90;
-					image.BeginInit();
-					image.UriSource = new Uri(MediaUrl);
-					image.CacheOption = BitmapCacheOption.None;
-					image.CreateOptions = BitmapCreateOptions.DelayCreation;
-					image.EndInit();
-
-					if (image.CanFreeze)
-						image.Freeze();
-
-					ret = image;
-				}
-				else
-				{
-					meta = frame.Metadata as BitmapMetadata;
-					ret = frame.Thumbnail;
-				}
-
-			}
-			catch (Exception ex)
-			{
-			}
-
-			return ret;
 		}
 
 		public String FileName
@@ -128,32 +82,5 @@ namespace ThetaWinApp.Info
 				return DateTaken.ToShortTimeString();
 			}
 		}
-
-
-		//public String DateAndTime
-		//{
-		//	get
-		//	{
-		//		var props = File.Properties.GetImagePropertiesAsync().AsTask().Result;
-		//		var dt = props.DateTaken;
-		//		return dt.ToLocalTime().ToString();
-		//	}
-		//}
-
-		//String _dateTaken = "";
-		//public String CompareDate
-		//{
-		//	get
-		//	{
-		//		if (String.IsNullOrEmpty(_dateTaken))
-		//		{
-		//			var props = File.Properties.GetImagePropertiesAsync().AsTask().Result;
-		//			_dateTaken = props.DateTaken.ToString("yyyy-MM-dd");
-		//		}
-		//		return _dateTaken;
-
-		//	}
-		//}
-
 	}
 }
