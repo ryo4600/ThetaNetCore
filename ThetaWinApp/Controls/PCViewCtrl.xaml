@@ -7,7 +7,6 @@
 			 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
 			 xmlns:ctrl="clr-namespace:ThetaWinApp.Controls"
 			 xmlns:strings="clr-namespace:ThetaWinApp.Resources"
-			 xmlns:view3d="clr-namespace:SphereViewWpf;assembly=SphereViewWpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" IsVisibleChanged="UserControl_IsVisibleChanged">
     <Grid>

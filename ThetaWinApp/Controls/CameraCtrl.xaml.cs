@@ -51,7 +51,7 @@ namespace ThetaWinApp.Controls
 			{
 				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(async () =>
 				{
-					await ctrlPhoto.ReloadAllFiles(false);
+					await ctrlPhoto.ReloadAllFilesAsync(false);
 				}));
 
 			}

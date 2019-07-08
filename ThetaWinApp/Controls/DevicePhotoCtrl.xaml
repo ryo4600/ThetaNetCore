@@ -26,15 +26,13 @@
             <TextBlock Text="{x:Static strings:AppStrings.Title_DownloadFolder}" VerticalAlignment="Center" Margin="5" />
             <TextBox x:Name="txtFolder" Grid.Column="1" Margin="5" IsReadOnly="True" VerticalContentAlignment="Center" TextChanged="TxtFolder_TextChanged" />
             <Button Content="..." HorizontalAlignment="Left" Click="btnFolder_Click" Grid.Column="2" Margin="5" />
-            <StackPanel Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <StackPanel Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Orientation="Horizontal">
                 <Button Click="BtnRefresh_Click" Margin="5" Padding="5">
                     <materialDesign:PackIcon Kind="Refresh" Height="25" Width="25" />
                 </Button>
+                <ComboBox x:Name="cmbImageFilter" ItemsSource="{Binding}" Width="120" Margin="5,0" SelectionChanged="cmbImageFilter_SelectionChanged" />
             </StackPanel>
             <StackPanel Grid.Column="3" HorizontalAlignment="Right" Margin="5,5" Orientation="Horizontal">
-                <Button x:Name="btnDownload" Click="BtnDownload_Click" Margin="5" Visibility="{Binding ElementName=toggleEdit, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <materialDesign:PackIcon Kind="Download" Height="21" Width="21" />
-                </Button>
                 <Button x:Name="btnDelete" Click="BtnDelete_Click" Margin="5" Visibility="{Binding ElementName=toggleEdit, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <materialDesign:PackIcon Kind="Garbage" Height="25" Width="25" />
                 </Button>
@@ -72,7 +70,8 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <local:DeviceImageCtrl MouseDoubleClick="DeviceImageCtrl_MouseDoubleClick" />
+                        <local:DeviceImageCtrl MouseDoubleClick="DeviceImageCtrl_MouseDoubleClick" 
+                                               DownloadRequested="DeviceImageCtrl_DownloadRequested" CancelRequested="DeviceImageCtrl_CancelRequested" />
                         <ToggleButton Visibility="{Binding ElementName=toggleEdit, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" 
                                   VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" IsChecked="{Binding IsChecked}"
                                   Style="{StaticResource MaterialDesignActionLightToggleButton}" Checked="chkListItem_Checked" Unchecked="chkListItem_Checked" />

@@ -4,10 +4,39 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ThetaWinApp.Controls"
+   			 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+			 xmlns:ctrl="clr-namespace:ThetaWinApp.Controls"
+			 xmlns:strings="clr-namespace:ThetaWinApp.Resources"
+
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <WrapPanel>
-		<StackPanel Orientation="Horizontal">
-		</StackPanel>
+    <WrapPanel Orientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+        <GroupBox Header="{x:Static strings:AppStrings.Title_FolderSettings}" Margin="10">
+            <StackPanel>
+                <TextBlock Text="{x:Static strings:AppStrings.Desc_FolderSettings}" TextWrapping="Wrap" 
+                           Margin="5,10"/>
+                <Grid x:Name="folderPanel">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="{x:Static strings:AppStrings.Title_DownloadFolder}" VerticalAlignment="Center" Margin="5" />
+                    <TextBox Grid.Row="0" x:Name="txtDownloadFolder" Grid.Column="1" Margin="5" IsReadOnly="True" VerticalContentAlignment="Center" />
+                    <Button Grid.Row="0" Content="..." HorizontalAlignment="Left" Click="btnDownloadFolder_Click" Grid.Column="2" Margin="5" />
+
+                    <TextBlock Grid.Row="1" Text="{x:Static strings:AppStrings.Title_PhotoFolder}" VerticalAlignment="Center" Margin="5" />
+                    <TextBox Grid.Row="1" x:Name="txtPCFolder" Grid.Column="1" Margin="5" IsReadOnly="True" VerticalContentAlignment="Center" />
+                    <Button Grid.Row="1" Content="..." HorizontalAlignment="Left" Click="btnPCFolder_Click" Grid.Column="2" Margin="5" />
+
+                </Grid>
+            </StackPanel>
+        </GroupBox>
     </WrapPanel>
 </UserControl>

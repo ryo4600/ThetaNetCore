@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace ThetaWinApp.Controls
 {
@@ -25,7 +26,28 @@ namespace ThetaWinApp.Controls
 		/// Set Image to show
 		/// </summary>
 		/// <param name="img"></param>
-		public void SetImage (ImageSource img)
+		public void SetImage (BitmapImage img)
+		{
+			// If the image is the URL, it takes while to get image.
+			if (img.IsFrozen == false && img.PixelWidth == 1)
+			{
+				_progress.Visibility = Visibility.Visible;
+				img.DownloadFailed += Img_DownloadFailed;
+				img.DownloadCompleted += Img_DownloadCompleted;
+			}
+			else
+			{
+				_progress.Visibility = Visibility.Collapsed;
+			}
+
+			DoSetImage(img);
+		}
+
+		/// <summary>
+		/// Set image to the control
+		/// </summary>
+		/// <param name="img"></param>
+		private void DoSetImage(BitmapImage img)
 		{
 			if (img.Width / img.Height == 2.0)
 			{
@@ -39,6 +61,27 @@ namespace ThetaWinApp.Controls
 				viewSphere.Visibility = Visibility.Collapsed;
 				viewNormal.Visibility = Visibility.Visible;
 			}
+		}
+
+		/// <summary>
+		/// Load image failed
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Img_DownloadFailed(object sender, ExceptionEventArgs e)
+		{
+			_progress.Visibility = Visibility.Collapsed;
+		}
+
+		/// <summary>
+		/// Load  image succeeded
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Img_DownloadCompleted(object sender, EventArgs e)
+		{
+			_progress.Visibility = Visibility.Collapsed;
+			DoSetImage(sender as BitmapImage);
 		}
 
 		/// <summary>

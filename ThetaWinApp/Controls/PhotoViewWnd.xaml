@@ -56,5 +56,8 @@
         <Button x:Name="btnRight" VerticalAlignment="Center" HorizontalAlignment="Right" Opacity="0.2" Click="BtnRight_Click">
             <materialDesign:PackIcon Kind="MenuRightOutline" Height="24" />
         </Button>
+
+        <ProgressBar x:Name="_progress" Visibility="Collapsed"
+                     HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="20" IsIndeterminate="True" />
     </Grid>
 </metro:MetroWindow>

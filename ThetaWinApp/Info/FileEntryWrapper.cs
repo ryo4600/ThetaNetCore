@@ -51,17 +51,55 @@ namespace ThetaWinApp.Info
 			get { return Data.DateTime.Substring(12); }
 		}
 
-		private int _downloadState = -1;
+		private int _downloadProgress = -1;
 		/// <summary>
 		/// 0: not downloaded, 100 : downloaded, in-between : download in progress
 		/// </summary>
-		public int DownloadState
+		public int DownloadProgress
 		{
-			get { return _downloadState; }
-			set { SetProperty<int>(ref _downloadState, value); }
+			get { return _downloadProgress; }
+			set { SetProperty<int>(ref _downloadProgress, value); }
 		}
-		public const String STR_DOWNLOAD_STATE = "DownloadState";
+
+		/// <summary>
+		/// Get the status of download
+		/// </summary>
+		public DOWNLOAD_STATUS DownloadStatus
+		{
+			get
+			{
+				switch(_downloadProgress)
+				{
+					case 100:
+						return DOWNLOAD_STATUS.DOWNLOADED;
+					case -1:
+						return DOWNLOAD_STATUS.NOT_DOWNLOADED;
+					case 0:
+						return DOWNLOAD_STATUS.WAINTING;
+					default:
+						return DOWNLOAD_STATUS.DOWNLOADING;
+				}
+			}
+			set
+			{
+				switch (value)
+				{
+					case DOWNLOAD_STATUS.NOT_DOWNLOADED:
+						_downloadProgress = -1;
+						break;
+					case DOWNLOAD_STATUS.WAINTING:
+						_downloadProgress = 0;
+						break;
+					default:
+						// Unsupported
+						break;
+				}
+
+			}
+		}
 
 		public int EntryNo { get; set; }
 	}
+
+	public enum DOWNLOAD_STATUS { NOT_DOWNLOADED, WAINTING, DOWNLOADING, DOWNLOADED };
 }

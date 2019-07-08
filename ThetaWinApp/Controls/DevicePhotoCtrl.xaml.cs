@@ -17,6 +17,7 @@ using System.ComponentModel;
 
 namespace ThetaWinApp.Controls
 {
+	public enum PHOTO_FILTER { ALL, NOT_DOWNLOADED, DOWNLOADED }
 	/// <summary>
 	/// Control to view phots taken still in device
 	/// </summary>
@@ -24,10 +25,34 @@ namespace ThetaWinApp.Controls
 	{
 		PhotoViewWnd _photoWnd = null;
 		private ThetaWifiConnect _theta = null;
+		Queue<FileEntryWrapper> _getThumbnailQueue = new Queue<FileEntryWrapper>();
+		List<FileEntryWrapper> _deviceImages = new List<FileEntryWrapper>();
 
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public DevicePhotoCtrl()
 		{
 			InitializeComponent();
+
+			this.Loaded += (sender, e) =>
+			{
+				var settings = Settings.Default;
+				var filters = new List<KeyValuePair<PHOTO_FILTER, string>>()
+				{
+					new KeyValuePair<PHOTO_FILTER, string>(PHOTO_FILTER.ALL, AppStrings.Item_PhotoAll),
+					new KeyValuePair<PHOTO_FILTER, string>(PHOTO_FILTER.NOT_DOWNLOADED, AppStrings.Item_PhotoNotDownloaded),
+					new KeyValuePair<PHOTO_FILTER, string>(PHOTO_FILTER.DOWNLOADED, AppStrings.Item_PhotoDownloaded)
+				};
+				cmbImageFilter.SelectedValuePath = "Key";
+				cmbImageFilter.DisplayMemberPath = "Value";
+				cmbImageFilter.DataContext = filters;
+
+				cmbImageFilter.SelectedIndex = settings.LastSelectedDevPhotoFilter < 0 ? 1 : settings.LastSelectedDevPhotoFilter;
+			};
+
+
 		}
 
 		/// <summary>
@@ -48,8 +73,6 @@ namespace ThetaWinApp.Controls
 		{
 			var settings = Settings.Default;
 			txtFolder.Text = settings.DownloadPath;
-
-			UpdateDownloadButton();
 		}
 
 		/// <summary>
@@ -101,15 +124,6 @@ namespace ThetaWinApp.Controls
 		/// <param name="e"></param>
 		private void TxtFolder_TextChanged(object sender, TextChangedEventArgs e)
 		{
-			UpdateDownloadButton();
-		}
-
-		/// <summary>
-		/// Update state of the "download" button
-		/// </summary>
-		private void UpdateDownloadButton()
-		{
-			btnDownload.IsEnabled = Directory.Exists(txtFolder.Text) && lstFiles.DataContext != null;
 		}
 
 		/// <summary>
@@ -119,44 +133,79 @@ namespace ThetaWinApp.Controls
 		/// <param name="e"></param>
 		private async void BtnRefresh_Click(object sender, RoutedEventArgs e)
 		{
-			await ReloadAllFiles();
+			await ReloadAllFilesAsync(true);
 		}
 
-		Queue<FileEntryWrapper> _getThumbnailQueue = new Queue<FileEntryWrapper>();
+		/// <summary>
+		/// Selection of image filter has changed
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		async private void cmbImageFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			// Avoid to check onLoaded event
+			if (this.Visibility != Visibility.Visible)
+				return;
+
+			if (cmbImageFilter.SelectedIndex < 0)
+				return;
+
+			await ReloadAllFilesAsync(false);
+
+			var settings = Settings.Default;
+			settings.LastSelectedDevPhotoFilter = cmbImageFilter.SelectedIndex;
+			settings.Save();
+		}
 
 		/// <summary>
 		/// Reload all files
 		/// </summary>
-		public async Task ReloadAllFiles(bool force=true)
+		public async Task ReloadAllFilesAsync(bool force = true)
 		{
-			if (!force && lstFiles.DataContext != null)
-				return;
-
-			var entries = new List<FileEntryWrapper>();
-			// Get xx files in each iteration. EntryCount and StartPosition is important.
-			while (true)
+			if (force || _deviceImages.Count == 0)
 			{
-				var param = new ListFilesParam() { FileType = ThetaFileType.Image, EntryCount = 50, StartPosition = entries.Count, Detail = false };
-				var res = await _theta.ThetaApi.ListFilesAsync(param);
-				foreach (var anEntry in res.Entries)
-				{
-					var wrapper = new FileEntryWrapper() { Data = anEntry, EntryNo = entries.Count };
-					entries.Add(wrapper);
-					_getThumbnailQueue.Enqueue(wrapper);
-				}
+				_deviceImages.Clear();
 
-				if (entries.Count >= res.TotalEntries)
+				while (true)
+				{
+					var param = new ListFilesParam() { FileType = ThetaFileType.Image, EntryCount = 50, StartPosition = _deviceImages.Count, Detail = false };
+					var res = await _theta.ThetaApi.ListFilesAsync(param);
+					foreach (var anEntry in res.Entries)
+					{
+						var wrapper = new FileEntryWrapper() { Data = anEntry, EntryNo = _deviceImages.Count };
+						_deviceImages.Add(wrapper);
+						_getThumbnailQueue.Enqueue(wrapper);
+					}
+
+					if (_deviceImages.Count >= res.TotalEntries)
+						break;
+				}
+			}
+
+			IEnumerable<FileEntryWrapper> filteredEntries = null;
+
+			switch(cmbImageFilter.SelectedValue)
+			{
+				case PHOTO_FILTER.DOWNLOADED:
+					filteredEntries = from anEntry in _deviceImages where anEntry.DownloadStatus == DOWNLOAD_STATUS.DOWNLOADED select anEntry;
+					break;
+				case PHOTO_FILTER.NOT_DOWNLOADED:
+					filteredEntries = from anEntry in _deviceImages where anEntry.DownloadStatus == DOWNLOAD_STATUS.NOT_DOWNLOADED select anEntry;
+					break;
+				case PHOTO_FILTER.ALL:
+				default:
+					filteredEntries = _deviceImages;
 					break;
 			}
 
-			var view = (CollectionView)CollectionViewSource.GetDefaultView(entries);
+			var view = (CollectionView)CollectionViewSource.GetDefaultView(filteredEntries);
 			var groupDesc = new PropertyGroupDescription("SimpleDate");
 			view.GroupDescriptions.Add(groupDesc);
 
 			await Task.Delay(1);
 
 			groupDesc.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
-			lstFiles.DataContext = entries;
+			lstFiles.DataContext = filteredEntries;
 
 			GetThumbnails();
 		}
@@ -176,7 +225,7 @@ namespace ThetaWinApp.Controls
 			var localFiles = new Dictionary<string, FileInfo>();
 			foreach (var file in existingFiles)
 				localFiles.Add(file.Name, file);
-			
+
 			// For each entry...
 			while (_getThumbnailQueue.Count > 0)
 			{
@@ -203,7 +252,7 @@ namespace ThetaWinApp.Controls
 						{
 							await memStream.WriteAsync(result.ThumbnailData, 0, result.ThumbnailData.Length);
 
-							var newFile = new FileInfo( Path.Combine(thumbFolder.FullName, anEntry.Data.Name));
+							var newFile = new FileInfo(Path.Combine(thumbFolder.FullName, anEntry.Data.Name));
 							using (Stream aStream = newFile.Open(FileMode.CreateNew, FileAccess.Write))
 							{
 								memStream.Seek(0, SeekOrigin.Begin);
@@ -228,37 +277,6 @@ namespace ThetaWinApp.Controls
 			// Delete files that are no longer exist inside the camera
 			foreach (var key in localFiles.Keys)
 				localFiles[key].Delete();
-		}
-
-		/// <summary>
-		/// Download button is clicked
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private async void BtnDownload_Click(object sender, RoutedEventArgs e)
-		{
-			//var anEntry = thumbnailBiew.DataContext as FileEntry;
-
-			//// Get a read stream
-			//using (Stream stream = await _theta.ThetaApi.GetImageAsync(anEntry.FileUrl))
-			//{
-			//	var path = System.IO.Path.Combine(txtFolder.Text, anEntry.Name);
-			//	var size = anEntry.Size;
-			//	var newFile = new FileInfo(path);
-			//	using (var aStream = newFile.Open(FileMode.OpenOrCreate))
-			//	{
-			//		int readSize = 1000;
-			//		var readBuffer = new byte[readSize];
-			//		int totalRead = 0;
-			//		for (int i = 0; i < (int)Math.Ceiling(size / (double)readSize); i++)
-			//		{
-			//			var numRead = await stream.ReadAsync(readBuffer, 0, readSize);
-
-			//			aStream.Write(readBuffer, 0, numRead);
-			//			totalRead += numRead;
-			//		}
-			//	}
-			//}
 		}
 
 		/// <summary>
@@ -288,10 +306,10 @@ namespace ThetaWinApp.Controls
 			img.CacheOption = BitmapCacheOption.OnLoad;
 			img.UriSource = new Uri(anEntry.FileUrl);
 			img.EndInit();
-			
+
 			if (_photoWnd == null)
 			{
-				CreatePhotWindow();
+				CreatePhotoViewWindow();
 			}
 
 			_photoWnd.SetImage(img);
@@ -301,7 +319,7 @@ namespace ThetaWinApp.Controls
 		/// <summary>
 		/// Create photo window
 		/// </summary>
-		private void CreatePhotWindow()
+		private void CreatePhotoViewWindow()
 		{
 			_photoWnd = new PhotoViewWnd();
 			_photoWnd.Owner = App.Current.MainWindow;
@@ -387,7 +405,88 @@ namespace ThetaWinApp.Controls
 				await _theta.ThetaApi.DeleteAsync(new string[] { items[i].Data.FileUrl });
 			}
 
-			await ReloadAllFiles();
+			await ReloadAllFilesAsync();
 		}
+
+		List<FileEntryWrapper> _downloadQueue = new List<FileEntryWrapper>();
+		BackgroundWorker _downloadWorkder = null;
+		/// <summary>
+		/// Download request from one of images.
+		/// </summary>
+		/// <param name="entry"></param>
+		private void DeviceImageCtrl_DownloadRequested(FileEntryWrapper entry)
+		{
+			if(txtFolder.Text == "")
+			{
+				MessageBox.Show(AppStrings.Err_DownloadFolder, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
+
+			entry.DownloadStatus = DOWNLOAD_STATUS.WAINTING;
+			_downloadQueue.Add(entry);
+			if(_downloadWorkder == null)
+			{
+				_downloadWorkder = new BackgroundWorker();
+				_downloadWorkder.WorkerSupportsCancellation = true;
+				_downloadWorkder.DoWork += _downloadWorkder_DoWork;
+			}
+
+			var parameters = new object[] { txtFolder.Text };
+			if (!_downloadWorkder.IsBusy)
+				_downloadWorkder.RunWorkerAsync(parameters);
+		}
+
+		/// <summary>
+		/// Download cancel request from one of images 
+		/// </summary>
+		/// <param name="entry"></param>
+		private void DeviceImageCtrl_CancelRequested(FileEntryWrapper entry)
+		{
+			entry.DownloadStatus = DOWNLOAD_STATUS.NOT_DOWNLOADED;
+			_downloadQueue.Remove(entry);
+		}
+
+		/// <summary>
+		/// Process downloading in background
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		async private void _downloadWorkder_DoWork(object sender, DoWorkEventArgs e)
+		{
+			var args = (object[])e.Argument;
+			var savePath = (string)args[0];
+
+			while (_downloadQueue.Count > 0)
+			{
+				var anEntry = _downloadQueue[0];
+
+				// Get a read stream
+				using (Stream stream = await _theta.ThetaApi.GetImageAsync(anEntry.Data.FileUrl))
+				{
+					var fileName = System.IO.Path.Combine(savePath, anEntry.Data.Name);
+					var size = anEntry.Data.Size;
+					var newFile = new FileInfo(fileName);
+					using (var aStream = newFile.Open(FileMode.OpenOrCreate))
+					{
+						int readSize = 1000;
+						var readBuffer = new byte[readSize];
+						int totalRead = 0;
+						for (int i = 0; i < (int)Math.Ceiling(size / (double)readSize); i++)
+						{
+							var numRead = await stream.ReadAsync(readBuffer, 0, readSize);
+
+							aStream.Write(readBuffer, 0, numRead);
+							totalRead += numRead;
+							anEntry.DownloadProgress = (int)((double)totalRead / size * 100);
+						}
+					}
+				}
+
+				anEntry.DownloadProgress = 100;
+
+				_downloadQueue.RemoveAt(0);
+			}
+		}
+
 	}
 }

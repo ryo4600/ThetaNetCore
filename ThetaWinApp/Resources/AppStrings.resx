@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Desc_FolderSettings" xml:space="preserve">
+    <value>When you download photos from your Theta, they are saved in the "Download Folder". "Phot View Folder" is a folder to view images in your PC. These are different so that you can view sherical images in other folders.</value>
+  </data>
   <data name="Err_Connection_Title" xml:space="preserve">
     <value>Connection error</value>
+  </data>
+  <data name="Err_DownloadFolder" xml:space="preserve">
+    <value>Download folder is not specified.</value>
   </data>
   <data name="Err_PreviewImage" xml:space="preserve">
     <value>Exception occurred while getting preview image</value>
@@ -131,6 +137,15 @@
   </data>
   <data name="Header_TakePict" xml:space="preserve">
     <value>Take Pict.</value>
+  </data>
+  <data name="Item_PhotoAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Item_PhotoDownloaded" xml:space="preserve">
+    <value>Downloaded</value>
+  </data>
+  <data name="Item_PhotoNotDownloaded" xml:space="preserve">
+    <value>Not Downloaded</value>
   </data>
   <data name="Menu_Title_Camera" xml:space="preserve">
     <value>Camera</value>
@@ -186,6 +201,9 @@
   <data name="Title_Firmware" xml:space="preserve">
     <value>Firmware Version</value>
   </data>
+  <data name="Title_FolderSettings" xml:space="preserve">
+    <value>Folder Settings</value>
+  </data>
   <data name="Title_GPS" xml:space="preserve">
     <value>Support GPS</value>
   </data>
@@ -202,7 +220,7 @@
     <value>Model</value>
   </data>
   <data name="Title_PhotoFolder" xml:space="preserve">
-    <value>Photo Folder</value>
+    <value>Photo View Folder</value>
   </data>
   <data name="Title_Preview" xml:space="preserve">
     <value>Preview</value>
