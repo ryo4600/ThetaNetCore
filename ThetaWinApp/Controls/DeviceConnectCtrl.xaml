@@ -84,7 +84,8 @@
                             <TextBox Text="{Binding State.CaptureStatusFriendly, Mode=OneWay}" Grid.Row="3" Grid.Column="1" />
                             <TextBox Text="{Binding State.RecordedTime, Mode=OneWay}" Grid.Row="4" Grid.Column="1" />
                             <TextBox Text="{Binding State.RecordableTime, Mode=OneWay}" Grid.Row="5" Grid.Column="1" />
-                            <TextBox Text="{Binding State.CameraErrorFriendly, Mode=OneWay}" Grid.Row="6" Grid.Column="1" />
+                            <TextBox Text="{Binding State.CameraError, Mode=OneWay, Converter={StaticResource StringArrayConverter}, ConverterParameter='&#13;'}" Grid.Row="6" Grid.Column="1"
+                                     AcceptsReturn="True" TextAlignment="Left" />
                         </Grid>
 
                         <!-- Information -->

@@ -116,6 +116,7 @@
     <Compile Include="Controls\PhotoViewWnd.xaml.cs">
       <DependentUpon>PhotoViewWnd.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\StringArrayConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\FileGroupHeaderConverter.cs" />
     <Compile Include="Info\FileEntryWrapper.cs" />

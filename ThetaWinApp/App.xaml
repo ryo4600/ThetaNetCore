@@ -52,6 +52,7 @@
 
 			<conv:InverseBooleanConverter x:Key="InverseBooleanConverter" />
 			<conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-		</ResourceDictionary>
+            <conv:StringArrayConverter x:Key="StringArrayConverter" />
+        </ResourceDictionary>
 	</Application.Resources>
 </Application>
