@@ -14,6 +14,7 @@ using ThetaWinApp.Info;
 using ThetaWinApp.Resources;
 using System.Windows.Data;
 using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace ThetaWinApp.Controls
 {
@@ -202,8 +203,6 @@ namespace ThetaWinApp.Controls
 			var groupDesc = new PropertyGroupDescription("SimpleDate");
 			view.GroupDescriptions.Add(groupDesc);
 
-			await Task.Delay(1);
-
 			groupDesc.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Descending));
 			lstFiles.DataContext = filteredEntries;
 
@@ -215,6 +214,9 @@ namespace ThetaWinApp.Controls
 		/// </summary>
 		async private void GetThumbnails()
 		{
+			if (_getThumbnailQueue.Count == 0)
+				return;
+
 			var thumbFolder = new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ThetaImage", "thumbnails"));
 			thumbFolder.Create();
 
@@ -276,7 +278,17 @@ namespace ThetaWinApp.Controls
 
 			// Delete files that are no longer exist inside the camera
 			foreach (var key in localFiles.Keys)
-				localFiles[key].Delete();
+			{
+				try
+				{
+					localFiles[key].Delete();
+				}
+				catch (IOException)
+				{
+					// This happens when we delete pictures.
+					// It is too soon to delete thumbnails. Safe to delete next time.
+				}
+			}
 		}
 
 		/// <summary>

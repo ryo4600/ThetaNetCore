@@ -6,6 +6,11 @@ namespace ThetaNetCore.Wifi
 	[DataContract]
 	public class InfoResponse
 	{
+		public enum THETA_MODEL : short
+		{
+			UNSUPPORTED, S, SC, V, Z1
+		}
+
 		/// <summary>
 		/// Manufacturer
 		/// </summary>
@@ -17,6 +22,31 @@ namespace ThetaNetCore.Wifi
 		/// </summary>
 		[DataMember(Name = "model")]
 		public String Model { get; set; }
+
+		/// <summary>
+		/// Theta model type in enum
+		/// </summary>
+		[IgnoreDataMember]
+		public THETA_MODEL ThetaModel
+		{
+			get
+			{
+				var vals = this.Model.Split(' ');
+				switch (vals[vals.Length - 1])
+				{
+					case "Z1":
+						return THETA_MODEL.Z1;
+					case "V":
+						return THETA_MODEL.V;
+					case "SC":
+						return THETA_MODEL.SC;
+					case "S":
+						return THETA_MODEL.S;
+					default:
+						return THETA_MODEL.UNSUPPORTED;
+				}
+			}
+		}
 
 		/// <summary>
 		/// Serial No
