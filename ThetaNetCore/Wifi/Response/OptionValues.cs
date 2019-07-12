@@ -109,7 +109,6 @@ namespace ThetaNetCore.Wifi
 		[DataMember(Name = "_wlanChannel", IsRequired = false, EmitDefaultValue = false)]
 		public int WiFiChannel { get; set; } = I_DEFAULT;
 
-
 		/// <summary>
 		/// Shutter volume. 
 		/// </summary>
@@ -158,6 +157,7 @@ namespace ThetaNetCore.Wifi
 			_exposureDelay = this.ExposureDelay;
 			this.ExposureDelay = this.ExposureDelay == I_DEFAULT ? 0 : this.ExposureDelay == 0 ? I_DEFAULT : this.ExposureDelay;
 		}
+
 		[OnSerialized]
 		void OnSerialized(StreamingContext context)
 		{
@@ -165,6 +165,13 @@ namespace ThetaNetCore.Wifi
 			this.ExposureCompensation = _exposureCompensation;
 			this.ExposureDelay = _exposureDelay;
 		}
+
+		/// <summary>
+		/// Format for Live preview <br />
+		/// Changing value is possible after THETA V
+		/// </summary>
+		[DataMember(Name = "previewFormat", IsRequired = false, EmitDefaultValue = false)]
+		public PreviewFormat PreviewFormat { get; set; }
 	}
 
 	/// <summary>
@@ -198,6 +205,47 @@ namespace ThetaNetCore.Wifi
 			return ff != null
 				&& ff.FileType.Equals(this.FileType) 
 				&& ff.Width == this.Width 
+				&& ff.Height == this.Height;
+		}
+
+		public override int GetHashCode()
+		{
+			return base.GetHashCode();
+		}
+		#endregion
+	}
+
+	/// <summary>
+	/// Preview format
+	/// </summary>
+	[DataContract]
+	public class PreviewFormat
+	{
+		/// <summary>
+		/// Dimension (Width). 
+		/// </summary>
+		[DataMember(Name = "width")]
+		public int Width { get; set; }
+
+		/// <summary>
+		/// Dimension (Height). 
+		/// </summary>
+		[DataMember(Name = "height")]
+		public int Height { get; set; }
+
+		/// <summary>
+		/// Framerate
+		/// </summary>
+		[DataMember(Name = "framerate")]
+		public int Framerate { get; set; }
+
+		#region Compare
+		public override bool Equals(object obj)
+		{
+			var ff = obj as PreviewFormat;
+			return ff != null
+				&& ff.Framerate == this.Framerate
+				&& ff.Width == this.Width
 				&& ff.Height == this.Height;
 		}
 

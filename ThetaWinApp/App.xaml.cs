@@ -5,6 +5,9 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using ThetaNetCore.Wifi;
+using ThetaWinApp.Controls.Camera;
+using ThetaWinApp.Resources;
 
 namespace ThetaWinApp
 {
@@ -13,5 +16,11 @@ namespace ThetaWinApp
 	/// </summary>
 	public partial class App : Application
 	{
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		public App()
+		{
+		}
 	}
 }

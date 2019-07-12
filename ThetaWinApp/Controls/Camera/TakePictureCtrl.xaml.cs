@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,13 +11,14 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ThetaNetCore.Wifi;
 using ThetaWinApp.Resources;
 
-namespace ThetaWinApp.Controls
+namespace ThetaWinApp.Controls.Camera
 {
 	/// <summary>
 	/// Control to preview camera image and take photos
@@ -24,7 +26,11 @@ namespace ThetaWinApp.Controls
 	public partial class TakePictureCtrl : UserControl
 	{
 		private ThetaWifiConnect _theta = null;
+		CameraSettingsWnd _settingsWnd = null;
 
+		/// <summary>
+		/// Constructor
+		/// </summary>
 		public TakePictureCtrl()
 		{
 			InitializeComponent();
@@ -50,9 +56,54 @@ namespace ThetaWinApp.Controls
 		/// <param name="e"></param>
 		private void UserControl_Unloaded(object sender, RoutedEventArgs e)
 		{
+			if (DesignerProperties.GetIsInDesignMode(this))
+				return;
+
 			_theta.ImageReady -= ThetaApi_ImageReady;
 			_theta.OnTakePictureCompleted -= ThetaApi_OnTakePictureCompleted;
 			_theta.OnTakePictureFailed -= ThetaApi_OnTakePictureFailed;
+		}
+
+		/// <summary>
+		/// Visibility changed event. Hide photo window.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+		{
+			if (!(bool)e.NewValue)
+			{
+				// Collapsed
+				if (_settingsWnd != null && _settingsWnd.Visibility == Visibility.Visible)
+					_settingsWnd.Visibility = Visibility.Collapsed;
+				CameraSharedInfo.Instance.RestartPreviewRequested -= OnRestartPreviewRequested;
+			}
+			else
+			{
+				// Visible
+				CameraSharedInfo.Instance.RestartPreviewRequested += OnRestartPreviewRequested;
+			}
+		}
+	
+		/// <summary>
+		/// Restart of preview is required
+		/// </summary>
+		async private void OnRestartPreviewRequested()
+		{
+			if (!this.Dispatcher.CheckAccess())
+			{
+				await this.Dispatcher.BeginInvoke(new Action(() =>
+				{
+					OnRestartPreviewRequested();
+				}));
+				return;
+			}
+			if (!chkPreview.IsChecked.Value)
+				return;
+
+			_theta.StopLivePreview();
+			await Task.Delay(1000);
+			_theta.StartLivePreview();
 		}
 
 		/// <summary>
@@ -151,20 +202,28 @@ namespace ThetaWinApp.Controls
 		/// <param name="e"></param>
 		async private void BtnTakePicture_Click(object sender, RoutedEventArgs e)
 		{
+			txtProgress.Text = AppStrings.Msg_TakingAPicture;
 			pnlPrgress.Visibility = Visibility.Visible;
 			await _theta.TakePictureAsync();
-			txtProgress.Text = "Processing ... ";
+			txtProgress.Text = AppStrings.Msg_Processing;
 		}
 
 		/// <summary>
 		/// Take picture completed
 		/// </summary>
-		/// <param name="fileName"></param>
-		private void ThetaApi_OnTakePictureCompleted(string fileName)
+		/// <param name="fileUrl"></param>
+		private void ThetaApi_OnTakePictureCompleted(string fileUrl)
 		{
 			this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate
 			{
 				pnlPrgress.Visibility = Visibility.Collapsed;
+				var img = new BitmapImage(new Uri(fileUrl));
+				img.DownloadCompleted += (s, e) =>
+				{
+					OnRestartPreviewRequested();
+				};
+				thumbImg.Source = img;
+				((Storyboard)this.FindResource("OpenThumbnail")).Begin();
 			}));
 		}
 
@@ -180,5 +239,38 @@ namespace ThetaWinApp.Controls
 			}));
 		}
 
+		/// <summary>
+		/// Settings button is clicked
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void BtnSettings_Checked(object sender, RoutedEventArgs e)
+		{
+			if (_settingsWnd == null)
+			{
+				_settingsWnd = new CameraSettingsWnd();
+				_settingsWnd.Owner = App.Current.MainWindow;
+				_settingsWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+				_settingsWnd.SaveWindowPosition = true;
+				_settingsWnd.SetTheta(_theta);
+				_settingsWnd.IsVisibleChanged += (s2, e2) =>
+				{
+					if (!(bool)e2.NewValue)
+						btnSettings.IsChecked = false;
+				};
+			}
+			_settingsWnd.Visibility = btnSettings.IsChecked.Value ? Visibility.Visible : Visibility.Collapsed;
+		}
+
+		/// <summary>
+		/// Close button for thumbnail is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnThumbClose_Click(object sender, RoutedEventArgs e)
+		{
+			((Storyboard)this.FindResource("CloseThumbnail")).Begin();
+
+		}
 	}
 }

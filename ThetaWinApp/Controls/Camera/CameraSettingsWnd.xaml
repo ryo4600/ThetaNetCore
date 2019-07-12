@@ -1,0 +1,19 @@
+﻿<metro:MetroWindow x:Class="ThetaWinApp.Controls.Camera.CameraSettingsWnd"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ThetaWinApp.Controls.Camera"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:strings="clr-namespace:ThetaWinApp.Resources"
+ 		xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" Closing="MetroWindow_Closing"
+        Title="{x:Static strings:AppStrings.Title_CameraSettings}" Height="450" Width="400">
+    <Grid>
+        <TabControl>
+            <TabItem Header="{x:Static strings:AppStrings.Title_Video}">
+                <local:VideoSettings x:Name="videoSettings" />
+            </TabItem>
+        </TabControl>
+    </Grid>
+</metro:MetroWindow>

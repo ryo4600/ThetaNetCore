@@ -27,6 +27,11 @@ namespace ThetaNetCore.Wifi
 		/// Called when the taking picture is initiated by pressing hard button.
 		/// </summary>
 		public event Action OnHardButtonPressed = null;
+
+		/// <summary>
+		/// Preview is terminated unexpectedly.
+		/// </summary>
+		public event Action<ThetaWifiConnectException> OnPreviewTerminated = null;
 		#endregion
 
 		private readonly ThetaWifiApi _theta = new ThetaWifiApi();
@@ -162,7 +167,8 @@ namespace ThetaNetCore.Wifi
 						}
 						catch (Exception ex)
 						{
-							throw new ThetaWifiConnectException(WifiStrings.Err_GetImage, ex);
+							OnPreviewTerminated?.Invoke(new ThetaWifiConnectException(WifiStrings.Err_GetImage, ex));
+							break;
 						}
 					}
 				}
@@ -224,6 +230,8 @@ namespace ThetaNetCore.Wifi
 		/// <returns></returns>
 		public async Task<TakePictureResponse> TakePictureAsync()
 		{
+			_isPreviewing = false;
+
 			var response = await _theta.TakePictureAsync();
 			var state = await _theta.StateAsync();
 

@@ -130,6 +130,10 @@
   <data name="Err_PreviewImage" xml:space="preserve">
     <value>プレビュー取得中にエラーが発生しました</value>
   </data>
+  <data name="Err_ThetaUnhandledError" xml:space="preserve">
+    <value>Thetaとの通信中に不明のエラーが発生しました。 
+接続を確認してください。</value>
+  </data>
   <data name="Header_CameraHome" xml:space="preserve">
     <value>カメラホーム</value>
   </data>
@@ -175,8 +179,17 @@
   <data name="Msg_FileSorting" xml:space="preserve">
     <value>日付で並べ替え中</value>
   </data>
+  <data name="Msg_Processing" xml:space="preserve">
+    <value>処理中 …</value>
+  </data>
+  <data name="Msg_TakingAPicture" xml:space="preserve">
+    <value>撮影実行</value>
+  </data>
   <data name="Msg_TryConnecting" xml:space="preserve">
     <value>接続 確認中 …</value>
+  </data>
+  <data name="Note_Configurable_AfterV" xml:space="preserve">
+    <value>(V 以降設定可能)</value>
   </data>
   <data name="Title_BatteryLevel" xml:space="preserve">
     <value>バッテリー残量</value>
@@ -186,6 +199,9 @@
   </data>
   <data name="Title_CameraError" xml:space="preserve">
     <value>本体エラー</value>
+  </data>
+  <data name="Title_CameraSettings" xml:space="preserve">
+    <value>カメラ設定</value>
   </data>
   <data name="Title_CaptureStatus" xml:space="preserve">
     <value>連続撮影状態</value>
@@ -226,6 +242,9 @@
   <data name="Title_Preview" xml:space="preserve">
     <value>プレビュー</value>
   </data>
+  <data name="Title_PreviewFormat" xml:space="preserve">
+    <value>ライブビューフォーマット</value>
+  </data>
   <data name="Title_RecordableTime" xml:space="preserve">
     <value>動画の残り撮影時間(秒)</value>
   </data>
@@ -240,5 +259,8 @@
   </data>
   <data name="Title_Uptime" xml:space="preserve">
     <value>起動してからの時間（秒）</value>
+  </data>
+  <data name="Title_Video" xml:space="preserve">
+    <value>動画</value>
   </data>
 </root>

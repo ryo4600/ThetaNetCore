@@ -5,8 +5,9 @@ using System.Windows.Threading;
 using System;
 using System.Threading.Tasks;
 using System.Text;
+using ThetaWinApp.Resources;
 
-namespace ThetaWinApp.Controls
+namespace ThetaWinApp.Controls.Camera
 {
 	/// <summary>
 	/// Home for the camera control
@@ -34,6 +35,19 @@ namespace ThetaWinApp.Controls
 				ctrlConnect.OnShowMessage += ShowMessage;
 				ctrlConnect.OnShowError += ShowError;
 			};
+
+			_theta.OnPreviewTerminated += (wifiEx) =>
+			{
+				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+				{
+					var msg = AppStrings.Err_PreviewImage + '\n' + wifiEx.Message;
+					MessageBox.Show(msg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+					// Theta is disconnected 
+					radioConnect.IsChecked = true;
+					ctrlConnect.ClearBinding();
+					radioTakePict.IsEnabled = radioPhotos.IsEnabled = false;
+				}));
+			};
 		}
 
 		/// <summary>
@@ -43,10 +57,7 @@ namespace ThetaWinApp.Controls
 		/// <param name="e"></param>
 		private void Radio_Checked(object sender, RoutedEventArgs e)
 		{
-			if (ctrlTakePict == null)
-				return;
-
-			ctrlTakePict.TogglePreview(sender == radioTakePict);
+			ctrlTakePict?.TogglePreview(sender == radioTakePict);
 			if (sender == radioPhotos)
 			{
 				this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(async () =>

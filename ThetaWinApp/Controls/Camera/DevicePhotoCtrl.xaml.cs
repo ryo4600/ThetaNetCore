@@ -16,7 +16,7 @@ using System.Windows.Data;
 using System.ComponentModel;
 using System.Windows.Threading;
 
-namespace ThetaWinApp.Controls
+namespace ThetaWinApp.Controls.Camera
 {
 	public enum PHOTO_FILTER { ALL, NOT_DOWNLOADED, DOWNLOADED }
 	/// <summary>
@@ -116,15 +116,6 @@ namespace ThetaWinApp.Controls
 		private void ToggleEdit_Checked(object sender, RoutedEventArgs e)
 		{
 			lstFiles.SelectionMode = toggleEdit.IsChecked.Value ? SelectionMode.Extended : SelectionMode.Single;
-		}
-
-		/// <summary>
-		/// Text for Download path changed
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void TxtFolder_TextChanged(object sender, TextChangedEventArgs e)
-		{
 		}
 
 		/// <summary>
@@ -373,22 +364,6 @@ namespace ThetaWinApp.Controls
 				if (_photoWnd != null && _photoWnd.Visibility == Visibility.Visible)
 					_photoWnd.Visibility = Visibility.Collapsed;
 			}
-		}
-
-		/// <summary>
-		/// Checked event for item in listview
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void chkListItem_Checked(object sender, RoutedEventArgs e)
-		{
-			//var selItems = lstFiles.SelectedItems;
-			//if (selItems.Count > 0)
-			//{
-			//	var newVal = ((ToggleButton)sender).IsChecked.Value;
-			//	for (int i = 0; i < selItems.Count; i++)
-			//		((FileEntryWrapper)selItems[i]).IsChecked = newVal;
-			//}
 		}
 
 		/// <summary>

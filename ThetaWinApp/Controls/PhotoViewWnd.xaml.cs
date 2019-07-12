@@ -23,6 +23,17 @@ namespace ThetaWinApp.Controls
 		}
 
 		/// <summary>
+		/// Prevent from deleting window. Hide instead.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			this.Visibility = Visibility.Collapsed;
+			e.Cancel = true;
+		}
+
+		/// <summary>
 		/// Set Image to show
 		/// </summary>
 		/// <param name="img"></param>
@@ -82,17 +93,6 @@ namespace ThetaWinApp.Controls
 		{
 			_progress.Visibility = Visibility.Collapsed;
 			DoSetImage(sender as BitmapImage);
-		}
-
-		/// <summary>
-		/// Prevent from deleting window. Hide instead.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			this.Visibility = Visibility.Collapsed;
-			e.Cancel = true;
 		}
 
         /// <summary>

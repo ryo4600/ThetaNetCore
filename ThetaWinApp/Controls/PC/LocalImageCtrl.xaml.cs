@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using ThetaWinApp.Controls.Camera;
 using ThetaWinApp.Info;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace ThetaWinApp.Controls
+namespace ThetaWinApp.Controls.PC
 {
 	public sealed partial class LocalImageCtrl : UserControl
 	{

@@ -12,7 +12,7 @@ using ThetaNetCore.Wifi;
 using ThetaWinApp.Properties;
 using ThetaWinApp.Resources;
 
-namespace ThetaWinApp.Controls
+namespace ThetaWinApp.Controls.Camera
 {
 	/// <summary>
 	/// Interaction logic for DeviceConnectCtrl.xaml
@@ -103,6 +103,16 @@ namespace ThetaWinApp.Controls
 
 			var info = await _theta.ThetaApi.InfoAsync();
 			infoSection.DataContext = info;
+			CameraSharedInfo.Instance.Info = info;
+		}
+
+		/// <summary>
+		/// Clear binding.
+		/// </summary>
+		public void ClearBinding()
+		{
+			statusSection.DataContext = null;
+			infoSection.DataContext = null;
 		}
 	}
 }

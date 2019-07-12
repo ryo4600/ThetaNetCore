@@ -135,15 +135,17 @@ namespace SphereViewWpf
 		/// <param name="e"></param>
 		async private void OnMouseUp(object sender, MouseButtonEventArgs e)
 		{
-			_mousePosCheckTimer.Stop();
+			_mousePosCheckTimer?.Stop();
 			((FrameworkElement)sender).ReleaseMouseCapture();
+
+			if (_lastRecordedPos == null)
+				return;
 
 			var timeDiff = DateTime.Now - _lastRecordedTime;
 
 			var currPos = e.GetPosition(_viewport);
 			var inertiaX = (currPos.X - _lastRecordedPos.Value.X) / timeDiff.Milliseconds * 50;
 			var inertiaY = (currPos.Y - _lastRecordedPos.Value.Y) / timeDiff.Milliseconds * 50;
-			System.Diagnostics.Debug.WriteLine("diff=" + inertiaX);
 
 			_lastDragPos = null;
 			this.Cursor = Cursors.Arrow;

@@ -92,25 +92,32 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\CameraCtrl.xaml.cs">
+    <Compile Include="Controls\Camera\CameraCtrl.xaml.cs">
       <DependentUpon>CameraCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DevicePhotoCtrl.xaml.cs">
+    <Compile Include="Controls\Camera\CameraSettingsWnd.xaml.cs">
+      <DependentUpon>CameraSettingsWnd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Camera\CameraSharedInfo.cs" />
+    <Compile Include="Controls\Camera\DevicePhotoCtrl.xaml.cs">
       <DependentUpon>DevicePhotoCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TakePictureCtrl.xaml.cs">
+    <Compile Include="Controls\Camera\TakePictureCtrl.xaml.cs">
       <DependentUpon>TakePictureCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\DeviceImageCtrl.xaml.cs">
+    <Compile Include="Controls\Camera\DeviceImageCtrl.xaml.cs">
       <DependentUpon>DeviceImageCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\HomeCtrl.xaml.cs">
+    <Compile Include="Controls\Camera\VideoSettings.xaml.cs">
+      <DependentUpon>VideoSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Home\HomeCtrl.xaml.cs">
       <DependentUpon>HomeCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\LocalImageCtrl.xaml.cs">
+    <Compile Include="Controls\PC\LocalImageCtrl.xaml.cs">
       <DependentUpon>LocalImageCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\SettingsCtrl.xaml.cs">
+    <Compile Include="Controls\Others\SettingsCtrl.xaml.cs">
       <DependentUpon>SettingsCtrl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PhotoViewWnd.xaml.cs">
@@ -122,7 +129,7 @@
     <Compile Include="Info\FileEntryWrapper.cs" />
     <Compile Include="Info\ImageFileWrapper.cs" />
     <Compile Include="Info\NavigateMenuInfo.cs" />
-    <Compile Include="Controls\PCViewCtrl.xaml.cs">
+    <Compile Include="Controls\PC\PCViewCtrl.xaml.cs">
       <DependentUpon>PCViewCtrl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\AppStrings.Designer.cs">
@@ -131,35 +138,43 @@
       <DependentUpon>AppStrings.resx</DependentUpon>
     </Compile>
     <Compile Include="Utils\ImageTools.cs" />
-    <Page Include="Controls\CameraCtrl.xaml">
+    <Page Include="Controls\Camera\CameraCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DevicePhotoCtrl.xaml">
+    <Page Include="Controls\Camera\CameraSettingsWnd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\TakePictureCtrl.xaml">
+    <Page Include="Controls\Camera\DevicePhotoCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DeviceConnectCtrl.xaml">
+    <Page Include="Controls\Camera\TakePictureCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\DeviceImageCtrl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Controls\HomeCtrl.xaml">
+    <Page Include="Controls\Camera\DeviceConnectCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\LocalImageCtrl.xaml">
+    <Page Include="Controls\Camera\DeviceImageCtrl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\SettingsCtrl.xaml">
+    <Page Include="Controls\Camera\VideoSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Home\HomeCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PC\LocalImageCtrl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Others\SettingsCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -175,7 +190,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controls\DeviceConnectCtrl.xaml.cs">
+    <Compile Include="Controls\Camera\DeviceConnectCtrl.xaml.cs">
       <DependentUpon>DeviceConnectCtrl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\InverseBooleanConverter.cs" />
@@ -183,7 +198,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Controls\PCViewCtrl.xaml">
+    <Page Include="Controls\PC\PCViewCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -233,5 +248,6 @@
   <ItemGroup>
     <Resource Include="Images\Garbage.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

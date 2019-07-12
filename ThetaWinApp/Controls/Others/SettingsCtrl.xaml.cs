@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ThetaWinApp.Properties;
 
-namespace ThetaWinApp.Controls
+namespace ThetaWinApp.Controls.Others
 {
 	/// <summary>
 	/// Interaction logic for SettingsCtrl.xaml

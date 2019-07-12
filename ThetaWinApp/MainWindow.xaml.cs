@@ -47,12 +47,12 @@ namespace ThetaWinApp
 				this.Height = settings.FormHeight;
 			}
 
-			var ctrlHome = new HomeCtrl() { Tag = "Home" };
+			var ctrlHome = new Controls.Home.HomeCtrl() { Tag = "Home" };
 			ctrlHome.MenuSelected += (item) => { lstDrawerMenu.SelectedItem = item; };
 			ctrls.Add(ctrlHome);
-			ctrls.Add(new CameraCtrl() { Tag = "Camera" });
-			ctrls.Add(new PCViewCtrl() { Tag = "PC" });
-			ctrls.Add(new SettingsCtrl() { Tag = "Settings" });
+			ctrls.Add(new Controls.Camera.CameraCtrl() { Tag = "Camera" });
+			ctrls.Add(new Controls.PC.PCViewCtrl() { Tag = "PC" });
+			ctrls.Add(new Controls.Others.SettingsCtrl() { Tag = "Settings" });
 			UpdateContents();
 		}
 

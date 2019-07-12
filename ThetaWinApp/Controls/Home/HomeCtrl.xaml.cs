@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using ThetaWinApp.Info;
 using System.Linq;
 
-namespace ThetaWinApp.Controls
+namespace ThetaWinApp.Controls.Home
 {
 	/// <summary>
 	/// Home window

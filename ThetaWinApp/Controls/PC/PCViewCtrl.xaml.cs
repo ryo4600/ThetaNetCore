@@ -13,7 +13,7 @@ using ThetaWinApp.Info;
 using ThetaWinApp.Properties;
 using ThetaWinApp.Resources;
 
-namespace ThetaWinApp.Controls
+namespace ThetaWinApp.Controls.PC
 {
 	/// <summary>
 	/// User control to list files in PC and view them

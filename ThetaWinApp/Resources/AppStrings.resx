@@ -129,6 +129,10 @@
   <data name="Err_PreviewImage" xml:space="preserve">
     <value>Exception occurred while getting preview image</value>
   </data>
+  <data name="Err_ThetaUnhandledError" xml:space="preserve">
+    <value>Unexpected error while communicating Theta. 
+Check the connection.</value>
+  </data>
   <data name="Header_CameraHome" xml:space="preserve">
     <value>Camera Home</value>
   </data>
@@ -174,8 +178,17 @@
   <data name="Msg_FileSorting" xml:space="preserve">
     <value>Sorting photos by dates</value>
   </data>
+  <data name="Msg_Processing" xml:space="preserve">
+    <value>Processing ...</value>
+  </data>
+  <data name="Msg_TakingAPicture" xml:space="preserve">
+    <value>Taking a picture.</value>
+  </data>
   <data name="Msg_TryConnecting" xml:space="preserve">
     <value>Try connecting...</value>
+  </data>
+  <data name="Note_Configurable_AfterV" xml:space="preserve">
+    <value>(Configurable after model V)</value>
   </data>
   <data name="Title_BatteryLevel" xml:space="preserve">
     <value>Battery Level</value>
@@ -185,6 +198,9 @@
   </data>
   <data name="Title_CameraError" xml:space="preserve">
     <value>Camera Error</value>
+  </data>
+  <data name="Title_CameraSettings" xml:space="preserve">
+    <value>Camera Settings</value>
   </data>
   <data name="Title_CaptureStatus" xml:space="preserve">
     <value>Capture Status</value>
@@ -225,6 +241,9 @@
   <data name="Title_Preview" xml:space="preserve">
     <value>Preview</value>
   </data>
+  <data name="Title_PreviewFormat" xml:space="preserve">
+    <value>Preview Format</value>
+  </data>
   <data name="Title_RecordableTime" xml:space="preserve">
     <value>Recordable Time (sec)</value>
   </data>
@@ -239,5 +258,8 @@
   </data>
   <data name="Title_Uptime" xml:space="preserve">
     <value>Uptime (sec)</value>
+  </data>
+  <data name="Title_Video" xml:space="preserve">
+    <value>Video</value>
   </data>
 </root>

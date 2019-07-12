@@ -6,7 +6,7 @@ using ThetaWinApp.Info;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace ThetaWinApp.Controls
+namespace ThetaWinApp.Controls.Camera
 {
 	public sealed partial class DeviceImageCtrl : UserControl
 	{
@@ -14,6 +14,37 @@ namespace ThetaWinApp.Controls
 		public event Action<FileEntryWrapper> DownloadRequested = null;
 		public event Action<FileEntryWrapper> CancelRequested = null;
 		#endregion
+
+
+		//public static Boolean GetIsInEditMode(DependencyObject obj)
+		//{
+		//	return (Boolean)obj.GetValue(IsEnabledProperty);
+		//}
+
+		//public static void SetIsInEditMode(DependencyObject obj, Boolean value)
+		//{
+		//	obj.SetValue(IsEnabledProperty, value);
+
+		//}
+
+		//// Using a DependencyProperty as the backing store for IsEnabled.  This enables animation, styling, binding, etc...
+		//public static readonly DependencyProperty IsInEditModeProperty =
+		//	DependencyProperty.RegisterAttached("IsEnabled", typeof(Boolean), typeof(DeviceImageCtrl), new PropertyMetadata(0));
+
+		public Boolean IsInEditMode
+		{
+			get { return (Boolean)GetValue(IsInEditModeProperty); }
+			set { SetValue(IsInEditModeProperty, value); }
+		}
+
+		// Using a DependencyProperty as the backing store for IsInEditMode.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty IsInEditModeProperty =
+			DependencyProperty.Register("IsInEditMode", typeof(Boolean), typeof(DeviceImageCtrl), new PropertyMetadata(false, OnIsSelectedChanged));
+
+		private static void OnIsSelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			((DeviceImageCtrl)d).UpdateUIs();
+		}
 
 		/// <summary>
 		/// Constructor
@@ -37,7 +68,7 @@ namespace ThetaWinApp.Controls
 				return;
 
 			wrapper.PropertyChanged += Val_PropertyChanged;
-			UpdateUIs(wrapper);
+			UpdateUIs();
 		}
 
 		/// <summary>
@@ -51,7 +82,7 @@ namespace ThetaWinApp.Controls
 			{
 				case nameof(FileEntryWrapper.DownloadProgress):
 					{
-						if(!this.Dispatcher.CheckAccess())
+						if (!this.Dispatcher.CheckAccess())
 						{
 							this.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
 							{
@@ -70,21 +101,22 @@ namespace ThetaWinApp.Controls
 		/// </summary>
 		private void UpdateProgress()
 		{
-			var wrapper = this.DataContext as FileEntryWrapper;
-			UpdateUIs(wrapper);
+			UpdateUIs();
 		}
 
 		/// <summary>
 		/// Decide ctrl to show among download, progress, and completed image
 		/// </summary>
 		/// <param name="wrapper"></param>
-		private void UpdateUIs(FileEntryWrapper wrapper)
+		private void UpdateUIs()
 		{
+			var wrapper = this.DataContext as FileEntryWrapper;
 			if (wrapper == null)
 				return;
 
-			btnDownload.Visibility = wrapper.DownloadStatus == DOWNLOAD_STATUS.NOT_DOWNLOADED ? Visibility.Visible : Visibility.Collapsed;
-			btnCancel.Visibility = wrapper.DownloadStatus == DOWNLOAD_STATUS.WAINTING ? Visibility.Visible : Visibility.Collapsed;
+			toggleChecked.Visibility = IsInEditMode ? Visibility.Visible : Visibility.Collapsed;
+			btnDownload.Visibility = !IsInEditMode && wrapper.DownloadStatus == DOWNLOAD_STATUS.NOT_DOWNLOADED ? Visibility.Visible : Visibility.Collapsed;
+			btnCancel.Visibility = !IsInEditMode && wrapper.DownloadStatus == DOWNLOAD_STATUS.WAINTING ? Visibility.Visible : Visibility.Collapsed;
 			if (wrapper.DownloadStatus == DOWNLOAD_STATUS.DOWNLOADING)
 			{
 				_progress.Visibility = Visibility.Visible;
