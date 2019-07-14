@@ -69,8 +69,8 @@
             </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <local:DeviceImageCtrl MouseDoubleClick="DeviceImageCtrl_MouseDoubleClick" IsInEditMode="{Binding ElementName=toggleEdit, Path=IsChecked}"
-                                               DownloadRequested="DeviceImageCtrl_DownloadRequested" CancelRequested="DeviceImageCtrl_CancelRequested" />
+                    <local:PhotoCard MouseDoubleClick="PhotoCard_MouseDoubleClick" IsInEditMode="{Binding ElementName=toggleEdit, Path=IsChecked}"
+                                               DownloadRequested="PhotoCard_DownloadRequested" CancelRequested="PhotoCard_CancelRequested" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

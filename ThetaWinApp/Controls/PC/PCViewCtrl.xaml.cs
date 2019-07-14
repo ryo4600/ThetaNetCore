@@ -232,7 +232,7 @@ namespace ThetaWinApp.Controls.PC
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void LocalImageCtrl_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		private void LocalImageCard_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			if (toggleEdit.IsChecked.Value)
 				return;

@@ -71,7 +71,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <ctrl:LocalImageCtrl MouseLeftButtonUp="LocalImageCtrl_MouseDoubleClick" />
+                        <ctrl:LocalImageCard MouseLeftButtonUp="LocalImageCard_MouseLeftButtonUp" />
                         <ToggleButton Visibility="{Binding ElementName=toggleEdit, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" 
                                   VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" IsChecked="{Binding IsChecked}"
                                   Style="{StaticResource MaterialDesignActionLightToggleButton}" />

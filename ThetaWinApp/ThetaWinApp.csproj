@@ -105,8 +105,8 @@
     <Compile Include="Controls\Camera\TakePictureCtrl.xaml.cs">
       <DependentUpon>TakePictureCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Camera\DeviceImageCtrl.xaml.cs">
-      <DependentUpon>DeviceImageCtrl.xaml</DependentUpon>
+    <Compile Include="Controls\Camera\PhotoCard.xaml.cs">
+      <DependentUpon>PhotoCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Camera\VideoSettings.xaml.cs">
       <DependentUpon>VideoSettings.xaml</DependentUpon>
@@ -114,8 +114,8 @@
     <Compile Include="Controls\Home\HomeCtrl.xaml.cs">
       <DependentUpon>HomeCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PC\LocalImageCtrl.xaml.cs">
-      <DependentUpon>LocalImageCtrl.xaml</DependentUpon>
+    <Compile Include="Controls\PC\LocalImageCard.xaml.cs">
+      <DependentUpon>LocalImageCard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Others\SettingsCtrl.xaml.cs">
       <DependentUpon>SettingsCtrl.xaml</DependentUpon>
@@ -158,7 +158,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Camera\DeviceImageCtrl.xaml">
+    <Page Include="Controls\Camera\PhotoCard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -170,7 +170,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\PC\LocalImageCtrl.xaml">
+    <Page Include="Controls\PC\LocalImageCard.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

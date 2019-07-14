@@ -85,10 +85,13 @@ namespace ThetaWinApp.Info
 				switch (value)
 				{
 					case DOWNLOAD_STATUS.NOT_DOWNLOADED:
-						_downloadProgress = -1;
+						this.DownloadProgress = -1;
 						break;
 					case DOWNLOAD_STATUS.WAINTING:
-						_downloadProgress = 0;
+						this.DownloadProgress = 0;
+						break;
+					case DOWNLOAD_STATUS.DOWNLOADED:
+						this.DownloadProgress = 100;
 						break;
 					default:
 						// Unsupported

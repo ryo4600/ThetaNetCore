@@ -8,28 +8,13 @@ using ThetaWinApp.Info;
 
 namespace ThetaWinApp.Controls.Camera
 {
-	public sealed partial class DeviceImageCtrl : UserControl
+	public sealed partial class PhotoCard : UserControl
 	{
 		#region events
 		public event Action<FileEntryWrapper> DownloadRequested = null;
 		public event Action<FileEntryWrapper> CancelRequested = null;
 		#endregion
 
-
-		//public static Boolean GetIsInEditMode(DependencyObject obj)
-		//{
-		//	return (Boolean)obj.GetValue(IsEnabledProperty);
-		//}
-
-		//public static void SetIsInEditMode(DependencyObject obj, Boolean value)
-		//{
-		//	obj.SetValue(IsEnabledProperty, value);
-
-		//}
-
-		//// Using a DependencyProperty as the backing store for IsEnabled.  This enables animation, styling, binding, etc...
-		//public static readonly DependencyProperty IsInEditModeProperty =
-		//	DependencyProperty.RegisterAttached("IsEnabled", typeof(Boolean), typeof(DeviceImageCtrl), new PropertyMetadata(0));
 
 		public Boolean IsInEditMode
 		{
@@ -39,21 +24,21 @@ namespace ThetaWinApp.Controls.Camera
 
 		// Using a DependencyProperty as the backing store for IsInEditMode.  This enables animation, styling, binding, etc...
 		public static readonly DependencyProperty IsInEditModeProperty =
-			DependencyProperty.Register("IsInEditMode", typeof(Boolean), typeof(DeviceImageCtrl), new PropertyMetadata(false, OnIsSelectedChanged));
+			DependencyProperty.Register("IsInEditMode", typeof(Boolean), typeof(PhotoCard), new PropertyMetadata(false, OnIsSelectedChanged));
 
 		private static void OnIsSelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			((DeviceImageCtrl)d).UpdateUIs();
+			((PhotoCard)d).UpdateUIs();
 		}
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public DeviceImageCtrl()
+		public PhotoCard()
 		{
 			this.InitializeComponent();
 
-			DataContextChanged += DeviceImageCtrl_DataContextChanged;
+			DataContextChanged += PhotoCard_DataContextChanged;
 		}
 
 		/// <summary>
@@ -61,7 +46,7 @@ namespace ThetaWinApp.Controls.Camera
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void DeviceImageCtrl_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+		private void PhotoCard_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
 			var wrapper = e.NewValue as FileEntryWrapper;
 			if (wrapper == null)

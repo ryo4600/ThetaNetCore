@@ -174,6 +174,21 @@ namespace ThetaWinApp.Controls.Camera
 				}
 			}
 
+			var di = new DirectoryInfo(txtFolder.Text);
+			// Get list of thumbnails already downloaded
+			var existingFiles = di.EnumerateFiles().Where(file => file.Extension.Equals(".jpg", StringComparison.CurrentCultureIgnoreCase) ||
+								file.Extension.Equals(".jpeg", StringComparison.CurrentCultureIgnoreCase)).ToList();
+
+			var localFiles = new Dictionary<string, FileInfo>();
+			foreach (var file in existingFiles)
+				localFiles.Add(file.Name, file);
+
+			foreach(var anEntry in _deviceImages)
+			{
+				if (localFiles.ContainsKey(anEntry.Data.Name))
+					anEntry.DownloadStatus = DOWNLOAD_STATUS.DOWNLOADED;
+			}
+
 			IEnumerable<FileEntryWrapper> filteredEntries = null;
 
 			switch(cmbImageFilter.SelectedValue)
@@ -182,7 +197,7 @@ namespace ThetaWinApp.Controls.Camera
 					filteredEntries = from anEntry in _deviceImages where anEntry.DownloadStatus == DOWNLOAD_STATUS.DOWNLOADED select anEntry;
 					break;
 				case PHOTO_FILTER.NOT_DOWNLOADED:
-					filteredEntries = from anEntry in _deviceImages where anEntry.DownloadStatus == DOWNLOAD_STATUS.NOT_DOWNLOADED select anEntry;
+					filteredEntries = from anEntry in _deviceImages where anEntry.DownloadStatus != DOWNLOAD_STATUS.DOWNLOADED select anEntry;
 					break;
 				case PHOTO_FILTER.ALL:
 				default:
@@ -287,7 +302,7 @@ namespace ThetaWinApp.Controls.Camera
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void DeviceImageCtrl_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+		private void PhotoCard_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
 		{
 			var anEntry = ((FrameworkElement)sender).DataContext as FileEntryWrapper;
 			ShowPhoto(anEntry.Data);
@@ -395,13 +410,14 @@ namespace ThetaWinApp.Controls.Camera
 			await ReloadAllFilesAsync();
 		}
 
+		bool _isDownloading = false;
 		List<FileEntryWrapper> _downloadQueue = new List<FileEntryWrapper>();
 		BackgroundWorker _downloadWorkder = null;
 		/// <summary>
 		/// Download request from one of images.
 		/// </summary>
 		/// <param name="entry"></param>
-		private void DeviceImageCtrl_DownloadRequested(FileEntryWrapper entry)
+		private void PhotoCard_DownloadRequested(FileEntryWrapper entry)
 		{
 			if(txtFolder.Text == "")
 			{
@@ -419,7 +435,8 @@ namespace ThetaWinApp.Controls.Camera
 			}
 
 			var parameters = new object[] { txtFolder.Text };
-			if (!_downloadWorkder.IsBusy)
+			//if (!_downloadWorkder.IsBusy)
+			if(!_isDownloading)
 				_downloadWorkder.RunWorkerAsync(parameters);
 		}
 
@@ -427,7 +444,7 @@ namespace ThetaWinApp.Controls.Camera
 		/// Download cancel request from one of images 
 		/// </summary>
 		/// <param name="entry"></param>
-		private void DeviceImageCtrl_CancelRequested(FileEntryWrapper entry)
+		private void PhotoCard_CancelRequested(FileEntryWrapper entry)
 		{
 			entry.DownloadStatus = DOWNLOAD_STATUS.NOT_DOWNLOADED;
 			_downloadQueue.Remove(entry);
@@ -443,6 +460,7 @@ namespace ThetaWinApp.Controls.Camera
 			var args = (object[])e.Argument;
 			var savePath = (string)args[0];
 
+			_isDownloading = true;
 			while (_downloadQueue.Count > 0)
 			{
 				var anEntry = _downloadQueue[0];
@@ -471,8 +489,11 @@ namespace ThetaWinApp.Controls.Camera
 
 				anEntry.DownloadProgress = 100;
 
-				_downloadQueue.RemoveAt(0);
+				_downloadQueue.Remove(anEntry);
 			}
+			_isDownloading = false;
+
+			await this.ReloadAllFilesAsync();
 		}
 
 	}

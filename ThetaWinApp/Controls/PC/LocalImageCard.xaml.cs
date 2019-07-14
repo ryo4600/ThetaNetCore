@@ -8,7 +8,7 @@ using ThetaWinApp.Info;
 
 namespace ThetaWinApp.Controls.PC
 {
-	public sealed partial class LocalImageCtrl : UserControl
+	public sealed partial class LocalImageCard : UserControl
 	{
 		public bool ShowButtons
 		{
@@ -22,12 +22,12 @@ namespace ThetaWinApp.Controls.PC
 
 		// Using a DependencyProperty as the backing store for ShowButtons.  This enables animation, styling, binding, etc...
 		public static readonly DependencyProperty ShowButtonsProperty =
-			DependencyProperty.Register("ShowButtons", typeof(bool), typeof(DeviceImageCtrl), new PropertyMetadata(true));
+			DependencyProperty.Register("ShowButtons", typeof(bool), typeof(LocalImageCard), new PropertyMetadata(true));
 
 		/// <summary>
 		/// Constructor
 		/// </summary>
-		public LocalImageCtrl()
+		public LocalImageCard()
 		{
 			this.InitializeComponent();
 		}
