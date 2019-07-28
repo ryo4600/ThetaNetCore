@@ -30,13 +30,14 @@
             </Button>
             <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5" Padding="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" 
                     Style="{DynamicResource MaterialDesignFloatingActionButton}" Width="32" Height="32">
-                <materialDesign:PackIcon Kind="StopCircleOutline" Height="25" Width="25" />
+                <materialDesign:PackIcon Kind="Stop" Height="25" Width="25" />
             </Button>
             
             <ToggleButton x:Name="toggleChecked" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" IsChecked="{Binding IsChecked}" 
                           Style="{StaticResource MaterialDesignActionLightToggleButton}" />
 
-            <ProgressBar x:Name="_progress" Minimum="0" Maximum="100" Grid.RowSpan="2" Value="{Binding DownloadProgress}" Width="120" Visibility="Collapsed" />
+            <ProgressBar x:Name="_progress" Minimum="0" Maximum="100" Grid.RowSpan="2" Value="{Binding DownloadProgress}" HorizontalAlignment="Stretch" Height="20"
+						 Margin="20,0" Visibility="Collapsed" />
         </Grid>
     </Border>
 

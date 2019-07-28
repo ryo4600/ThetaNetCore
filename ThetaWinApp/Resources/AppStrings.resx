@@ -208,6 +208,9 @@ Check the connection.</value>
   <data name="Title_CheckConnection" xml:space="preserve">
     <value>Check Connection</value>
   </data>
+  <data name="Title_Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
   <data name="Title_ConfirmDelete" xml:space="preserve">
     <value>Delte files</value>
   </data>
@@ -252,6 +255,9 @@ Check the connection.</value>
   </data>
   <data name="Title_SerialNumber" xml:space="preserve">
     <value>Serial Number</value>
+  </data>
+  <data name="Title_SpherePhotoView" xml:space="preserve">
+    <value>Theta Win App Photo Viewer</value>
   </data>
   <data name="Title_Status" xml:space="preserve">
     <value>Camera Statuses</value>

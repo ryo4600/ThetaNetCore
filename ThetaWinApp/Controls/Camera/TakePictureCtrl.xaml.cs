@@ -154,20 +154,10 @@ namespace ThetaWinApp.Controls.Camera
 				catch (Exception ex)
 				{
 					String msg = AppStrings.Err_PreviewImage + "\n" + ex.Message;
-					ShowError(msg);
+					txtError.Text = msg;
 				}
 
 			}));
-		}
-
-		/// <summary>
-		/// Show error message
-		/// </summary>
-		/// <param name="message"></param>
-		/// <param name="title"></param>
-		private void ShowError(String message, String title = "Error")
-		{
-			MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 		/// <summary>
@@ -271,6 +261,16 @@ namespace ThetaWinApp.Controls.Camera
 		{
 			((Storyboard)this.FindResource("CloseThumbnail")).Begin();
 
+		}
+
+		/// <summary>
+		/// Clear button of error message is clicked.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void btnClearMessage_Click(object sender, RoutedEventArgs e)
+		{
+			txtError.Text = "";
 		}
 	}
 }

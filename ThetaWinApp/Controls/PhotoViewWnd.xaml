@@ -7,10 +7,11 @@
  		xmlns:view3d="clr-namespace:SphereViewWpf;assembly=SphereViewWpf"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ThetaWinApp.Controls"
+		xmlns:strings="clr-namespace:ThetaWinApp.Resources"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         mc:Ignorable="d"
-        Title="Shere Photo View" Height="450" Width="800" Closing="MetroWindow_Closing">
+        Title="{x:Static strings:AppStrings.Title_SpherePhotoView}" Height="450" Width="800" Closing="MetroWindow_Closing">
     <metro:MetroWindow.Resources>
         <Storyboard x:Key="OnButtonEnterL">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="btnLeft" >
@@ -50,11 +51,11 @@
     <Grid>
         <view3d:SphereViewCtrl x:Name="viewSphere" />
         <Image x:Name="viewNormal" Stretch="Uniform" />
-        <Button x:Name="btnLeft" VerticalAlignment="Center" HorizontalAlignment="Left" Opacity="0.2" Click="BtnLeft_Click">
-            <materialDesign:PackIcon Kind="MenuLeftOutline" Height="24" />
+        <Button x:Name="btnLeft" VerticalAlignment="Center" HorizontalAlignment="Left" Opacity="0.2" Click="BtnLeft_Click" Padding="5">
+            <materialDesign:PackIcon Kind="MenuLeftOutline" Height="24" Width="24" />
         </Button>
-        <Button x:Name="btnRight" VerticalAlignment="Center" HorizontalAlignment="Right" Opacity="0.2" Click="BtnRight_Click">
-            <materialDesign:PackIcon Kind="MenuRightOutline" Height="24" />
+        <Button x:Name="btnRight" VerticalAlignment="Center" HorizontalAlignment="Right" Opacity="0.2" Click="BtnRight_Click" Padding="5">
+            <materialDesign:PackIcon Kind="MenuRightOutline" Height="24" Width="24" />
         </Button>
 
         <ProgressBar x:Name="_progress" Visibility="Collapsed"

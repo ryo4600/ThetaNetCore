@@ -26,7 +26,7 @@
 				</ModelVisual3D.Content>
 			</ModelVisual3D>
 		</Viewport3D>
-        <Slider HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="150" Height="20" Minimum="1" Maximum="140" Value="{Binding ElementName=_camera, Path=FieldOfView}"
-                Margin="0,10" />
+        <Slider HorizontalAlignment="Right" VerticalAlignment="Top" Width="50" Height="120" Minimum="1" Maximum="140" Value="{Binding ElementName=_camera, Path=FieldOfView}"
+                Margin="10" Orientation="Vertical" />
     </Grid>
 </UserControl>

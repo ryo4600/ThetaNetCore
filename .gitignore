@@ -6,7 +6,6 @@ ThetaNetSample/obj
 ThetaWinApp/bin
 ThetaWinApp/obj
 packages
-.vs/ThetaNetCore/v16
-.vs/ThetaNetCore/DesignTimeBuild
+.vs
 SphereViewWpf/bin
 SphereViewWpf/obj

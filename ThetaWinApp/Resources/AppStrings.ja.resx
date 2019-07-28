@@ -209,6 +209,9 @@
   <data name="Title_CheckConnection" xml:space="preserve">
     <value>接続チェック</value>
   </data>
+  <data name="Title_Clear" xml:space="preserve">
+    <value>クリアー</value>
+  </data>
   <data name="Title_ConfirmDelete" xml:space="preserve">
     <value>ファイルの削除</value>
   </data>
@@ -253,6 +256,9 @@
   </data>
   <data name="Title_SerialNumber" xml:space="preserve">
     <value>シリアルナンバー</value>
+  </data>
+  <data name="Title_SpherePhotoView" xml:space="preserve">
+    <value>Theta Win App フォトビューアー</value>
   </data>
   <data name="Title_Status" xml:space="preserve">
     <value>カメラの状態</value>

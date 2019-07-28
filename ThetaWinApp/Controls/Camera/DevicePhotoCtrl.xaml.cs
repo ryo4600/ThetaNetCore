@@ -154,6 +154,14 @@ namespace ThetaWinApp.Controls.Camera
 		/// </summary>
 		public async Task ReloadAllFilesAsync(bool force = true)
 		{
+			if(!this.Dispatcher.CheckAccess())
+			{
+				await this.Dispatcher.BeginInvoke(new Action(async () =>
+				{
+					await ReloadAllFilesAsync(force);
+				}));
+				return;
+			}
 			if (force || _deviceImages.Count == 0)
 			{
 				_deviceImages.Clear();

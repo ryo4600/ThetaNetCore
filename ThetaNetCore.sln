@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Blend for Visual Studio 15
-VisualStudioVersion = 15.0.27703.2035
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThetaNetCore", "ThetaNetCore\ThetaNetCore.csproj", "{69BB6066-149D-4CA7-B248-552746BA0FC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThetaNetCore", "ThetaNetCore\ThetaNetCore.csproj", "{69BB6066-149D-4CA7-B248-552746BA0FC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SphereViewWpf", "SphereViewWpf\SphereViewWpf.csproj", "{788A5921-78BF-47DC-8890-A30704408360}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThetaWinApp", "ThetaWinApp\ThetaWinApp.csproj", "{9C10D5D5-CB14-4A34-B746-3530AEF78581}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThetaNetSample", "ThetaNetSample\ThetaNetSample.csproj", "{4869082C-1A97-40F2-87F4-C5DC38ADA1BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{9C10D5D5-CB14-4A34-B746-3530AEF78581}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C10D5D5-CB14-4A34-B746-3530AEF78581}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C10D5D5-CB14-4A34-B746-3530AEF78581}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4869082C-1A97-40F2-87F4-C5DC38ADA1BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4869082C-1A97-40F2-87F4-C5DC38ADA1BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4869082C-1A97-40F2-87F4-C5DC38ADA1BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4869082C-1A97-40F2-87F4-C5DC38ADA1BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

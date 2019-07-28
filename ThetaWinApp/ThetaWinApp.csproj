@@ -123,6 +123,7 @@
     <Compile Include="Controls\PhotoViewWnd.xaml.cs">
       <DependentUpon>PhotoViewWnd.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\CountToVisibilityConverter.cs" />
     <Compile Include="Converters\StringArrayConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\FileGroupHeaderConverter.cs" />
@@ -193,7 +194,6 @@
     <Compile Include="Controls\Camera\DeviceConnectCtrl.xaml.cs">
       <DependentUpon>DeviceConnectCtrl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

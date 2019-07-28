@@ -50,9 +50,9 @@
 				<info:NavigateMenuItem Title="{x:Static strings:AppStrings.Menu_Title_Settings}" PackIconKind="{x:Static materialDesign:PackIconKind.Gear}" NavigateTo="Settings" />
 			</info:NavigateMenuItems>
 
-			<conv:InverseBooleanConverter x:Key="InverseBooleanConverter" />
 			<conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <conv:StringArrayConverter x:Key="StringArrayConverter" />
-        </ResourceDictionary>
+			<conv:CountToVisibilityConverter x:Key="CountToVisibilityConverter" />
+		</ResourceDictionary>
 	</Application.Resources>
 </Application>

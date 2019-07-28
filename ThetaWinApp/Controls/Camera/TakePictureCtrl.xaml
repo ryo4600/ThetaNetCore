@@ -30,7 +30,12 @@
 	<Grid>
 		<Grid>
 			<sphere:SphereViewCtrl x:Name="imgPreview" Background="#FFB63737" />
-			<StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15">
+			<StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15" Orientation="Horizontal" 
+						Visibility="{Binding ElementName=txtError, Path=Text.Length, Converter={StaticResource CountToVisibilityConverter}}">
+				<TextBox x:Name="txtError" IsReadOnly="True" Text="" Foreground="Red" VerticalAlignment="Center" Width="400" Padding="5,0" BorderBrush="#8888" BorderThickness="1" />
+				<Button Click="btnClearMessage_Click" Padding="5" Background="{DynamicResource AccentColorBrush4}">
+					<materialDesign:PackIcon Kind="Clear" Width="24" Height="24" />
+				</Button>
 			</StackPanel>
 
 			<Button x:Name="btnTakePicture" Style="{StaticResource MaterialDesignFloatingActionButton}" Margin="15,0"
