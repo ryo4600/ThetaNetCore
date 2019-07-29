@@ -6,6 +6,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
+    <Authors>RySaProject</Authors>
+    <Company>RySaProject</Company>
+    <Description>A library to control RICOH THETA spherical camera in C#. It is written with .NET standard, so it should work with most projects.</Description>
+    <PackageReleaseNotes>Initial publication</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="Resources\ApiStrings.Designer.cs">

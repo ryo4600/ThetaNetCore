@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,6 +52,9 @@ namespace ThetaWinApp.Controls.Camera
 		/// <param name="e"></param>
 		private void UserControl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
+			if (DesignerProperties.GetIsInDesignMode(this))
+				return;
+
 			if (!(bool)e.NewValue)
 				return;
 

@@ -8,9 +8,11 @@ If you are not clear about the details, you may check their web page.
 The library is written with .Net Standard 2.0, so it should work for other OS using Xamarin.
 
 ## Architecture
-*ThetaWifiApi* is almost direct translations of API specification. *ThetaWifiConnect* is a wrapper of API and you usually need this class for controlling the camera. Use *ThetaWifiApi*, if you need to do simple tasks or direct manipulation. In that case retrieve the instance of *ThetaWifiApi* from the instance of *ThetaWifiConnect*.
+*ThetaWifiApi* is almost direct translations of API specification. If you know enough about the THETA API, instantiate this class and use it. This class is basically do the network communication and JSON data handling.
 
-Wifi\Request and Wifi\Respond are self explanetory. They are just wrapping the data sent/retrieve from the camera.
+For most of you will use the *ThetaWifiConnect*. It is a wrapper of the THETA API to make complicated task simple, which involves several set of calls. If you need tasks that are not wrapped by the class, you retrieve *ThetaWifiApi* from the instance. 
+
+Classes in Wifi\Request and Wifi\Respond directory are self explanetory. They are direct conversion of JSON data to C# object.
 
 ## How to use
 1. Declare an instance of ThetaWifiConnect.
@@ -19,7 +21,7 @@ Wifi\Request and Wifi\Respond are self explanetory. They are just wrapping the d
     ThetaWifiConnect _theta = new ThetaWifiConnect();
     ```
 
-1. You may register listeners 
+1. You may register some listeners 
 
 	```
     _theta.ImageReady += ThetaApi_ImageReady;
@@ -31,6 +33,11 @@ Wifi\Request and Wifi\Respond are self explanetory. They are just wrapping the d
     ```
     await _theta.CheckConnection();
     ```
+1. Get the information of the camera
+    ```
+    var info = await _theta.ThetaApi.InfoAsync();
+    ```
+    Notice that getting information is a simple single call, so we retrieve the ThetaApi and operates on it. 
 1. Get the status of the camera
     ```
 	var status = await _theta.ThetaApi.StateAsync();
@@ -85,8 +92,18 @@ Wifi\Request and Wifi\Respond are self explanetory. They are just wrapping the d
         ...
     }
     ```
+1. Use SetOptions to configuring camera settings
 
-## About sample
-ThetaNetSample is a WPF windows application. It shows you the basic usages of this library. Check the MainWindow.xaml and .xaml.cs, you will find everything you need.
+    ```
+    var options = new OptionValues();
+	options.PreviewFormat = new PreviewFormat(){ Width=1920, Height=960, Framerate=8 };
+	await _theta.ThetaApi.SetOptionsAsync(options);
 
-If you want to show images in 360, you need to work yourself. I recommend to use the Unity and feed images into it.
+    ```
+    Set values that you are updating only.  
+
+## ThetaWinApp
+
+Windows implementaion of Theta application. It is written with WPF. You will see more examples of how you should implement. 
+
+Classes under the "Controls/Camera" folder are the ones interacting with THETA camera.
