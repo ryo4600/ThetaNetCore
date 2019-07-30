@@ -107,3 +107,16 @@ Classes in Wifi\Request and Wifi\Respond directory are self explanetory. They ar
 Windows implementaion of Theta application. It is written with WPF. You will see more examples of how you should implement. 
 
 Classes under the "Controls/Camera" folder are the ones interacting with THETA camera.
+
+Start page is like this
+![App Home](./Gallery/App_Home.png)
+
+You need to check connection. 
+Once connection is confirmed, you can take pictures and download them.
+![App Home](./Gallery/App_Connect.png)
+
+You can browse pictures in your camera and PC.
+![App Home](./Gallery/App_PictList.png)
+
+And the 360 image viewer.
+![App Home](./Gallery/App_360.png)
