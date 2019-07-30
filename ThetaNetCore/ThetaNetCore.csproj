@@ -12,10 +12,14 @@
     <PackageReleaseNotes>Initial publication</PackageReleaseNotes>
     <Copyright>RySaProject 2019-</Copyright>
     <PackageId>RySaProject.ThetaNetCore</PackageId>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/rysaproject/ThetaNetCore</PackageProjectUrl>
     <RepositoryUrl>https://github.com/rysaproject/ThetaNetCore</RepositoryUrl>
     <NeutralLanguage>en</NeutralLanguage>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageTags>Theta, Spherical, Camera, 360, Wifi</PackageTags>
+    <ApplicationIcon>Resources\logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="Resources\ApiStrings.Designer.cs">
