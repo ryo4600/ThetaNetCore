@@ -250,4 +250,9 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir lib
+xcopy *.dll  lib
+del *.dll</PostBuildEvent>
+  </PropertyGroup>
 </Project>

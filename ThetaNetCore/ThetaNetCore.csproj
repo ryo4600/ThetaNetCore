@@ -8,8 +8,14 @@
     <OldToolsVersion>2.0</OldToolsVersion>
     <Authors>RySaProject</Authors>
     <Company>RySaProject</Company>
-    <Description>A library to control RICOH THETA spherical camera in C#. It is written with .NET standard, so it should work with most projects.</Description>
+    <Description>Library to control RICOH THETA spherical camera in C#. It is written with .NET standard, so it should work for many platforms, although I tested only with Windows.</Description>
     <PackageReleaseNotes>Initial publication</PackageReleaseNotes>
+    <Copyright>RySaProject 2019-</Copyright>
+    <PackageId>RySaProject.ThetaNetCore</PackageId>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/rysaproject/ThetaNetCore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/rysaproject/ThetaNetCore</RepositoryUrl>
+    <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="Resources\ApiStrings.Designer.cs">
