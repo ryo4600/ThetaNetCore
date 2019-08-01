@@ -282,7 +282,7 @@ namespace ThetaWinApp.Controls.Camera
 					{
 						break;
 					}
-					catch (Exception ex)
+					catch (Exception)
 					{
 						continue;
 					}
