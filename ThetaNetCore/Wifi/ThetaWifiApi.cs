@@ -9,7 +9,7 @@ using ThetaNetCore.Util;
 
 namespace ThetaNetCore.Wifi
 {
-	public class ThetaWifiApi
+	public partial class ThetaWifiApi
 	{
 		private const string THETA_URL = "http://192.168.1.1:80/";
 		private enum SEND_TYPE { GET, POST };
@@ -42,81 +42,6 @@ namespace ThetaNetCore.Wifi
 			CheckResponse(response);
 			var resObj = JsonUtil.ToObject<CheckForUpdateResponse>(response.GetResponseStream());
 			return resObj.StateFingerprint;
-		}
-
-		/// <summary>
-		/// Throws excepton if response code indicates an error
-		/// </summary>
-		/// <param name="response"></param>
-		/// <exception cref="SerializationException"></exception>
-		/// <exception cref="ThetaWifiApiException"></exception> 
-		private static void CheckResponse(HttpWebResponse response)
-		{
-			switch (response.StatusCode)
-			{
-				case HttpStatusCode.OK:
-					return;
-				case HttpStatusCode.BadRequest:             // 400
-				case HttpStatusCode.Forbidden:              // 403
-				case HttpStatusCode.ServiceUnavailable:     // 503:
-					{
-						var errRes = JsonUtil.ToObject<ErrorResponse>(response.GetResponseStream());
-						throw new ThetaWifiApiException(errRes);
-					}
-				default:
-					throw new Exception(String.Format(WifiStrings.Err_SendRequestFailed, response.StatusCode));
-			}
-		}
-
-
-		/// <summary>
-		/// Common function to send a command.
-		/// </summary>
-		/// <param name="command"></param>
-		/// <returns></returns>
-		async private static Task<HttpWebResponse> ExecuteCommandAsync<T>(ThetaRequest<T> command, int? timeout = null)
-		{
-			return await SendRequestAsync(SEND_TYPE.POST, command, "osc/commands/execute", timeout);
-		}
-
-		/// <summary>
-		/// Common function to send a command.
-		/// </summary>
-		/// <param name="command"></param>
-		/// <returns></returns>
-		async private static Task<HttpWebResponse> ExecuteStatusAsync<T>(ThetaRequest<T> command)
-		{
-			return await SendRequestAsync(SEND_TYPE.POST, command, "osc/commands/status");
-		}
-
-		/// <summary>
-		/// Send a request to Theta <br />
-		/// Actual network operations are done here.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="sendType">POST/GET</param>
-		/// <param name="command"></param>
-		/// <param name="commandPath"></param>
-		/// <returns></returns>
-		async private static Task<HttpWebResponse> SendRequestAsync<T>(SEND_TYPE sendType, T command, String commandPath, int? timeout = null)
-		{
-			HttpWebRequest request = System.Net.WebRequest.Create(Path.Combine(THETA_URL, commandPath)) as HttpWebRequest;
-			request.Method = sendType == SEND_TYPE.POST ? "POST" : "GET";
-			request.Accept = "application/json";
-			request.ContentType = "application/json";
-			if (timeout != null)
-				request.ContinueTimeout = timeout.Value;
-
-			if (command != null)
-			{
-				var jsonString = JsonUtil.ToSring<T>(command).Replace(":999", ":0");
-				var reqStream = await request.GetRequestStreamAsync();
-				byte[] buffer = UTF8Encoding.UTF8.GetBytes(jsonString);
-				reqStream.Write(buffer, 0, buffer.Length);
-				reqStream.Flush();
-			}
-
-			return await request.GetResponseAsync() as HttpWebResponse;
 		}
 
 		#endregion
@@ -322,6 +247,51 @@ namespace ThetaNetCore.Wifi
 			return await request.GetResponseAsync() as HttpWebResponse;
 		}
 
+		/// <summary>
+		/// Gets a list of installed plugins.
+		/// </summary>
+		/// <param name="uri"></param>
+		/// <returns></returns>
+		async public Task<ListPluginsResponse> ListPluginsAsync()
+		{
+			var command = new ThetaRequest<Object>() { Name = "camera._listPlugins" };
+			var response = await ExecuteCommandAsync<Object>(command);
+			CheckResponse(response);
+			return JsonUtil.ToObject<ListPluginsResponse>(response.GetResponseStream());
+		}
+
+		/// <summary>
+		/// Sets the installed pugin for boot. <br />
+		/// For RICOH THETA Z1 or later, this command is ignored.Use camera._pluginControl
+		/// </summary>
+		/// <param name="uri"></param>
+		/// <returns></returns>
+		async public Task SetPluginsAsync(String packageName)
+		{
+			var command = new ThetaRequest<SetPluginParam>()
+			{
+				Name = "camera._setPlugin",
+				Parameters = new SetPluginParam() { PackageName = packageName }
+			};
+			using (var response = await ExecuteCommandAsync<SetPluginParam>(command))
+				CheckResponse(response);
+		}
+
+		/// <summary>
+		/// Starts or stops plugin.
+		/// </summary>
+		/// <param name="uri"></param>
+		/// <returns></returns>
+		async public Task PluginControlAsync(PLUGIN_ACTION action, String pluginName = null)
+		{
+			var command = new ThetaRequest<PluginControlParam>()
+			{
+				Name = "camera._pluginControl",
+				Parameters = new PluginControlParam() { PluginAction = action, Plugin = pluginName }
+			};
+			using (var response = await ExecuteCommandAsync<PluginControlParam>(command))
+				CheckResponse(response);
+		}
 	}
 
 }

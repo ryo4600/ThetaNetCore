@@ -242,6 +242,39 @@
   <data name="Title_PhotoFolder" xml:space="preserve">
     <value>写真表示フォルダ</value>
   </data>
+  <data name="Title_Plugin" xml:space="preserve">
+    <value>プラグイン</value>
+  </data>
+  <data name="Title_PluginBoot" xml:space="preserve">
+    <value>起動する対象か</value>
+  </data>
+  <data name="Title_PluginExitStatus" xml:space="preserve">
+    <value>終了ステータス</value>
+  </data>
+  <data name="Title_PluginForeground" xml:space="preserve">
+    <value>操作対象か</value>
+  </data>
+  <data name="Title_PluginMessage" xml:space="preserve">
+    <value>メッセージ</value>
+  </data>
+  <data name="Title_PluginName" xml:space="preserve">
+    <value>プラグイン名</value>
+  </data>
+  <data name="Title_PluginPackageName" xml:space="preserve">
+    <value>パッケージ名</value>
+  </data>
+  <data name="Title_PluginRunning" xml:space="preserve">
+    <value>起動中か</value>
+  </data>
+  <data name="Title_PluginType" xml:space="preserve">
+    <value>種類</value>
+  </data>
+  <data name="Title_PluginVersion" xml:space="preserve">
+    <value>バージョン</value>
+  </data>
+  <data name="Title_PluginWebServer" xml:space="preserve">
+    <value>Webサーバか</value>
+  </data>
   <data name="Title_Preview" xml:space="preserve">
     <value>プレビュー</value>
   </data>

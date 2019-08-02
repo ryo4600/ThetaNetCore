@@ -30,11 +30,11 @@
 		<Border Grid.Row="1" Margin="5" Padding="15" BorderThickness="2"
 				BorderBrush="{DynamicResource AccentColorBrush}" materialDesign:ShadowAssist.ShadowDepth="Depth3">
 			<Grid>
-                <Grid.Resources>
-                    <Style TargetType="TextBlock" BasedOn="{StaticResource CategoryTitle}" />
-                    <Style TargetType="TextBox" BasedOn="{StaticResource CategoryValue}" />
-                </Grid.Resources>
-                <Grid.RowDefinitions>
+				<Grid.Resources>
+					<Style TargetType="TextBlock" BasedOn="{StaticResource CategoryTitle}" />
+					<Style TargetType="TextBox" BasedOn="{StaticResource CategoryValue}" />
+				</Grid.Resources>
+				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
 					<RowDefinition />
 				</Grid.RowDefinitions>
@@ -43,87 +43,139 @@
 				<ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
 					<WrapPanel Orientation="Horizontal">
 						<!-- Statuses -->
-                        <Grid x:Name="statusSection" Margin="10" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+						<Grid x:Name="statusSection" Margin="10" >
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
 
-                            <!-- Title -->
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_Status}" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,5"
+							<!-- Title -->
+							<TextBlock Text="{x:Static strings:AppStrings.Title_Status}" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,5"
                                        Foreground="{DynamicResource AccentBaseColorBrush}" Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
 
-                            <!-- Headers -->
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_BatteryLevel}" Grid.Row="1" />
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_BatteryStatus}" Grid.Row="2" />
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_CaptureStatus}" Grid.Row="3" />
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_RecordedTime}" Grid.Row="4" />
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_RecordableTime}" Grid.Row="5" />
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_CameraError}" Grid.Row="6" />
+							<!-- Headers -->
+							<TextBlock Text="{x:Static strings:AppStrings.Title_BatteryLevel}" Grid.Row="1" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_BatteryStatus}" Grid.Row="2" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_CaptureStatus}" Grid.Row="3" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_RecordedTime}" Grid.Row="4" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_RecordableTime}" Grid.Row="5" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_CameraError}" Grid.Row="6" />
 
-                            <!-- Inputs -->
-                            <TextBox Text="{Binding State.BatteryLevel, Mode=OneWay, StringFormat={}{0:p0}}" Grid.Row="1" Grid.Column="1" />
-                            <TextBox Text="{Binding State.BatteryStateFriendly, Mode=OneWay}" Grid.Row="2" Grid.Column="1" />
-                            <TextBox Text="{Binding State.CaptureStatusFriendly, Mode=OneWay}" Grid.Row="3" Grid.Column="1" />
-                            <TextBox Text="{Binding State.RecordedTime, Mode=OneWay}" Grid.Row="4" Grid.Column="1" />
-                            <TextBox Text="{Binding State.RecordableTime, Mode=OneWay}" Grid.Row="5" Grid.Column="1" />
-                            <TextBox Text="{Binding State.CameraError, Mode=OneWay, Converter={StaticResource StringArrayConverter}, ConverterParameter='&#13;'}" Grid.Row="6" Grid.Column="1"
+							<!-- Inputs -->
+							<TextBox Text="{Binding State.BatteryLevel, Mode=OneWay, StringFormat={}{0:p0}}" Grid.Row="1" Grid.Column="1" />
+							<TextBox Text="{Binding State.BatteryStateFriendly, Mode=OneWay}" Grid.Row="2" Grid.Column="1" />
+							<TextBox Text="{Binding State.CaptureStatusFriendly, Mode=OneWay}" Grid.Row="3" Grid.Column="1" />
+							<TextBox Text="{Binding State.RecordedTime, Mode=OneWay}" Grid.Row="4" Grid.Column="1" />
+							<TextBox Text="{Binding State.RecordableTime, Mode=OneWay}" Grid.Row="5" Grid.Column="1" />
+							<TextBox Text="{Binding State.CameraError, Mode=OneWay, Converter={StaticResource StringArrayConverter}, ConverterParameter='&#13;'}" Grid.Row="6" Grid.Column="1"
                                      AcceptsReturn="True" TextAlignment="Left" />
-                        </Grid>
+						</Grid>
 
-                        <!-- Information -->
-                        <Grid x:Name="infoSection" Margin="10">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
+						<!-- Information -->
+						<Grid x:Name="infoSection" Margin="10">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
 
-                            <!--Title 2-->
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_Info}" Margin="0,5" Grid.Row="0" Grid.ColumnSpan="2"
+							<!--Title 2-->
+							<TextBlock Text="{x:Static strings:AppStrings.Title_Info}" Margin="0,5" Grid.Row="0" Grid.ColumnSpan="2"
                                        Foreground="{DynamicResource AccentBaseColorBrush }" Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_Manufacturer}" Grid.Row="1" />
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_Model}" Grid.Row="2" />
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_SerialNumber}" Grid.Row="3" />
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_Firmware}" Grid.Row="4" />
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_GPS}" Grid.Row="5" />
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_Gyro}" Grid.Row="6" />
-                            <TextBlock Text="{x:Static strings:AppStrings.Title_Uptime}" Grid.Row="7" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_Manufacturer}" Grid.Row="1" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_Model}" Grid.Row="2" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_SerialNumber}" Grid.Row="3" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_Firmware}" Grid.Row="4" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_GPS}" Grid.Row="5" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_Gyro}" Grid.Row="6" />
+							<TextBlock Text="{x:Static strings:AppStrings.Title_Uptime}" Grid.Row="7" />
 
-                            <TextBox Text="{Binding Manufacturer, Mode=OneWay}" Grid.Row="1" Grid.Column="1" />
-                            <TextBox Text="{Binding Model, Mode=OneWay}" Grid.Row="2" Grid.Column="1" />
-                            <TextBox Text="{Binding SerialNumber, Mode=OneWay}" Grid.Row="3" Grid.Column="1" />
-                            <TextBox Text="{Binding FirmwareVersion, Mode=OneWay}" Grid.Row="4" Grid.Column="1" />
-                            <TextBox Text="{Binding Gps, Mode=OneWay}" Grid.Row="5" Grid.Column="1" />
-                            <TextBox Text="{Binding Gyro, Mode=OneWay}" Grid.Row="6" Grid.Column="1" />
-                            <TextBox Text="{Binding Uptime, Mode=OneWay}" Grid.Row="7" Grid.Column="1" />
-                        </Grid>
+							<TextBox Text="{Binding Manufacturer, Mode=OneWay}" Grid.Row="1" Grid.Column="1" />
+							<TextBox Text="{Binding Model, Mode=OneWay}" Grid.Row="2" Grid.Column="1" />
+							<TextBox Text="{Binding SerialNumber, Mode=OneWay}" Grid.Row="3" Grid.Column="1" />
+							<TextBox Text="{Binding FirmwareVersion, Mode=OneWay}" Grid.Row="4" Grid.Column="1" />
+							<TextBox Text="{Binding Gps, Mode=OneWay}" Grid.Row="5" Grid.Column="1" />
+							<TextBox Text="{Binding Gyro, Mode=OneWay}" Grid.Row="6" Grid.Column="1" />
+							<TextBox Text="{Binding Uptime, Mode=OneWay}" Grid.Row="7" Grid.Column="1" />
+						</Grid>
+
+						<!-- Plugin -->
+						<StackPanel x:Name="pluginSection" Margin="10">
+							<TextBlock Text="{x:Static strings:AppStrings.Title_Plugin}" Margin="0,5" Grid.Row="0" Grid.ColumnSpan="2"
+                                       Foreground="{DynamicResource AccentBaseColorBrush }" Style="{StaticResource MaterialDesignHeadlineTextBlock}"/>
+							<ComboBox x:Name="lstPlugin" HorizontalAlignment="Stretch" ItemsSource="{Binding}" DisplayMemberPath="PluginName"
+									  materialDesign:HintAssist.Hint="select plugin" FontSize="18">
+							</ComboBox>
+							<Grid DataContext="{Binding ElementName=lstPlugin, Path=SelectedItem}">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="Auto" />
+									<ColumnDefinition Width="Auto" />
+								</Grid.ColumnDefinitions>
+								<Grid.RowDefinitions>
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+									<RowDefinition Height="Auto" />
+								</Grid.RowDefinitions>
+
+								<TextBlock Text="{x:Static strings:AppStrings.Title_PluginName}" Grid.Row="1" />
+								<TextBlock Text="{x:Static strings:AppStrings.Title_PluginPackageName}" Grid.Row="2" />
+								<TextBlock Text="{x:Static strings:AppStrings.Title_PluginVersion}" Grid.Row="3" />
+								<TextBlock Text="{x:Static strings:AppStrings.Title_PluginType}" Grid.Row="4" />
+								<TextBlock Text="{x:Static strings:AppStrings.Title_PluginRunning}" Grid.Row="6" />
+								<TextBlock Text="{x:Static strings:AppStrings.Title_PluginForeground}" Grid.Row="5" />
+								<TextBlock Text="{x:Static strings:AppStrings.Title_PluginBoot}" Grid.Row="7" />
+								<TextBlock Text="{x:Static strings:AppStrings.Title_PluginWebServer}" Grid.Row="8" />
+								<TextBlock Text="{x:Static strings:AppStrings.Title_PluginExitStatus}" Grid.Row="9" />
+								<TextBlock Text="{x:Static strings:AppStrings.Title_PluginMessage}" Grid.Row="10" />
+
+								<TextBox Text="{Binding PluginName, Mode=OneWay}" Grid.Row="1" Grid.Column="1" />
+								<TextBox Text="{Binding PackageName, Mode=OneWay}" Grid.Row="2" Grid.Column="1" />
+								<TextBox Text="{Binding Version, Mode=OneWay}" Grid.Row="3" Grid.Column="1" />
+								<TextBox Text="{Binding Type, Mode=OneWay}" Grid.Row="4" Grid.Column="1" />
+								<!--<ToggleButton IsChecked="{Binding Running, Mode=OneWay}" Grid.Row="6" Grid.Column="1" Checked="ToggleRunning_Checked" Unchecked="ToggleRunning_Checked" />
+								<ToggleButton IsChecked="{Binding Foreground, Mode=OneWay}" Grid.Row="5" Grid.Column="1" Checked="ToggleForeground_Checked" Unchecked="ToggleForeground_Checked" />-->
+								<TextBox Text="{Binding Running, Mode=OneWay}" Grid.Row="6" Grid.Column="1" />
+								<TextBox Text="{Binding Foreground, Mode=OneWay}" Grid.Row="5" Grid.Column="1" />
+								<TextBox Text="{Binding Boot, Mode=OneWay}" Grid.Row="7" Grid.Column="1" />
+								<TextBox Text="{Binding WebServer, Mode=OneWay}" Grid.Row="8" Grid.Column="1" />
+								<TextBox Text="{Binding ExistStatus, Mode=OneWay}" Grid.Row="9" Grid.Column="1" />
+								<TextBox Text="{Binding Message, Mode=OneWay}" AcceptsReturn="True" Grid.Row="10" Grid.Column="1" />
+							</Grid>
+						</StackPanel>
 					</WrapPanel>
 				</ScrollViewer>
 			</Grid>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media.Imaging;
 using ThetaNetCore;
 using ThetaNetCore.Util;
@@ -104,6 +105,18 @@ namespace ThetaWinApp.Controls.Camera
 			var info = await _theta.ThetaApi.InfoAsync();
 			infoSection.DataContext = info;
 			CameraSharedInfo.Instance.Info = info;
+
+			if(info.ThetaModel >= InfoResponse.THETA_MODEL.V)
+			{
+				var plugins = await _theta.ThetaApi.ListPluginsAsync();
+				pluginSection.DataContext = plugins?.Results?.Plugins;
+				pluginSection.IsEnabled = true;
+			}
+			else
+			{
+				pluginSection.DataContext = null;
+				pluginSection.IsEnabled = false;
+			}
 		}
 
 		/// <summary>
@@ -114,5 +127,38 @@ namespace ThetaWinApp.Controls.Camera
 			statusSection.DataContext = null;
 			infoSection.DataContext = null;
 		}
+
+		///// <summary>
+		///// Toggle "Foreground" is checked/unchecked
+		///// </summary>
+		///// <param name="sender"></param>
+		///// <param name="e"></param>
+		//async private void ToggleForeground_Checked(object sender, RoutedEventArgs e)
+		//{
+		//	if(CameraSharedInfo.Instance.Info.ThetaModel == InfoResponse.THETA_MODEL.V)
+		//	{
+		//		var plugin = ((FrameworkElement)sender).DataContext as Plugin;
+		//		await _theta.ThetaApi.SetPluginsAsync(plugin.PackageName);
+		//	}
+		//}
+
+		///// <summary>
+		///// Toggle "Running" is checked/unchecked
+		///// </summary>
+		///// <param name="sender"></param>
+		///// <param name="e"></param>
+		//async private void ToggleRunning_Checked(object sender, RoutedEventArgs e)
+		//{
+		//	var plugin = ((FrameworkElement)sender).DataContext as Plugin;
+		//	var action = ((ToggleButton)sender).IsChecked.Value ? PLUGIN_ACTION.START : PLUGIN_ACTION.STOP;
+		//	if (CameraSharedInfo.Instance.Info.ThetaModel == InfoResponse.THETA_MODEL.V)
+		//	{
+		//		await _theta.ThetaApi.PluginControlAsync(action);
+		//	}
+		//	else
+		//	{
+		//		await _theta.ThetaApi.PluginControlAsync(action, plugin.PackageName);
+		//	}
+		//}
 	}
 }
