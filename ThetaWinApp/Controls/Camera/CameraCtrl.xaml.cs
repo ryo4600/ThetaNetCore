@@ -15,6 +15,7 @@ namespace ThetaWinApp.Controls.Camera
 	public partial class CameraCtrl : UserControl
 	{
 		private ThetaWifiConnect _theta = new ThetaWifiConnect();
+		CameraSettingsWnd _settingsWnd = null;
 
 		/// <summary>
 		/// Constructor
@@ -48,6 +49,22 @@ namespace ThetaWinApp.Controls.Camera
 					radioTakePict.IsEnabled = radioPhotos.IsEnabled = false;
 				}));
 			};
+
+			this.IsVisibleChanged += CameraCtrl_IsVisibleChanged;
+		}
+
+		/// <summary>
+		/// Visibility changed
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CameraCtrl_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+		{
+			if (!(bool)e.NewValue)
+			{
+				if (_settingsWnd != null && _settingsWnd.Visibility == Visibility.Visible)
+					_settingsWnd.Visibility = Visibility.Collapsed;
+			}
 		}
 
 		/// <summary>
@@ -67,6 +84,30 @@ namespace ThetaWinApp.Controls.Camera
 
 			}
 		}
+
+		/// <summary>
+		/// Settings button is clicked
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void BtnSettings_Checked(object sender, RoutedEventArgs e)
+		{
+			if (_settingsWnd == null)
+			{
+				_settingsWnd = new CameraSettingsWnd();
+				_settingsWnd.Owner = App.Current.MainWindow;
+				_settingsWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+				_settingsWnd.SaveWindowPosition = true;
+				_settingsWnd.SetTheta(_theta);
+				_settingsWnd.IsVisibleChanged += (s2, e2) =>
+				{
+					if (!(bool)e2.NewValue)
+						btnSettings.IsChecked = false;
+				};
+			}
+			_settingsWnd.Visibility = btnSettings.IsChecked.Value ? Visibility.Visible : Visibility.Collapsed;
+		}
+
 
 		/// <summary>
 		/// Show message with a snack bar

@@ -48,10 +48,6 @@
 					<ToggleButton x:Name="chkPreview" VerticalAlignment="Center" Margin="10,0" Checked="chkPreview_CheckedChanged" 
                                       Unchecked="chkPreview_CheckedChanged" IsChecked="True" />
 				</StackPanel>
-				<ToggleButton x:Name="btnSettings" Style="{StaticResource MaterialDesignFloatingActionButton}"
-									ToolTip="MaterialDesignFloatingActionButton" Checked="BtnSettings_Checked" Unchecked="BtnSettings_Checked">
-					<materialDesign:PackIcon Kind="Settings"  Height="28" Width="28" />
-				</ToggleButton>
 			</StackPanel>
 			<Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" BorderBrush="#888" BorderThickness="1" x:Name="thumbBorder" Visibility="Collapsed" RenderTransformOrigin="0.5,0.5">
 				<Border.RenderTransform>

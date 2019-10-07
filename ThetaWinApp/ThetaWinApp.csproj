@@ -117,6 +117,9 @@
     <Compile Include="Controls\Camera\DevicePhotoCtrl.xaml.cs">
       <DependentUpon>DevicePhotoCtrl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Camera\PhotoSettings.xaml.cs">
+      <DependentUpon>PhotoSettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Camera\TakePictureCtrl.xaml.cs">
       <DependentUpon>TakePictureCtrl.xaml</DependentUpon>
     </Compile>
@@ -163,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Camera\DevicePhotoCtrl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Camera\PhotoSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

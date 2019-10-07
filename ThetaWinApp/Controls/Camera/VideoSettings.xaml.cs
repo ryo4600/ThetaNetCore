@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using ThetaNetCore.Wifi;
+using ThetaWinApp.Properties;
 using static ThetaNetCore.Wifi.InfoResponse;
 
 namespace ThetaWinApp.Controls.Camera
@@ -26,6 +27,8 @@ namespace ThetaWinApp.Controls.Camera
 	{
 		#region Members and Properties
 		private ThetaWifiConnect _theta = null;
+
+		bool _isInitialized = false;
 		#endregion
 
 		/// <summary>
@@ -82,6 +85,12 @@ namespace ThetaWinApp.Controls.Camera
 					new PreviewFormat() { Width=640, Height=320, Framerate=8 },
 					new PreviewFormat() { Width=640, Height=320, Framerate=8 }
 				};
+
+				if (!_isInitialized)
+				{
+					SetLastSettings();
+				}
+
 			}
 			else
 			{
@@ -89,6 +98,22 @@ namespace ThetaWinApp.Controls.Camera
 				{
 					new PreviewFormat() { Width=640, Height=320, Framerate=10 }
 				};
+			}
+
+			_isInitialized = true;
+		}
+
+		/// <summary>
+		/// Apply last settings to camera <br />
+		/// Because some settings (ex. preview format) are set back to defaults.
+		/// </summary>
+		private void SetLastSettings()
+		{
+			Settings settings = Settings.Default;
+			if(settings.LastSelectedPreviewResolution >= 0 &&
+				settings.LastSelectedPreviewResolution < cmbPreview.Items.Count)
+			{
+				cmbPreview.SelectedIndex = settings.LastSelectedPreviewResolution;
 			}
 		}
 
@@ -132,7 +157,12 @@ namespace ThetaWinApp.Controls.Camera
 			{
 				await _theta.ThetaApi.SetOptionsAsync(options);
 				CameraSharedInfo.Instance.FireRestartPreview();
+
+				Settings settings = Settings.Default;
+				settings.LastSelectedPreviewResolution = cmbPreview.SelectedIndex;
+				settings.Save();
 			}));
 		}
+
 	}
 }

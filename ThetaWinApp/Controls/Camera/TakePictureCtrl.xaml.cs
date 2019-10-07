@@ -26,7 +26,6 @@ namespace ThetaWinApp.Controls.Camera
 	public partial class TakePictureCtrl : UserControl
 	{
 		private ThetaWifiConnect _theta = null;
-		CameraSettingsWnd _settingsWnd = null;
 
 		/// <summary>
 		/// Constructor
@@ -74,8 +73,6 @@ namespace ThetaWinApp.Controls.Camera
 			if (!(bool)e.NewValue)
 			{
 				// Collapsed
-				if (_settingsWnd != null && _settingsWnd.Visibility == Visibility.Visible)
-					_settingsWnd.Visibility = Visibility.Collapsed;
 				CameraSharedInfo.Instance.RestartPreviewRequested -= OnRestartPreviewRequested;
 			}
 			else
@@ -227,29 +224,6 @@ namespace ThetaWinApp.Controls.Camera
 			{
 				pnlPrgress.Visibility = Visibility.Collapsed;
 			}));
-		}
-
-		/// <summary>
-		/// Settings button is clicked
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void BtnSettings_Checked(object sender, RoutedEventArgs e)
-		{
-			if (_settingsWnd == null)
-			{
-				_settingsWnd = new CameraSettingsWnd();
-				_settingsWnd.Owner = App.Current.MainWindow;
-				_settingsWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-				_settingsWnd.SaveWindowPosition = true;
-				_settingsWnd.SetTheta(_theta);
-				_settingsWnd.IsVisibleChanged += (s2, e2) =>
-				{
-					if (!(bool)e2.NewValue)
-						btnSettings.IsChecked = false;
-				};
-			}
-			_settingsWnd.Visibility = btnSettings.IsChecked.Value ? Visibility.Visible : Visibility.Collapsed;
 		}
 
 		/// <summary>

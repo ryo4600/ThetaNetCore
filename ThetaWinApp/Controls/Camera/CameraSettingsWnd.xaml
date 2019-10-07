@@ -11,7 +11,13 @@
         Title="{x:Static strings:AppStrings.Title_CameraSettings}" Height="450" Width="400">
     <Grid>
         <TabControl>
-            <TabItem Header="{x:Static strings:AppStrings.Title_Video}">
+			<TabItem Header="{x:Static strings:AppStrings.Title_PhotoSettings}">
+				
+			</TabItem>
+			<TabItem Header="{x:Static strings:AppStrings.Title_DeviceSettings}">
+
+			</TabItem>
+			<TabItem Header="{x:Static strings:AppStrings.Title_Video}">
                 <local:VideoSettings x:Name="videoSettings" />
             </TabItem>
         </TabControl>

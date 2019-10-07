@@ -107,11 +107,11 @@ namespace ThetaWinApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Camera Home.
+        ///   Looks up a localized string similar to Connection.
         /// </summary>
-        public static string Header_CameraHome {
+        public static string Header_Connection {
             get {
-                return ResourceManager.GetString("Header_CameraHome", resourceCulture);
+                return ResourceManager.GetString("Header_Connection", resourceCulture);
             }
         }
         
@@ -350,6 +350,15 @@ namespace ThetaWinApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Device.
+        /// </summary>
+        public static string Title_DeviceSettings {
+            get {
+                return ResourceManager.GetString("Title_DeviceSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download Folder.
         /// </summary>
         public static string Title_DownloadFolder {
@@ -427,6 +436,15 @@ namespace ThetaWinApp.Resources {
         public static string Title_PhotoFolder {
             get {
                 return ResourceManager.GetString("Title_PhotoFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Photo.
+        /// </summary>
+        public static string Title_PhotoSettings {
+            get {
+                return ResourceManager.GetString("Title_PhotoSettings", resourceCulture);
             }
         }
         

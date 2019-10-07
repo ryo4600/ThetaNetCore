@@ -133,8 +133,8 @@
     <value>Unexpected error while communicating Theta. 
 Check the connection.</value>
   </data>
-  <data name="Header_CameraHome" xml:space="preserve">
-    <value>Camera Home</value>
+  <data name="Header_Connection" xml:space="preserve">
+    <value>Connection</value>
   </data>
   <data name="Header_Photos" xml:space="preserve">
     <value>Photos</value>
@@ -214,6 +214,9 @@ Check the connection.</value>
   <data name="Title_ConfirmDelete" xml:space="preserve">
     <value>Delte files</value>
   </data>
+  <data name="Title_DeviceSettings" xml:space="preserve">
+    <value>Device</value>
+  </data>
   <data name="Title_DownloadFolder" xml:space="preserve">
     <value>Download Folder</value>
   </data>
@@ -240,6 +243,9 @@ Check the connection.</value>
   </data>
   <data name="Title_PhotoFolder" xml:space="preserve">
     <value>Photo View Folder</value>
+  </data>
+  <data name="Title_PhotoSettings" xml:space="preserve">
+    <value>Photo</value>
   </data>
   <data name="Title_Plugin" xml:space="preserve">
     <value>Plugin</value>

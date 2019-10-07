@@ -9,6 +9,21 @@
 			 xmlns:strings="clr-namespace:ThetaWinApp.Resources"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+	<UserControl.Resources>
+		<ControlTemplate x:Key="radioTemplate" TargetType="RadioButton">
+			<Border BorderBrush="{DynamicResource AccentColorBrush}" x:Name="border" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+				<ContentPresenter HorizontalAlignment="Center" />
+			</Border>
+			<ControlTemplate.Triggers>
+				<Trigger Property="IsEnabled" Value="False">
+					<Setter Property="TextElement.Foreground" Value="LightGray" />
+				</Trigger>
+				<Trigger Property="IsChecked" Value="True">
+					<Setter TargetName="border" Property="BorderThickness" Value="0,0,0,2" />
+				</Trigger>
+			</ControlTemplate.Triggers>
+		</ControlTemplate>
+	</UserControl.Resources>
 	<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -18,12 +33,16 @@
         <!-- select contents-->
         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" >
             <RadioButton x:Name="radioConnect" Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="True"
-						 Content="{x:Static strings:AppStrings.Header_CameraHome}" Cursor="Hand" Checked="Radio_Checked" />
-            <RadioButton x:Name="radioTakePict" Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" 
-						 Content="{x:Static strings:AppStrings.Header_TakePict}" IsEnabled="False" Cursor="Hand" Checked="Radio_Checked" />
-            <RadioButton x:Name="radioPhotos" Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" 
-						 Content="{x:Static strings:AppStrings.Header_Photos}" IsEnabled="False" Cursor="Hand" Checked="Radio_Checked" />
-        </StackPanel>
+						 Content="{x:Static strings:AppStrings.Header_Connection}" Cursor="Hand" Checked="Radio_Checked" Template="{StaticResource radioTemplate}" />
+			<RadioButton x:Name="radioTakePict" Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" 
+						 Content="{x:Static strings:AppStrings.Header_TakePict}" IsEnabled="False" Cursor="Hand" Checked="Radio_Checked" Template="{StaticResource radioTemplate}" />
+			<RadioButton x:Name="radioPhotos" Style="{StaticResource MaterialDesignTabRadioButton}" Margin="4" IsChecked="False" 
+						 Content="{x:Static strings:AppStrings.Header_Photos}" IsEnabled="False" Cursor="Hand" Checked="Radio_Checked" Template="{StaticResource radioTemplate}" />
+			<ToggleButton x:Name="btnSettings" Style="{StaticResource MaterialDesignFloatingActionButton}"
+									ToolTip="MaterialDesignFloatingActionButton" Checked="BtnSettings_Checked" Unchecked="BtnSettings_Checked">
+				<materialDesign:PackIcon Kind="Settings"  Height="28" Width="28" />
+			</ToggleButton>
+		</StackPanel>
 
         <!-- contents iteselves-->
 		<ctrl:DeviceConnectCtrl x:Name="ctrlConnect" Grid.Row="1" Visibility="{Binding ElementName=radioConnect, Path=IsChecked, Converter={StaticResource BooleanToVisibilityConverter}}" />
