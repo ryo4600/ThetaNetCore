@@ -38,14 +38,20 @@
 				</Button>
 			</StackPanel>
 
-			<Button x:Name="btnTakePicture" Style="{StaticResource MaterialDesignFloatingActionButton}" Margin="15,0"
-									ToolTip="MaterialDesignFloatingActionButton" Click="BtnTakePicture_Click" HorizontalAlignment="Right">
+			<Button x:Name="btnTakePicture" Style="{StaticResource MaterialDesignFloatingActionButton}" Margin="15,0" ToolTip="{x:Static strings:AppStrings.ToolTip_Shatter}"
+									Click="BtnTakePicture_Click" HorizontalAlignment="Right">
 				<materialDesign:PackIcon Kind="Camera"  Height="28" Width="28" />
 			</Button>
-			<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="15">
-				<StackPanel VerticalAlignment="Center">
+
+			<!-- Zoom -->
+			<Slider HorizontalAlignment="Right" VerticalAlignment="Top" Height="120" Minimum="1" Maximum="140" Value="{Binding ElementName=imgPreview, Path=FieldOfView}"
+                Margin="10" Orientation="Vertical" HorizontalContentAlignment="Center" Background="#4FFF" ToolTip="{x:Static strings:AppStrings.ToolTip_Zoom}" />
+
+			<!-- Preview -->
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="15" Background="#4444">
+				<StackPanel VerticalAlignment="Center"  ToolTip="{x:Static strings:AppStrings.ToolTip_Preview}">
 					<TextBlock Text="{x:Static strings:AppStrings.Title_Preview}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,5" />
-					<ToggleButton x:Name="chkPreview" VerticalAlignment="Center" Margin="10,0" Checked="chkPreview_CheckedChanged" 
+					<ToggleButton x:Name="chkPreview" VerticalAlignment="Center" Margin="10,0" Checked="chkPreview_CheckedChanged"
                                       Unchecked="chkPreview_CheckedChanged" IsChecked="True" />
 				</StackPanel>
 			</StackPanel>

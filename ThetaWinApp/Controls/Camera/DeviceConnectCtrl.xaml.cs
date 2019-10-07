@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using ThetaNetCore;
 using ThetaNetCore.Util;
@@ -50,6 +51,13 @@ namespace ThetaWinApp.Controls.Camera
 		/// <param name="e"></param>
 		private async void BtnCheck_Click(object sender, RoutedEventArgs e)
 		{
+#if DEBUG
+			if(Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+			{
+				OnConnectionReady?.Invoke(true);
+				return;
+			}
+#endif
 			try
 			{
 				OnConnectionReady?.Invoke(false);

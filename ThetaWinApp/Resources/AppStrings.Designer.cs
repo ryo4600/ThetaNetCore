@@ -627,5 +627,32 @@ namespace ThetaWinApp.Resources {
                 return ResourceManager.GetString("Title_Video", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to toggle preview.
+        /// </summary>
+        public static string ToolTip_Preview {
+            get {
+                return ResourceManager.GetString("ToolTip_Preview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to shoot button.
+        /// </summary>
+        public static string ToolTip_Shatter {
+            get {
+                return ResourceManager.GetString("ToolTip_Shatter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to zoom.
+        /// </summary>
+        public static string ToolTip_Zoom {
+            get {
+                return ResourceManager.GetString("ToolTip_Zoom", resourceCulture);
+            }
+        }
     }
 }

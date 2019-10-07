@@ -21,6 +21,12 @@ namespace SphereViewWpf
 		private ImageBrush _textureBrush = null;
 		#endregion
 
+		public double FieldOfView
+		{
+			get { return _camera.FieldOfView; }
+			set { _camera.FieldOfView = value;  }
+		}
+
 		/// <summary>
 		/// Camera horizontal orientation
 		/// </summary>

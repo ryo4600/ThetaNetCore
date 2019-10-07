@@ -308,4 +308,13 @@
   <data name="Title_Video" xml:space="preserve">
     <value>動画</value>
   </data>
+  <data name="ToolTip_Preview" xml:space="preserve">
+    <value>プレビューモードのOn/Off</value>
+  </data>
+  <data name="ToolTip_Shatter" xml:space="preserve">
+    <value>撮影ボタン</value>
+  </data>
+  <data name="ToolTip_Zoom" xml:space="preserve">
+    <value>ズームイン／アウト</value>
+  </data>
 </root>

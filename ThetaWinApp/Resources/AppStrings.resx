@@ -307,4 +307,13 @@ Check the connection.</value>
   <data name="Title_Video" xml:space="preserve">
     <value>Video</value>
   </data>
+  <data name="ToolTip_Preview" xml:space="preserve">
+    <value>toggle preview</value>
+  </data>
+  <data name="ToolTip_Shatter" xml:space="preserve">
+    <value>shoot button</value>
+  </data>
+  <data name="ToolTip_Zoom" xml:space="preserve">
+    <value>zoom</value>
+  </data>
 </root>

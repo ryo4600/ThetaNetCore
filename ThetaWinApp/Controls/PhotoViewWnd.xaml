@@ -49,16 +49,24 @@
         </EventTrigger>
     </metro:MetroWindow.Triggers>
     <Grid>
+		<!-- 360 view -->
         <view3d:SphereViewCtrl x:Name="viewSphere" />
+		<!-- For normal photo uses this -->
         <Image x:Name="viewNormal" Stretch="Uniform" />
+		<!-- Previous image -->
         <Button x:Name="btnLeft" VerticalAlignment="Center" HorizontalAlignment="Left" Opacity="0.2" Click="BtnLeft_Click" Padding="5">
             <materialDesign:PackIcon Kind="MenuLeftOutline" Height="24" Width="24" />
         </Button>
+		<!-- Next image -->
         <Button x:Name="btnRight" VerticalAlignment="Center" HorizontalAlignment="Right" Opacity="0.2" Click="BtnRight_Click" Padding="5">
             <materialDesign:PackIcon Kind="MenuRightOutline" Height="24" Width="24" />
         </Button>
 
-        <ProgressBar x:Name="_progress" Visibility="Collapsed"
+		<!-- Zoom -->
+		<Slider HorizontalAlignment="Right" VerticalAlignment="Top" Height="120" Minimum="1" Maximum="140" Value="{Binding ElementName=viewSphere, Path=FieldOfView}"
+                Margin="10" Orientation="Vertical" HorizontalContentAlignment="Center" Background="#4FFF" ToolTip="{x:Static strings:AppStrings.ToolTip_Zoom}" />
+
+		<ProgressBar x:Name="_progress" Visibility="Collapsed"
                      HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="20" IsIndeterminate="True" />
     </Grid>
 </metro:MetroWindow>
