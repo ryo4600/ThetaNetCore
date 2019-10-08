@@ -39,7 +39,7 @@ namespace ThetaNetCore.Wifi
 		/// If fine control is needed, use this instance.
 		/// </summary>
 		public ThetaWifiApi ThetaApi { get => _theta; }
-		public bool IsPreviewing { get => _isPreviewing; }
+		public bool IsPreviewing { get => _previewStream != null; }
 
 		/// <summary>
 		/// Check if connection to THETA is established
@@ -81,47 +81,33 @@ namespace ThetaNetCore.Wifi
 		/// Notifies when an image is ready
 		/// </summary>
 		public event Action<byte[]> ImageReady;
-
-		/// <summary>
-		/// Flag to stop the live preview
-		/// </summary>
-		private bool _stopPreview = false;
-
-		/// <summary>
-		/// Previewing ?
-		/// </summary>
-		private bool _isPreviewing = false;
 		#endregion
 
 		#region Live Preview
+		Stream _previewStream = null;
 		/// <summary>
 		/// Starts getting preview images
 		/// </summary>
 		public void StartLivePreview()
 		{
-			if (_isPreviewing)
-				return;
+			if (_previewStream != null)
+			{
+				_previewStream.Close();
+			}
 
-			_isPreviewing = true;
 			Task.Factory.StartNew(new Action(async() =>
 			{
 				var state = await _theta.StateAsync();
-				var stream = await _theta.GetLivePreviewAsync();
+				_previewStream = await _theta.GetLivePreviewAsync();
 
-				var reader = new BinaryReader(stream, new System.Text.ASCIIEncoding());
+				var reader = new BinaryReader(_previewStream, new System.Text.ASCIIEncoding());
 				var imageBytes = new System.Collections.Generic.List<byte>();
-				bool loadStarted = false; // 画像の頭のバイナリとったかフラグ
+				bool loadStarted = false; // flag if I take the 画像の頭のバイナリとったかフラグ
 				byte oldByte = 0; // 1つ前のByteデータを格納する
-				using (stream)
+				using (_previewStream)
 				{
 					while (true)
 					{
-						if (_stopPreview)
-						{
-							_stopPreview = false;
-							break;
-						}
-
 						try
 						{
 							byte byteData = reader.ReadByte();
@@ -167,12 +153,12 @@ namespace ThetaNetCore.Wifi
 						}
 						catch (Exception ex)
 						{
-							OnPreviewTerminated?.Invoke(new ThetaWifiConnectException(WifiStrings.Err_GetImage, ex));
+							//OnPreviewTerminated?.Invoke(new ThetaWifiConnectException(WifiStrings.Err_GetImage, ex));
 							break;
 						}
 					}
 				}
-				_isPreviewing = false;
+				_previewStream = null;
 			}));
 
 		}
@@ -216,10 +202,11 @@ namespace ThetaNetCore.Wifi
 		/// </summary>
 		public void StopLivePreview()
 		{
-			if (!_isPreviewing)
-				return;
-
-			_stopPreview = true;
+			if(_previewStream != null)
+			{
+				_previewStream.Close();
+				_previewStream = null;
+			}
 		}
 
 		#endregion
@@ -230,7 +217,7 @@ namespace ThetaNetCore.Wifi
 		/// <returns></returns>
 		public async Task<TakePictureResponse> TakePictureAsync()
 		{
-			_isPreviewing = false;
+			StopLivePreview();
 
 			var response = await _theta.TakePictureAsync();
 			var state = await _theta.StateAsync();

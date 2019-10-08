@@ -36,7 +36,7 @@
             <ToggleButton x:Name="toggleChecked" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" IsChecked="{Binding IsChecked}" 
                           Style="{StaticResource MaterialDesignActionLightToggleButton}" />
 
-            <ProgressBar x:Name="_progress" Minimum="0" Maximum="100" Grid.RowSpan="2" Value="{Binding DownloadProgress}" HorizontalAlignment="Stretch" Height="20"
+            <ProgressBar x:Name="_progress" Minimum="0" Maximum="100" Grid.RowSpan="2" Value="{Binding DownloadProgress}" HorizontalAlignment="Stretch" Width="150" Height="20"
 						 Margin="20,0" Visibility="Collapsed" />
         </Grid>
     </Border>

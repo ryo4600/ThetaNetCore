@@ -1,10 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Net;
+using System.Net.Http;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading.Tasks;
-using ThetaNetCore.Resources;
 using ThetaNetCore.Util;
 
 namespace ThetaNetCore.Wifi
@@ -13,7 +11,6 @@ namespace ThetaNetCore.Wifi
 	{
 		private const string THETA_URL = "http://192.168.1.1:80/";
 		private enum SEND_TYPE { GET, POST };
-
 
 		#region Utility, Common Functions
 		/// <summary>
@@ -25,8 +22,8 @@ namespace ThetaNetCore.Wifi
 		async public Task<StateResponse> StateAsync()
 		{
 			var response = await SendRequestAsync<Object>(SEND_TYPE.POST, null, "osc/state");
-			CheckResponse(response);
-			return JsonUtil.ToObject<StateResponse>(response.GetResponseStream());
+			await CheckResponseAsync(response);
+			return JsonUtil.ToObject<StateResponse>(await response.Content.ReadAsStreamAsync());
 		}
 
 		/// <summary>
@@ -39,8 +36,8 @@ namespace ThetaNetCore.Wifi
 		{
 			var command = new CheckForUpdateRequest() { StateFingerprint = fingerPrint };
 			var response = await SendRequestAsync<CheckForUpdateRequest>(SEND_TYPE.POST, command, "osc/checkForUpdates");
-			CheckResponse(response);
-			var resObj = JsonUtil.ToObject<CheckForUpdateResponse>(response.GetResponseStream());
+			await CheckResponseAsync(response);
+			var resObj = JsonUtil.ToObject<CheckForUpdateResponse>(await response.Content.ReadAsStreamAsync());
 			return resObj.StateFingerprint;
 		}
 
@@ -54,8 +51,8 @@ namespace ThetaNetCore.Wifi
 		async public Task<InfoResponse> InfoAsync()
 		{
 			var response = await SendRequestAsync<Object>(SEND_TYPE.GET, null, "osc/info");
-			CheckResponse(response);
-			return JsonUtil.ToObject<InfoResponse>(response.GetResponseStream());
+			await CheckResponseAsync(response);
+			return JsonUtil.ToObject<InfoResponse>(await response.Content.ReadAsStreamAsync());
 		}
 
 		/// <summary>
@@ -67,8 +64,8 @@ namespace ThetaNetCore.Wifi
 		{
 			var command = new ThetaRequest<Object>() { Name = "camera.startSession" };
 			var response = await ExecuteCommandAsync<Object>(command);
-			CheckResponse(response);
-			return JsonUtil.ToObject<ThetaResponse<StartSessionResponse>>(response.GetResponseStream()).Results;
+			await CheckResponseAsync(response);
+			return JsonUtil.ToObject<ThetaResponse<StartSessionResponse>>(await response.Content.ReadAsStreamAsync()).Results;
 		}
 
 		/// <summary>
@@ -79,7 +76,7 @@ namespace ThetaNetCore.Wifi
 			var command = new ThetaRequest<SessionParam>()
 			{ Name = "camera.closeSession", Parameters = new SessionParam() { SessionId = sessionId } };
 			using (var response = await ExecuteCommandAsync<SessionParam>(command))
-				CheckResponse(response);
+				await CheckResponseAsync(response);
 		}
 
 		/// <summary>
@@ -96,8 +93,8 @@ namespace ThetaNetCore.Wifi
 			try
 			{
 				var response = await ExecuteCommandAsync<GetOptionParams>(command);
-				CheckResponse(response);
-				var res = JsonUtil.ToObject<ThetaResponse<SetOptionParams>>(response.GetResponseStream());
+				await CheckResponseAsync(response);
+				var res = JsonUtil.ToObject<ThetaResponse<SetOptionParams>>(await response.Content.ReadAsStreamAsync());
 				return res.Results.Options;
 			}
 			catch (Exception ex)
@@ -123,7 +120,7 @@ namespace ThetaNetCore.Wifi
 			var command = new ThetaRequest<SetOptionParams>()
 			{ Name = "camera.setOptions", Parameters = optionParams };
 			using (var response = await ExecuteCommandAsync<SetOptionParams>(command))
-				CheckResponse(response);
+				await CheckResponseAsync(response);
 		}
 
 		/// <summary>
@@ -136,7 +133,7 @@ namespace ThetaNetCore.Wifi
 		{
 			var command = new ThetaRequest<Object>() { Name = "camera._finishWlan" };
 			using (var response = await ExecuteCommandAsync<Object>(command))
-				CheckResponse(response);
+				await CheckResponseAsync(response);
 		}
 
 		/// <summary>
@@ -148,7 +145,7 @@ namespace ThetaNetCore.Wifi
 		{
 			var command = new ThetaRequest<Object>() { Name = "camera.reset" };
 			using (var response = await ExecuteCommandAsync<Object>(command))
-				CheckResponse(response);
+				await CheckResponseAsync(response);
 		}
 
 		/// <summary>
@@ -160,7 +157,7 @@ namespace ThetaNetCore.Wifi
 		{
 			var command = new ThetaRequest<Object>() { Name = "camera._stopSelfTimer" };
 			using (var response = await ExecuteCommandAsync<Object>(command))
-				CheckResponse(response);
+				await CheckResponseAsync(response);
 		}
 
 		/// <summary>
@@ -168,8 +165,7 @@ namespace ThetaNetCore.Wifi
 		/// </summary>
 		async public Task<Stream> GetLivePreviewAsync()
 		{
-			var command = new ThetaRequest<Object>() { Name = "camera.getLivePreview" };
-			var response = await ExecuteCommandAsync<Object>(command, 3000);
+			var response = await RequestVideoStreamAsync();
 			CheckResponse(response);
 			return response.GetResponseStream();
 		}
@@ -185,8 +181,8 @@ namespace ThetaNetCore.Wifi
 			var state = await StateAsync();
 			var command = new ThetaRequest<Object>() { Name = "camera.takePicture" };
 			var response = await ExecuteCommandAsync<Object>(command);
-			CheckResponse(response);
-			return JsonUtil.ToObject<TakePictureResponse>(response.GetResponseStream());
+			await CheckResponseAsync(response);
+			return JsonUtil.ToObject<TakePictureResponse>(await response.Content.ReadAsStreamAsync());
 		}
 
 		/// <summary>
@@ -201,8 +197,8 @@ namespace ThetaNetCore.Wifi
 			var command = new ThetaRequest<ListFilesParam>()
 			{ Name = "camera.listFiles", Parameters = param };
 			var response = await ExecuteCommandAsync<ListFilesParam>(command);
-			CheckResponse(response);
-			return JsonUtil.ToObject<ThetaResponse<ListFilesResponse>>(response.GetResponseStream()).Results;
+			await CheckResponseAsync(response);
+			return JsonUtil.ToObject<ThetaResponse<ListFilesResponse>>(await response.Content.ReadAsStreamAsync()).Results;
 		}
 
 		/// <summary>
@@ -217,7 +213,7 @@ namespace ThetaNetCore.Wifi
 			var command = new ThetaRequest<DeleteParam>()
 			{ Name = "camera.delete", Parameters = new DeleteParam() { FileUrls = fileUrls } };
 			using (var response = await ExecuteCommandAsync<DeleteParam>(command))
-				CheckResponse(response);
+				await CheckResponseAsync(response);
 		}
 
 		/// <summary>
@@ -230,8 +226,8 @@ namespace ThetaNetCore.Wifi
 		async public Task<Stream> GetImageAsync(String fileUrl)
 		{
 			var response = await DownloadFileAsync(fileUrl);
-			CheckResponse(response);
-			return response.GetResponseStream();
+			await CheckResponseAsync(response);
+			return await response.Content.ReadAsStreamAsync();
 		}
 
 		/// <summary>
@@ -239,12 +235,9 @@ namespace ThetaNetCore.Wifi
 		/// </summary>
 		/// <param name="uri"></param>
 		/// <returns></returns>
-		async private static Task<HttpWebResponse> DownloadFileAsync(String uri)
+		async private static Task<HttpResponseMessage> DownloadFileAsync(String uri)
 		{
-			HttpWebRequest request = System.Net.WebRequest.Create(uri) as HttpWebRequest;
-			request.Method = "GET";
-
-			return await request.GetResponseAsync() as HttpWebResponse;
+			return await _httpClient.GetAsync(uri);
 		}
 
 		/// <summary>
@@ -256,8 +249,8 @@ namespace ThetaNetCore.Wifi
 		{
 			var command = new ThetaRequest<Object>() { Name = "camera._listPlugins" };
 			var response = await ExecuteCommandAsync<Object>(command);
-			CheckResponse(response);
-			return JsonUtil.ToObject<ListPluginsResponse>(response.GetResponseStream());
+			await CheckResponseAsync(response);
+			return JsonUtil.ToObject<ListPluginsResponse>(await response.Content.ReadAsStreamAsync());
 		}
 
 		/// <summary>
@@ -274,7 +267,7 @@ namespace ThetaNetCore.Wifi
 				Parameters = new SetPluginParam() { PackageName = packageName }
 			};
 			using (var response = await ExecuteCommandAsync<SetPluginParam>(command))
-				CheckResponse(response);
+				await CheckResponseAsync(response);
 		}
 
 		/// <summary>
@@ -290,7 +283,7 @@ namespace ThetaNetCore.Wifi
 				Parameters = new PluginControlParam() { PluginAction = action, Plugin = pluginName }
 			};
 			using (var response = await ExecuteCommandAsync<PluginControlParam>(command))
-				CheckResponse(response);
+				await CheckResponseAsync(response);
 		}
 	}
 

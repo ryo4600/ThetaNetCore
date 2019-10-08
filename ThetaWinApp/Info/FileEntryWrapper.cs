@@ -58,7 +58,10 @@ namespace ThetaWinApp.Info
 		public int DownloadProgress
 		{
 			get { return _downloadProgress; }
-			set { SetProperty<int>(ref _downloadProgress, value); }
+			set {
+					SetProperty<int>(ref _downloadProgress, value);
+				
+				}
 		}
 
 		/// <summary>

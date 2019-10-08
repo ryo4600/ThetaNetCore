@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Net.Cache;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -201,16 +202,15 @@ namespace ThetaWinApp.Controls.Camera
 		/// <param name="fileUrl"></param>
 		private void ThetaApi_OnTakePictureCompleted(string fileUrl)
 		{
-			this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate
+			this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(async delegate
 			{
 				pnlPrgress.Visibility = Visibility.Collapsed;
-				var img = new BitmapImage(new Uri(fileUrl));
-				img.DownloadCompleted += (s, e) =>
-				{
-					OnRestartPreviewRequested();
-				};
-				thumbImg.Source = img;
+
+				var stream = await _theta.ThetaApi.GetImageAsync(fileUrl);
+				thumbImg.Source = BitmapFrame.Create(stream);
+
 				((Storyboard)this.FindResource("OpenThumbnail")).Begin();
+				OnRestartPreviewRequested();
 			}));
 		}
 

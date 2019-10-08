@@ -15,7 +15,6 @@ namespace ThetaWinApp.Controls.Camera
 		public event Action<FileEntryWrapper> CancelRequested = null;
 		#endregion
 
-
 		public Boolean IsInEditMode
 		{
 			get { return (Boolean)GetValue(IsInEditModeProperty); }
@@ -99,6 +98,7 @@ namespace ThetaWinApp.Controls.Camera
 			if (wrapper == null)
 				return;
 
+			System.Diagnostics.Debug.WriteLine("progress:" + wrapper.DownloadProgress);
 			toggleChecked.Visibility = IsInEditMode ? Visibility.Visible : Visibility.Collapsed;
 			btnDownload.Visibility = !IsInEditMode && wrapper.DownloadStatus == DOWNLOAD_STATUS.NOT_DOWNLOADED ? Visibility.Visible : Visibility.Collapsed;
 			btnCancel.Visibility = !IsInEditMode && wrapper.DownloadStatus == DOWNLOAD_STATUS.WAINTING ? Visibility.Visible : Visibility.Collapsed;
@@ -109,7 +109,7 @@ namespace ThetaWinApp.Controls.Camera
 			}
 			else
 			{
-				_progress.Visibility = Visibility.Collapsed;
+				//_progress.Visibility = Visibility.Collapsed;
 			}
 		}
 

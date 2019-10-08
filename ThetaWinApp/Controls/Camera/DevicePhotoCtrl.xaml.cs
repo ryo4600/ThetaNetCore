@@ -472,6 +472,11 @@ namespace ThetaWinApp.Controls.Camera
 			while (_downloadQueue.Count > 0)
 			{
 				var anEntry = _downloadQueue[0];
+				if(anEntry.DownloadStatus != DOWNLOAD_STATUS.WAINTING)
+				{
+					_downloadQueue.Remove(anEntry);
+					continue;
+				}
 
 				// Get a read stream
 				using (Stream stream = await _theta.ThetaApi.GetImageAsync(anEntry.Data.FileUrl))
@@ -481,7 +486,7 @@ namespace ThetaWinApp.Controls.Camera
 					var newFile = new FileInfo(fileName);
 					using (var aStream = newFile.Open(FileMode.OpenOrCreate))
 					{
-						int readSize = 1000;
+						int readSize = 100000;
 						var readBuffer = new byte[readSize];
 						int totalRead = 0;
 						for (int i = 0; i < (int)Math.Ceiling(size / (double)readSize); i++)
@@ -491,11 +496,13 @@ namespace ThetaWinApp.Controls.Camera
 							aStream.Write(readBuffer, 0, numRead);
 							totalRead += numRead;
 							anEntry.DownloadProgress = (int)((double)totalRead / size * 100);
+							await Task.Delay(1);
 						}
 					}
 				}
 
 				anEntry.DownloadProgress = 100;
+				await Task.Delay(1);
 
 				_downloadQueue.Remove(anEntry);
 			}

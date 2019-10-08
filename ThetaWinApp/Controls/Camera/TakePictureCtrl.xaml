@@ -12,7 +12,7 @@
 	<UserControl.Resources>
 		<Storyboard x:Key="OpenThumbnail">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="thumbBorder">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
 			</DoubleAnimationUsingKeyFrames>
 			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="thumbBorder">
 				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
@@ -47,7 +47,7 @@
 			<Slider HorizontalAlignment="Right" VerticalAlignment="Top" Height="120" Minimum="1" Maximum="140" Value="{Binding ElementName=imgPreview, Path=FieldOfView}"
                 Margin="10" Orientation="Vertical" HorizontalContentAlignment="Center" Background="#4FFF" ToolTip="{x:Static strings:AppStrings.ToolTip_Zoom}" />
 
-			<!-- Preview -->
+			<!-- Toggle Preview -->
 			<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="15" Background="#4444">
 				<StackPanel VerticalAlignment="Center"  ToolTip="{x:Static strings:AppStrings.ToolTip_Preview}">
 					<TextBlock Text="{x:Static strings:AppStrings.Title_Preview}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,5" />
@@ -55,7 +55,9 @@
                                       Unchecked="chkPreview_CheckedChanged" IsChecked="True" />
 				</StackPanel>
 			</StackPanel>
-			<Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10" BorderBrush="#888" BorderThickness="1" x:Name="thumbBorder" Visibility="Collapsed" RenderTransformOrigin="0.5,0.5">
+			
+			<!-- thumbnail -->
+			<Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" BorderBrush="#888" BorderThickness="1" x:Name="thumbBorder" Visibility="Collapsed" RenderTransformOrigin="0.5,0.5">
 				<Border.RenderTransform>
 					<TransformGroup>
 						<ScaleTransform ScaleY="0"/>

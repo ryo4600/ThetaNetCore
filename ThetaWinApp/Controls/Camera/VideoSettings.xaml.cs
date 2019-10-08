@@ -157,11 +157,11 @@ namespace ThetaWinApp.Controls.Camera
 			{
 				await _theta.ThetaApi.SetOptionsAsync(options);
 				CameraSharedInfo.Instance.FireRestartPreview();
-
-				Settings settings = Settings.Default;
-				settings.LastSelectedPreviewResolution = cmbPreview.SelectedIndex;
-				settings.Save();
 			}));
+			Settings settings = Settings.Default;
+			settings.LastSelectedPreviewResolution = cmbPreview.SelectedIndex;
+			settings.Save();
+
 		}
 
 	}
