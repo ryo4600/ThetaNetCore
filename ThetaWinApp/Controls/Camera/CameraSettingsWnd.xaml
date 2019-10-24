@@ -12,10 +12,10 @@
     <Grid>
         <TabControl>
 			<TabItem Header="{x:Static strings:AppStrings.Title_PhotoSettings}">
-				
+				<local:PhotoSettings x:Name="photoSettings" />
 			</TabItem>
-			<TabItem Header="{x:Static strings:AppStrings.Title_DeviceSettings}">
-
+			<TabItem Header="{x:Static strings:AppStrings.Title_ImageSettings}">
+				<local:ImageQualitySettings x:Name="imageSettings" />
 			</TabItem>
 			<TabItem Header="{x:Static strings:AppStrings.Title_Video}">
                 <local:VideoSettings x:Name="videoSettings" />

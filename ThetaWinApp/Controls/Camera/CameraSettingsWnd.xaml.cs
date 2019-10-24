@@ -41,6 +41,8 @@ namespace ThetaWinApp.Controls.Camera
 		{
 			_theta = theta;
 
+			photoSettings.SetTheta(theta);
+			imageSettings.SetTheta(theta);
 			videoSettings.SetTheta(theta);
 		}
 

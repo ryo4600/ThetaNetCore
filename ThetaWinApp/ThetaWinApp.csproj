@@ -117,6 +117,9 @@
     <Compile Include="Controls\Camera\DevicePhotoCtrl.xaml.cs">
       <DependentUpon>DevicePhotoCtrl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Camera\ImageQualitySettings.xaml.cs">
+      <DependentUpon>ImageQualitySettings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Camera\PhotoSettings.xaml.cs">
       <DependentUpon>PhotoSettings.xaml</DependentUpon>
     </Compile>
@@ -141,6 +144,7 @@
     <Compile Include="Controls\PhotoViewWnd.xaml.cs">
       <DependentUpon>PhotoViewWnd.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ByteToMegaByteConverter.cs" />
     <Compile Include="Converters\CountToVisibilityConverter.cs" />
     <Compile Include="Converters\StringArrayConverter.cs" />
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
@@ -168,6 +172,10 @@
     <Page Include="Controls\Camera\DevicePhotoCtrl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Camera\ImageQualitySettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\Camera\PhotoSettings.xaml">
       <SubType>Designer</SubType>

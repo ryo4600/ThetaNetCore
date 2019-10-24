@@ -278,6 +278,15 @@ namespace ThetaWinApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aperture.
+        /// </summary>
+        public static string Title_Aperture {
+            get {
+                return ResourceManager.GetString("Title_Aperture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Battery Level.
         /// </summary>
         public static string Title_BatteryLevel {
@@ -350,15 +359,6 @@ namespace ThetaWinApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Device.
-        /// </summary>
-        public static string Title_DeviceSettings {
-            get {
-                return ResourceManager.GetString("Title_DeviceSettings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Download Folder.
         /// </summary>
         public static string Title_DownloadFolder {
@@ -400,6 +400,15 @@ namespace ThetaWinApp.Resources {
         public static string Title_Gyro {
             get {
                 return ResourceManager.GetString("Title_Gyro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string Title_ImageSettings {
+            get {
+                return ResourceManager.GetString("Title_ImageSettings", resourceCulture);
             }
         }
         
@@ -584,11 +593,65 @@ namespace ThetaWinApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remaining.
+        /// </summary>
+        public static string Title_Remaining {
+            get {
+                return ResourceManager.GetString("Title_Remaining", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Photo.
+        /// </summary>
+        public static string Title_RemainingPhoto {
+            get {
+                return ResourceManager.GetString("Title_RemainingPhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video (sec).
+        /// </summary>
+        public static string Title_RemainingVideo {
+            get {
+                return ResourceManager.GetString("Title_RemainingVideo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Space (MB).
+        /// </summary>
+        public static string Title_RemainningSpace {
+            get {
+                return ResourceManager.GetString("Title_RemainningSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Serial Number.
         /// </summary>
         public static string Title_SerialNumber {
             get {
                 return ResourceManager.GetString("Title_SerialNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shutter Spead.
+        /// </summary>
+        public static string Title_ShutterSpeed {
+            get {
+                return ResourceManager.GetString("Title_ShutterSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shutter Volume.
+        /// </summary>
+        public static string Title_ShutterVolume {
+            get {
+                return ResourceManager.GetString("Title_ShutterVolume", resourceCulture);
             }
         }
         

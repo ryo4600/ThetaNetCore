@@ -191,6 +191,9 @@
   <data name="Note_Configurable_AfterV" xml:space="preserve">
     <value>(V 以降設定可能)</value>
   </data>
+  <data name="Title_Aperture" xml:space="preserve">
+    <value>開口</value>
+  </data>
   <data name="Title_BatteryLevel" xml:space="preserve">
     <value>バッテリー残量</value>
   </data>
@@ -215,9 +218,6 @@
   <data name="Title_ConfirmDelete" xml:space="preserve">
     <value>ファイルの削除</value>
   </data>
-  <data name="Title_DeviceSettings" xml:space="preserve">
-    <value>本体設定</value>
-  </data>
   <data name="Title_DownloadFolder" xml:space="preserve">
     <value>ダウンロードフォルダ</value>
   </data>
@@ -233,6 +233,9 @@
   <data name="Title_Gyro" xml:space="preserve">
     <value>ジャイロスコープの有無</value>
   </data>
+  <data name="Title_ImageSettings" xml:space="preserve">
+    <value>イメージ</value>
+  </data>
   <data name="Title_Info" xml:space="preserve">
     <value>カメラ情報</value>
   </data>
@@ -246,7 +249,7 @@
     <value>写真表示フォルダ</value>
   </data>
   <data name="Title_PhotoSettings" xml:space="preserve">
-    <value>写真設定</value>
+    <value>撮影</value>
   </data>
   <data name="Title_Plugin" xml:space="preserve">
     <value>プラグイン</value>
@@ -293,8 +296,26 @@
   <data name="Title_RecordedTime" xml:space="preserve">
     <value>動画の撮影時間(秒)</value>
   </data>
+  <data name="Title_Remaining" xml:space="preserve">
+    <value>残り</value>
+  </data>
+  <data name="Title_RemainingPhoto" xml:space="preserve">
+    <value>撮影枚数</value>
+  </data>
+  <data name="Title_RemainingVideo" xml:space="preserve">
+    <value>動画時間（秒）</value>
+  </data>
+  <data name="Title_RemainningSpace" xml:space="preserve">
+    <value>容量（MB）</value>
+  </data>
   <data name="Title_SerialNumber" xml:space="preserve">
     <value>シリアルナンバー</value>
+  </data>
+  <data name="Title_ShutterSpeed" xml:space="preserve">
+    <value>シャッター速度</value>
+  </data>
+  <data name="Title_ShutterVolume" xml:space="preserve">
+    <value>シャッター音量</value>
   </data>
   <data name="Title_SpherePhotoView" xml:space="preserve">
     <value>Theta Win App フォトビューアー</value>

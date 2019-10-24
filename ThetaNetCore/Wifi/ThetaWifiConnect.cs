@@ -151,7 +151,7 @@ namespace ThetaNetCore.Wifi
 							BeginWatchingForCompletion(state.FingerPrint, state.State.LatestFileUrl);
 							break;
 						}
-						catch (Exception ex)
+						catch (Exception)
 						{
 							//OnPreviewTerminated?.Invoke(new ThetaWifiConnectException(WifiStrings.Err_GetImage, ex));
 							break;

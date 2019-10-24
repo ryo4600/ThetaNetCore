@@ -4,17 +4,29 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ThetaWinApp.Controls.Camera"
-             mc:Ignorable="d" 
+			 xmlns:core="clr-namespace:System;assembly=mscorlib"
+			 xmlns:strings="clr-namespace:ThetaWinApp.Resources"
+             mc:Ignorable="d" IsVisibleChanged="UserControl_IsVisibleChanged"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Margin="10">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto" />
-			<RowDefinition />
-		</Grid.RowDefinitions>
-
-	</Grid>
+	<UserControl.Resources>
+		<core:Double x:Key="HeaderWidth">150</core:Double>
+	</UserControl.Resources>
+	<StackPanel Margin="10">
+		<!--<StackPanel Orientation="Horizontal">
+			<TextBlock Text="{x:Static strings:AppStrings.Title_ShutterSpeed}" VerticalAlignment="Center" Margin="10" Width="{StaticResource HeaderWidth}" />
+			<ComboBox ItemsSource="{Binding}" x:Name="cmbSpeed" SelectionChanged="ShutterSpeed_SelectionChanged"
+							  DisplayMemberPath="Key" SelectedValuePath="Value"/>
+		</StackPanel>-->
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<TextBlock Text="{x:Static strings:AppStrings.Title_ShutterVolume}" VerticalAlignment="Center" Margin="10" Width="{StaticResource HeaderWidth}" />
+			<Slider Grid.Column="1" x:Name="sliderVolume" Minimum="0" Maximum="100" SmallChange="1" LargeChange="5" ValueChanged="sliderVolume_ValueChanged" Orientation="Horizontal" 
+					VerticalAlignment="Center"/>
+			<TextBlock Grid.Column="2" Text="{Binding ElementName=sliderVolume, Path=Value}" VerticalAlignment="Center" Margin="10,0" Width="50" />
+		</Grid>
+	</StackPanel>
 </UserControl>

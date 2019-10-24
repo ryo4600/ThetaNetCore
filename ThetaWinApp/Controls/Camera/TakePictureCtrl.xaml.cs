@@ -27,6 +27,7 @@ namespace ThetaWinApp.Controls.Camera
 	public partial class TakePictureCtrl : UserControl
 	{
 		private ThetaWifiConnect _theta = null;
+		CameraSettingsWnd _settingsWnd = null;
 
 		/// <summary>
 		/// Constructor
@@ -75,14 +76,28 @@ namespace ThetaWinApp.Controls.Camera
 			{
 				// Collapsed
 				CameraSharedInfo.Instance.RestartPreviewRequested -= OnRestartPreviewRequested;
+
+				if (_settingsWnd != null && _settingsWnd.Visibility == Visibility.Visible)
+					_settingsWnd.Visibility = Visibility.Collapsed;
 			}
 			else
 			{
 				// Visible
 				CameraSharedInfo.Instance.RestartPreviewRequested += OnRestartPreviewRequested;
+				UpdateStatusTexts();
 			}
 		}
-	
+
+		/// <summary>
+		/// Update status texts, such as remaining photo, video, and etc...
+		/// </summary>
+		async private void UpdateStatusTexts()
+		{
+			var optionsParam = new GetOptionsParam() { RemainingPictures = true, RemainingVideoSeconds = true, RemainingSpace = true, TotalSpace = true };
+			var options = await _theta.ThetaApi.GetOptionsAsync(optionsParam);
+			pnlRemainings.DataContext = options;
+		}
+
 		/// <summary>
 		/// Restart of preview is required
 		/// </summary>
@@ -133,7 +148,6 @@ namespace ThetaWinApp.Controls.Camera
 				_theta.StopLivePreview();
 			}
 		}
-
 
 		/// <summary>
 		/// Preview image is ready
@@ -211,6 +225,7 @@ namespace ThetaWinApp.Controls.Camera
 
 				((Storyboard)this.FindResource("OpenThumbnail")).Begin();
 				OnRestartPreviewRequested();
+				UpdateStatusTexts();
 			}));
 		}
 
@@ -245,6 +260,29 @@ namespace ThetaWinApp.Controls.Camera
 		private void btnClearMessage_Click(object sender, RoutedEventArgs e)
 		{
 			txtError.Text = "";
+		}
+
+		/// <summary>
+		/// Settings button is clicked
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void BtnSettings_Checked(object sender, RoutedEventArgs e)
+		{
+			if (_settingsWnd == null)
+			{
+				_settingsWnd = new CameraSettingsWnd();
+				_settingsWnd.Owner = App.Current.MainWindow;
+				_settingsWnd.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+				_settingsWnd.SaveWindowPosition = true;
+				_settingsWnd.SetTheta(_theta);
+				_settingsWnd.IsVisibleChanged += (s2, e2) =>
+				{
+					if (!(bool)e2.NewValue)
+						btnSettings.IsChecked = false;
+				};
+			}
+			_settingsWnd.Visibility = btnSettings.IsChecked.Value ? Visibility.Visible : Visibility.Collapsed;
 		}
 	}
 }

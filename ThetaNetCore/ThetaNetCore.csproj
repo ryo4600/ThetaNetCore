@@ -21,6 +21,7 @@
     <PackageTags>theta spherical camera 360 wifi</PackageTags>
     <ApplicationIcon>Resources\logo.ico</ApplicationIcon>
     <PackageIconUrl>https://github.com/rysaproject/ThetaNetCore/blob/master/ThetaNetCore/Resources/logo.png</PackageIconUrl>
+    <Version>1.0.1</Version>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="Resources\ApiStrings.Designer.cs">

@@ -6,10 +6,12 @@
              xmlns:local="clr-namespace:ThetaWinApp.Controls"
              xmlns:strings="clr-namespace:ThetaWinApp.Resources"
  			 xmlns:sphere="clr-namespace:SphereViewWpf;assembly=SphereViewWpf"
+			 xmlns:conv="clr-namespace:ThetaWinApp.Converters"
  		     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Unloaded="UserControl_Unloaded" IsVisibleChanged="UserControl_IsVisibleChanged">
 	<UserControl.Resources>
+		<conv:ByteToMegaByteConverter x:Key="ByteToMegaByteConverter" />
 		<Storyboard x:Key="OpenThumbnail">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="thumbBorder">
 				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
@@ -30,7 +32,22 @@
 	<Grid>
 		<Grid>
 			<sphere:SphereViewCtrl x:Name="imgPreview" Background="#FFB63737" />
-			<StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="15" Orientation="Horizontal" 
+			
+			<!-- statuses -->
+			<StackPanel x:Name="pnlRemainings" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#4000" TextBlock.Foreground="White" Margin="10,10">
+				<TextBlock Text="{x:Static strings:AppStrings.Title_Remaining}" VerticalAlignment="Center" Margin="10,0" />
+				<TextBlock Text="{x:Static strings:AppStrings.Title_RemainingPhoto}" VerticalAlignment="Center" Margin="10,0" />
+				<TextBlock Text="{Binding RemainingPictures}" />
+				<TextBlock Text="{x:Static strings:AppStrings.Title_RemainingVideo}" VerticalAlignment="Center" Margin="10,0" />
+				<TextBlock Text="{Binding RemainingVideoSeconds}" />
+				<TextBlock Text="{x:Static strings:AppStrings.Title_RemainningSpace}" VerticalAlignment="Center" Margin="10,0" />
+				<TextBlock Text="{Binding RemainingSpace, Converter={StaticResource ByteToMegaByteConverter}}" />
+				<TextBlock Text="/" Margin="3,0" />
+				<TextBlock Text="{Binding TotalSpace, Converter={StaticResource ByteToMegaByteConverter}}" />
+			</StackPanel>
+
+			<!--Error message-->
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15" Orientation="Horizontal" 
 						Visibility="{Binding ElementName=txtError, Path=Text.Length, Converter={StaticResource CountToVisibilityConverter}}">
 				<TextBox x:Name="txtError" IsReadOnly="True" Text="" Foreground="Red" VerticalAlignment="Center" Width="400" Padding="5,0" BorderBrush="#8888" BorderThickness="1" />
 				<Button Click="btnClearMessage_Click" Padding="5" Background="{DynamicResource AccentColorBrush4}">
@@ -48,14 +65,18 @@
                 Margin="10" Orientation="Vertical" HorizontalContentAlignment="Center" Background="#4FFF" ToolTip="{x:Static strings:AppStrings.ToolTip_Zoom}" />
 
 			<!-- Toggle Preview -->
-			<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="15" Background="#4444">
-				<StackPanel VerticalAlignment="Center"  ToolTip="{x:Static strings:AppStrings.ToolTip_Preview}">
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="15, 50" Background="#4444" ToolTip="{x:Static strings:AppStrings.ToolTip_Preview}">
 					<TextBlock Text="{x:Static strings:AppStrings.Title_Preview}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,5" />
 					<ToggleButton x:Name="chkPreview" VerticalAlignment="Center" Margin="10,0" Checked="chkPreview_CheckedChanged"
                                       Unchecked="chkPreview_CheckedChanged" IsChecked="True" />
-				</StackPanel>
 			</StackPanel>
-			
+
+			<ToggleButton Grid.Row="1" x:Name="btnSettings" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" 
+					  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15, 0, 15, 100"
+					  ToolTip="MaterialDesignFloatingActionButton" Checked="BtnSettings_Checked" Unchecked="BtnSettings_Checked">
+				<materialDesign:PackIcon Kind="Settings"  Height="36" Width="36" />
+			</ToggleButton>
+
 			<!-- thumbnail -->
 			<Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" BorderBrush="#888" BorderThickness="1" x:Name="thumbBorder" Visibility="Collapsed" RenderTransformOrigin="0.5,0.5">
 				<Border.RenderTransform>

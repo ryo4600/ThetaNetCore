@@ -102,6 +102,15 @@ Classes in Wifi\Request and Wifi\Respond directory are self explanetory. They ar
     ```
     Set values that you are updating only.  
 
+## Version History
+1.0.0 initial release
+
+1.0.1 Fixes: 
+ - App crashed when change the preview format
+ - Preview stopped working after taking pictures
+ - Download progress was not shown
+ - Internally, changed the way accessing THETA to recommended way.
+
 ## ThetaWinApp
 
 Windows implementaion of Theta application. It is written with WPF. You will see more examples of how you should implement. 
