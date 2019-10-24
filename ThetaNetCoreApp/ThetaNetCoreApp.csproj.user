@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Camera\CameraCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\CameraSettingsWnd.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\DeviceConnectCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\DevicePhotoCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\ImageQualitySettings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\PhotoCard.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\PhotoSettings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\TakePictureCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\VideoSettings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Home\HomeCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Others\SettingsCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PC\LocalImageCard.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PC\PCViewCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PhotoViewWnd.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

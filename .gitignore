@@ -2,9 +2,9 @@ ThetaNetCore/bin
 ThetaNetCore/obj
 ThetaNetSample/bin
 ThetaNetSample/obj
-ThetaWinApp/bin
-ThetaWinApp/obj
+ThetaNetCoreApp/bin
+ThetaNetCoreApp/obj
 packages
 .vs
-SphereViewWpf/bin
-SphereViewWpf/obj
+DomeView/bin
+DomeView/obj

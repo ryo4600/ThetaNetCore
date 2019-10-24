@@ -1,0 +1,148 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\Garbage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ExifLib" Version="1.7.0" />
+    <PackageReference Include="MahApps.Metro" Version="2.0.0-alpha0531" />
+    <PackageReference Include="MaterialDesignThemes" Version="3.0.0-ci699" />
+    <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.1.1-ci699" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DormView\DormView.csproj" />
+    <ProjectReference Include="..\ThetaNetCore\ThetaNetCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Drawing.Common">
+      <HintPath>..\..\..\..\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\3.0.0\ref\netcoreapp3.0\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <HintPath>..\..\..\..\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\3.0.0\ref\netcoreapp3.0\System.Windows.Forms.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Garbage.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\Camera\CameraCtrl.xaml.cs">
+      <DependentUpon>CameraCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Camera\CameraSettingsWnd.xaml.cs">
+      <DependentUpon>CameraSettingsWnd.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Camera\DeviceConnectCtrl.xaml.cs">
+      <DependentUpon>DeviceConnectCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Camera\DevicePhotoCtrl.xaml.cs">
+      <DependentUpon>DevicePhotoCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Camera\ImageQualitySettings.xaml.cs">
+      <DependentUpon>ImageQualitySettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Camera\PhotoCard.xaml.cs">
+      <DependentUpon>PhotoCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Camera\PhotoSettings.xaml.cs">
+      <DependentUpon>PhotoSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Camera\TakePictureCtrl.xaml.cs">
+      <DependentUpon>TakePictureCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Camera\VideoSettings.xaml.cs">
+      <DependentUpon>VideoSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Home\HomeCtrl.xaml.cs">
+      <DependentUpon>HomeCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\Others\SettingsCtrl.xaml.cs">
+      <DependentUpon>SettingsCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\PC\LocalImageCard.xaml.cs">
+      <DependentUpon>LocalImageCard.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\PC\PCViewCtrl.xaml.cs">
+      <DependentUpon>PCViewCtrl.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Controls\PhotoViewWnd.xaml.cs">
+      <DependentUpon>PhotoViewWnd.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="MainWindow.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Resources\AppStrings.Designer.cs">
+      <DependentUpon>AppStrings.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\AppStrings.resx">
+      <LastGenOutput>AppStrings.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Controls\Camera\CameraCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\CameraSettingsWnd.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\DeviceConnectCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\DevicePhotoCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\ImageQualitySettings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\PhotoCard.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\PhotoSettings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\TakePictureCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Camera\VideoSettings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Home\HomeCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Others\SettingsCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PC\LocalImageCard.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PC\PCViewCtrl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PhotoViewWnd.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+</Project>

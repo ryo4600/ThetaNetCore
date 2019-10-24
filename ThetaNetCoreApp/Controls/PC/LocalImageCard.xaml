@@ -1,0 +1,29 @@
+﻿<UserControl
+    x:Class="ThetaNetCoreApp.Controls.PC.LocalImageCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="120"
+    d:DesignWidth="200">
+
+	<Border BorderBrush="#8888" BorderThickness="1" Padding="1" Background="White">
+		<!-- Left Part -->
+		<Grid Margin="2,5,2,0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition />
+			</Grid.RowDefinitions>
+			<Border Grid.Row="1" BorderBrush="#888" BorderThickness="1" Margin="0">
+				<Image Source="{Binding ThumbImage}" Stretch="UniformToFill" Width="180" Height="90"  />
+			</Border>
+			<TextBlock Grid.Row="2" Text="{Binding FileName, FallbackValue=Title}" HorizontalAlignment="Left" FontSize="11" />
+			<TextBlock Grid.Row="2" Text="{Binding TimeString}" HorizontalAlignment="Right" />
+			<Button HorizontalAlignment="Right" Background="Transparent" x:Name="ButtonArea" Visibility="Collapsed">
+				<Image Source="/ThetaNetCoreApp;component/Images/Garbage.png" Height="16" Margin="-8"/>
+			</Button>
+		</Grid>
+	</Border>
+</UserControl>

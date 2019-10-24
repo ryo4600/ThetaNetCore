@@ -1,0 +1,44 @@
+﻿<UserControl
+    x:Class="ThetaNetCoreApp.Controls.Camera.PhotoCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ThetaToGo.Ctrl"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:ctrl="clr-namespace:ThetaNetCoreApp.Controls"
+	xmlns:strings="clr-namespace:ThetaNetCoreApp.Resources"
+    mc:Ignorable="d"
+    d:DesignHeight="120"
+    d:DesignWidth="200">
+
+    <Border BorderBrush="#8888" BorderThickness="1" Padding="1" Background="White">
+        <!-- Left Part -->
+        <Grid Margin="2,5,2,0">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0" BorderBrush="#888" BorderThickness="1" Margin="0">
+                <Image Source="{Binding ThumbImage}" Stretch="UniformToFill" Width="180" Height="90"  />
+            </Border>
+            <TextBlock Grid.Row="1" Text="{Binding Data.Name, FallbackValue=Title}" HorizontalAlignment="Left" FontSize="11" />
+            <TextBlock Grid.Row="1" Text="{Binding TimeString}" HorizontalAlignment="Right" />
+            <Button x:Name="btnDownload" Click="btnDownload_Click" Margin="5" Padding="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                    Style="{DynamicResource MaterialDesignFloatingActionButton}" Width="32" Height="32" >
+                <materialDesign:PackIcon Kind="Download" Height="25" Width="25" />
+            </Button>
+            <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="5" Padding="0" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                    Style="{DynamicResource MaterialDesignFloatingActionButton}" Width="32" Height="32">
+                <materialDesign:PackIcon Kind="Stop" Height="25" Width="25" />
+            </Button>
+            
+            <ToggleButton x:Name="toggleChecked" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="5" IsChecked="{Binding IsChecked}" 
+                          Style="{StaticResource MaterialDesignActionLightToggleButton}" />
+
+            <ProgressBar x:Name="_progress" Minimum="0" Maximum="100" Grid.RowSpan="2" Value="{Binding DownloadProgress}" HorizontalAlignment="Stretch" Width="150" Height="20"
+						 Margin="20,0" Visibility="Collapsed" />
+        </Grid>
+    </Border>
+
+</UserControl>

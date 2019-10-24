@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="ThetaNetCoreApp.Controls.Camera.TakePictureCtrl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ThetaNetCoreApp.Controls"
+             xmlns:strings="clr-namespace:ThetaNetCoreApp.Resources"
+ 			 xmlns:view3d="clr-namespace:DormView;assembly=DormView"
+			 xmlns:conv="clr-namespace:ThetaNetCoreApp.Converters"
+ 		     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Unloaded="UserControl_Unloaded" IsVisibleChanged="UserControl_IsVisibleChanged">
+	<UserControl.Resources>
+		<conv:ByteToMegaByteConverter x:Key="ByteToMegaByteConverter" />
+		<Storyboard x:Key="OpenThumbnail">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="thumbBorder">
+				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="thumbBorder">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="CloseThumbnail">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="thumbBorder">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="thumbBorder">
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Collapsed}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+	</UserControl.Resources>
+	<Grid>
+		<Grid>
+			<view3d:DormViewCtrl x:Name="imgPreview" Background="#FFB63737" />
+			
+			<!-- statuses -->
+			<StackPanel x:Name="pnlRemainings" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#4000" TextBlock.Foreground="White" Margin="10,10">
+				<TextBlock Text="{x:Static strings:AppStrings.Title_Remaining}" VerticalAlignment="Center" Margin="10,0" />
+				<TextBlock Text="{x:Static strings:AppStrings.Title_RemainingPhoto}" VerticalAlignment="Center" Margin="10,0" />
+				<TextBlock Text="{Binding RemainingPictures}" />
+				<TextBlock Text="{x:Static strings:AppStrings.Title_RemainingVideo}" VerticalAlignment="Center" Margin="10,0" />
+				<TextBlock Text="{Binding RemainingVideoSeconds}" />
+				<TextBlock Text="{x:Static strings:AppStrings.Title_RemainningSpace}" VerticalAlignment="Center" Margin="10,0" />
+				<TextBlock Text="{Binding RemainingSpace, Converter={StaticResource ByteToMegaByteConverter}}" />
+				<TextBlock Text="/" Margin="3,0" />
+				<TextBlock Text="{Binding TotalSpace, Converter={StaticResource ByteToMegaByteConverter}}" />
+			</StackPanel>
+
+			<!--Error message-->
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15" Orientation="Horizontal" 
+						Visibility="{Binding ElementName=txtError, Path=Text.Length, Converter={StaticResource CountToVisibilityConverter}}">
+				<TextBox x:Name="txtError" IsReadOnly="True" Text="" Foreground="Red" VerticalAlignment="Center" Width="400" Padding="5,0" BorderBrush="#8888" BorderThickness="1" />
+				<Button Click="btnClearMessage_Click" Padding="5" Background="{DynamicResource AccentColorBrush4}">
+					<materialDesign:PackIcon Kind="Clear" Width="24" Height="24" />
+				</Button>
+			</StackPanel>
+
+			<Button x:Name="btnTakePicture" Style="{StaticResource MaterialDesignFloatingActionButton}" Margin="15,0" ToolTip="{x:Static strings:AppStrings.ToolTip_Shatter}"
+									Click="BtnTakePicture_Click" HorizontalAlignment="Right">
+				<materialDesign:PackIcon Kind="Camera"  Height="28" Width="28" />
+			</Button>
+
+			<!-- Zoom -->
+			<Slider HorizontalAlignment="Right" VerticalAlignment="Top" Height="120" Minimum="1" Maximum="140" Value="{Binding ElementName=imgPreview, Path=FieldOfView}"
+                Margin="10" Orientation="Vertical" HorizontalContentAlignment="Center" Background="#4FFF" ToolTip="{x:Static strings:AppStrings.ToolTip_Zoom}" />
+
+			<!-- Toggle Preview -->
+			<StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="15, 50" Background="#4444" ToolTip="{x:Static strings:AppStrings.ToolTip_Preview}">
+					<TextBlock Text="{x:Static strings:AppStrings.Title_Preview}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,5" />
+					<ToggleButton x:Name="chkPreview" VerticalAlignment="Center" Margin="10,0" Checked="chkPreview_CheckedChanged"
+                                      Unchecked="chkPreview_CheckedChanged" IsChecked="True" />
+			</StackPanel>
+
+			<ToggleButton Grid.Row="1" x:Name="btnSettings" Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" 
+					  HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15, 0, 15, 100"
+					  ToolTip="MaterialDesignFloatingActionButton" Checked="BtnSettings_Checked" Unchecked="BtnSettings_Checked">
+				<materialDesign:PackIcon Kind="Settings"  Height="36" Width="36" />
+			</ToggleButton>
+
+			<!-- thumbnail -->
+			<Border HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" BorderBrush="#888" BorderThickness="1" x:Name="thumbBorder" Visibility="Collapsed" RenderTransformOrigin="0.5,0.5">
+				<Border.RenderTransform>
+					<TransformGroup>
+						<ScaleTransform ScaleY="0"/>
+					</TransformGroup>
+				</Border.RenderTransform>
+				<Grid>
+					<Image x:Name="thumbImg" Width="300" Height="150" />
+					<Button HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0" Margin="2" 
+                            Click="btnThumbClose_Click">
+						<materialDesign:PackIcon Kind="Close" Height="24" Width="24" />
+					</Button>
+				</Grid>
+			</Border>
+		</Grid>
+
+		<!-- Indicates taking picture in progress -->
+		<Border Grid.RowSpan="3" x:Name="pnlPrgress" Background="#4FFF" Visibility="Collapsed" DataContext="aaaa" >
+			<materialDesign:Card materialDesign:ShadowAssist.ShadowDepth="Depth3" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10">
+				<StackPanel Orientation="Horizontal">
+					<ProgressBar Width="20"  IsIndeterminate="True" Style="{StaticResource MaterialDesignCircularProgressBar}" Margin="10,0" />
+					<TextBlock x:Name="txtProgress" Text="{Binding}" />
+				</StackPanel>
+			</materialDesign:Card>
+		</Border>
+	</Grid>
+</UserControl>
