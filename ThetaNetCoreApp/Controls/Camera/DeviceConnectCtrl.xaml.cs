@@ -75,12 +75,6 @@ namespace ThetaNetCoreApp.Controls.Camera
 				OnConnectionReady?.Invoke(true);
 
 			}
-			catch (ThetaWifiApiException apiex)
-			{
-				// Theta API erros... 
-				pnlPrgress.Visibility = Visibility.Collapsed;
-				HandleError(apiex);
-			}
 			catch (ThetaWifiConnectException connex)
 			{
 				// Connecton error...

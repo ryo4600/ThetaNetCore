@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using ThetaNetCore.Resources;
@@ -65,10 +66,6 @@ namespace ThetaNetCore.Wifi
 					var session = await _theta.StartSessionAsync();
 					await _theta.SetOptionsAsync(new OptionValues() { ClientVersion = 2 }, session.SessionId);
 				}
-			}
-			catch (System.Net.WebException wex)
-			{
-				throw new ThetaWifiConnectException(WifiStrings.Err_ConnectionFailed, wex);
 			}
 			catch (SerializationException sex)
 			{

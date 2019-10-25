@@ -48,9 +48,11 @@ namespace ThetaNetCore.Wifi
 		/// <param name="command"></param>
 		/// <param name="commandPath"></param>
 		/// <returns></returns>
+		/// <exception cref="ThetaWifiConnectException" />
 		async private static Task<HttpResponseMessage> SendRequestAsync<T>(SEND_TYPE sendType, T command, String commandPath, int? timeout = null)
 		{
 			var httpClient = _httpClient;
+			httpClient.Timeout = new TimeSpan(0, 0, 5);
 			var headers = httpClient.DefaultRequestHeaders;
 			headers.Clear();
 			headers.Add("Accept", "application/json");
@@ -62,11 +64,23 @@ namespace ThetaNetCore.Wifi
 				content = new StringContent(jsonString, Encoding.UTF8, "application/json");
 			}
 
-			var commandUri = Path.Combine(THETA_URL, commandPath);
-			if (sendType == SEND_TYPE.POST)
-				return await httpClient.PostAsync(commandUri, content);
-			else
-				return await httpClient.GetAsync(commandUri);
+			try
+			{
+				var commandUri = Path.Combine(THETA_URL, commandPath);
+				if (sendType == SEND_TYPE.POST)
+					return await httpClient.PostAsync(commandUri, content);
+				else
+					return await httpClient.GetAsync(commandUri);
+			}
+			catch (HttpRequestException wex)
+			{
+				throw new ThetaWifiConnectException(WifiStrings.Err_ConnectionFailed, wex);
+			}
+			catch (TaskCanceledException wex)
+			{
+				throw new ThetaWifiConnectException(WifiStrings.Err_ConnectionFailed, wex);
+			}
+
 		}
 
 		/// <summary>
@@ -74,8 +88,6 @@ namespace ThetaNetCore.Wifi
 		/// Version with HttpClient -> HttpResponseMessage
 		/// </summary>
 		/// <param name="response"></param>
-		/// <exception cref="SerializationException"></exception>
-		/// <exception cref="ThetaWifiApiException"></exception> 
 		async private static Task CheckResponseAsync(HttpResponseMessage response)
 		{
 			switch (response.StatusCode)
@@ -87,10 +99,10 @@ namespace ThetaNetCore.Wifi
 				case HttpStatusCode.ServiceUnavailable:     // 503:
 					{
 						var errRes = JsonUtil.ToObject<ErrorResponse>(await response.Content.ReadAsStreamAsync());
-						throw new ThetaWifiApiException(errRes);
+						throw new ThetaWifiConnectException(errRes.Error.Code + ":" + errRes.Error.Message);
 					}
 				default:
-					throw new Exception(String.Format(WifiStrings.Err_SendRequestFailed, response.StatusCode));
+					throw new ThetaWifiConnectException(String.Format(WifiStrings.Err_SendRequestFailed, response.StatusCode));
 			}
 		}
 
@@ -127,8 +139,6 @@ namespace ThetaNetCore.Wifi
 		/// Version with HttpWebRequest -> HttpWebResponse
 		/// </summary>
 		/// <param name="response"></param>
-		/// <exception cref="SerializationException"></exception>
-		/// <exception cref="ThetaWifiApiException"></exception> 
 		private static void CheckResponse(HttpWebResponse response)
 		{
 			switch (response.StatusCode)
@@ -140,10 +150,10 @@ namespace ThetaNetCore.Wifi
 				case HttpStatusCode.ServiceUnavailable:     // 503:
 					{
 						var errRes = JsonUtil.ToObject<ErrorResponse>(response.GetResponseStream());
-						throw new ThetaWifiApiException(errRes);
+						throw new ThetaWifiConnectException(errRes.Error.Code + ":" + errRes.Error.Message);
 					}
 				default:
-					throw new Exception(String.Format(WifiStrings.Err_SendRequestFailed, response.StatusCode));
+					throw new ThetaWifiConnectException(String.Format(WifiStrings.Err_SendRequestFailed, response.StatusCode));
 			}
 		}
 
