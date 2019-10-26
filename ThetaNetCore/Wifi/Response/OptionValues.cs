@@ -34,6 +34,12 @@ namespace ThetaNetCore.Wifi
 		public int ClientVersion { get; set; }
 
 		/// <summary>
+		/// Color temperature
+		/// </summary>
+		[DataMember(Name = "_colorTemperature", IsRequired = false, EmitDefaultValue = false)]
+		public int ColorTemperature { get; set; }
+
+		/// <summary>
 		/// The estimated remaining number of shots for the current shooting settings <br />
 		/// Read only
 		/// </summary>
@@ -67,7 +73,7 @@ namespace ThetaNetCore.Wifi
 		[DataMember(Name = "whiteBalance", IsRequired = false, EmitDefaultValue = false)]
 		public string WhiteBalance { get; set; }
 
-		public enum EXPOSURE : int { MANUAL = 1, NORMAL = 2, SHUTTER = 4, ISO = 9 };
+		public enum EXPOSURE : int { MANUAL = 1, NORMAL = 2, APERTURE = 3, SHUTTER = 4, ISO = 9 };
 
 		/// <summary>
 		/// Exposure program. The exposure settings that take priority can be selected. 

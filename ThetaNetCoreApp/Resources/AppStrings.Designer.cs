@@ -350,6 +350,15 @@ namespace ThetaNetCoreApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Color Temperature.
+        /// </summary>
+        public static string Title_ColorTemperature {
+            get {
+                return ResourceManager.GetString("Title_ColorTemperature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delte files.
         /// </summary>
         public static string Title_ConfirmDelete {
@@ -364,6 +373,69 @@ namespace ThetaNetCoreApp.Resources {
         public static string Title_DownloadFolder {
             get {
                 return ResourceManager.GetString("Title_DownloadFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aperture priority.
+        /// </summary>
+        public static string Title_ExposureAperture {
+            get {
+                return ResourceManager.GetString("Title_ExposureAperture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Self-timer (sec).
+        /// </summary>
+        public static string Title_ExposureDelay {
+            get {
+                return ResourceManager.GetString("Title_ExposureDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ISO priority.
+        /// </summary>
+        public static string Title_ExposureISO {
+            get {
+                return ResourceManager.GetString("Title_ExposureISO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual.
+        /// </summary>
+        public static string Title_ExposureManual {
+            get {
+                return ResourceManager.GetString("Title_ExposureManual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        public static string Title_ExposureNormal {
+            get {
+                return ResourceManager.GetString("Title_ExposureNormal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exposure Settings.
+        /// </summary>
+        public static string Title_ExposureProgram {
+            get {
+                return ResourceManager.GetString("Title_ExposureProgram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shutter priority.
+        /// </summary>
+        public static string Title_ExposureShutter {
+            get {
+                return ResourceManager.GetString("Title_ExposureShutter", resourceCulture);
             }
         }
         
@@ -422,6 +494,15 @@ namespace ThetaNetCoreApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ISO sensitivity.
+        /// </summary>
+        public static string Title_Iso_Sensitivity {
+            get {
+                return ResourceManager.GetString("Title_Iso_Sensitivity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manufacturer.
         /// </summary>
         public static string Title_Manufacturer {
@@ -436,6 +517,15 @@ namespace ThetaNetCoreApp.Resources {
         public static string Title_Model {
             get {
                 return ResourceManager.GetString("Title_Model", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power off delay (min).
+        /// </summary>
+        public static string Title_OffDelay {
+            get {
+                return ResourceManager.GetString("Title_OffDelay", resourceCulture);
             }
         }
         
@@ -656,6 +746,15 @@ namespace ThetaNetCoreApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sleep delay (min).
+        /// </summary>
+        public static string Title_SleepDelay {
+            get {
+                return ResourceManager.GetString("Title_SleepDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Theta Win App Photo Viewer.
         /// </summary>
         public static string Title_SpherePhotoView {
@@ -688,6 +787,114 @@ namespace ThetaNetCoreApp.Resources {
         public static string Title_Video {
             get {
                 return ResourceManager.GetString("Title_Video", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Automatic.
+        /// </summary>
+        public static string Title_WB_Auto {
+            get {
+                return ResourceManager.GetString("Title_WB_Auto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fluorescent Light 4 (light bulb color).
+        /// </summary>
+        public static string Title_WB_BulbFluorescent {
+            get {
+                return ResourceManager.GetString("Title_WB_BulbFluorescent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cloudy.
+        /// </summary>
+        public static string Title_WB_Cloudy {
+            get {
+                return ResourceManager.GetString("Title_WB_Cloudy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color Temperature setting.
+        /// </summary>
+        public static string Title_WB_ColorTemperature {
+            get {
+                return ResourceManager.GetString("Title_WB_ColorTemperature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Outdoor.
+        /// </summary>
+        public static string Title_WB_DayLight {
+            get {
+                return ResourceManager.GetString("Title_WB_DayLight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fluorescent Light 1 (daylight).
+        /// </summary>
+        public static string Title_WB_DayLightFluorescent {
+            get {
+                return ResourceManager.GetString("Title_WB_DayLightFluorescent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fluorescent Light 3 (white).
+        /// </summary>
+        public static string Title_WB_Fluorescent {
+            get {
+                return ResourceManager.GetString("Title_WB_Fluorescent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incandescent Light 1.
+        /// </summary>
+        public static string Title_WB_Incandescent {
+            get {
+                return ResourceManager.GetString("Title_WB_Incandescent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shade.
+        /// </summary>
+        public static string Title_WB_Shade {
+            get {
+                return ResourceManager.GetString("Title_WB_Shade", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incandescent Light 2.
+        /// </summary>
+        public static string Title_WB_WarmWhite {
+            get {
+                return ResourceManager.GetString("Title_WB_WarmWhite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fluorescent Light 2 (natural white).
+        /// </summary>
+        public static string Title_WB_WhiteFluorescent {
+            get {
+                return ResourceManager.GetString("Title_WB_WhiteFluorescent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to White Balance.
+        /// </summary>
+        public static string Title_WhiteBalance {
+            get {
+                return ResourceManager.GetString("Title_WhiteBalance", resourceCulture);
             }
         }
         

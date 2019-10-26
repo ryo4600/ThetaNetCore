@@ -52,7 +52,7 @@ namespace ThetaNetCore.Wifi
 		async private static Task<HttpResponseMessage> SendRequestAsync<T>(SEND_TYPE sendType, T command, String commandPath, int? timeout = null)
 		{
 			var httpClient = _httpClient;
-			httpClient.Timeout = new TimeSpan(0, 0, 5);
+			//httpClient.Timeout = new TimeSpan(0, 0, 5);
 			var headers = httpClient.DefaultRequestHeaders;
 			headers.Clear();
 			headers.Add("Accept", "application/json");

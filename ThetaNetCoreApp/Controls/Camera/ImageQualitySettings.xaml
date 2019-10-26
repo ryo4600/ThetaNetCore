@@ -7,15 +7,46 @@
 			 xmlns:core="clr-namespace:System;assembly=mscorlib"
 			 xmlns:strings="clr-namespace:ThetaNetCoreApp.Resources"
              mc:Ignorable="d" IsVisibleChanged="UserControl_IsVisibleChanged"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="400">
 	<UserControl.Resources>
 		<core:Double x:Key="HeaderWidth">150</core:Double>
 	</UserControl.Resources>
 	<StackPanel Margin="10">
 		<StackPanel Orientation="Horizontal">
-			<TextBlock Text="{x:Static strings:AppStrings.Title_Aperture}" VerticalAlignment="Center" Margin="10" Width="{StaticResource HeaderWidth}" />
-			<ComboBox ItemsSource="{Binding}" x:Name="cmbAperture" SelectionChanged="Aperture_SelectionChanged"
-							  DisplayMemberPath="Key" SelectedValuePath="Value"/>
+			<TextBlock Text="{x:Static strings:AppStrings.Title_WhiteBalance}" VerticalAlignment="Center" Margin="10" Width="{StaticResource HeaderWidth}" />
+			<ComboBox x:Name="cmbWhiteBalance" SelectionChanged="WhiteBalance_SelectionChanged"
+							  DisplayMemberPath="Key" SelectedValuePath="Value" MinWidth="100"/>
 		</StackPanel>
+		<Grid x:Name="pnlWB">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<TextBlock Text="{x:Static strings:AppStrings.Title_ColorTemperature}" VerticalAlignment="Center" Margin="10" Width="{StaticResource HeaderWidth}" />
+			<Slider Grid.Column="1" x:Name="sliderColorTemperature" Minimum="2500" Maximum="10000" SmallChange="100" LargeChange="500" ValueChanged="sliderColorTemperature_ValueChanged" Orientation="Horizontal" 
+					VerticalAlignment="Center"/>
+			<TextBlock Grid.Column="2" Text="{Binding ElementName=sliderColorTemperature, Path=Value}" VerticalAlignment="Center" Margin="10,0" Width="50" />
+		</Grid>
+		<StackPanel Orientation="Horizontal">
+			<TextBlock Text="{x:Static strings:AppStrings.Title_ExposureProgram}" VerticalAlignment="Center" Margin="10" Width="{StaticResource HeaderWidth}" />
+			<ComboBox x:Name="cmbExposureProgram" SelectionChanged="ExposureProgram_SelectionChanged"
+							  DisplayMemberPath="Key" SelectedValuePath="Value" MinWidth="100"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal" x:Name="pnlAperture">
+			<TextBlock Text="{x:Static strings:AppStrings.Title_Aperture}" VerticalAlignment="Center" Margin="10" Width="{StaticResource HeaderWidth}" />
+			<ComboBox x:Name="cmbAperture" SelectionChanged="Aperture_SelectionChanged"
+							  DisplayMemberPath="Key" SelectedValuePath="Value" MinWidth="100"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal" x:Name="pnlShutter">
+			<TextBlock Text="{x:Static strings:AppStrings.Title_ShutterSpeed}" VerticalAlignment="Center" Margin="10" Width="{StaticResource HeaderWidth}" />
+			<ComboBox x:Name="cmbSpeed" SelectionChanged="ShutterSpeed_SelectionChanged"
+							  DisplayMemberPath="Key" SelectedValuePath="Value" MinWidth="100"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal" x:Name="pnlIso">
+			<TextBlock Text="{x:Static strings:AppStrings.Title_Iso_Sensitivity}" VerticalAlignment="Center" Margin="10" Width="{StaticResource HeaderWidth}" />
+			<ComboBox x:Name="cmbIso" SelectionChanged="Iso_SelectionChanged" MinWidth="100"/>
+		</StackPanel>
+		
 	</StackPanel>
 </UserControl>

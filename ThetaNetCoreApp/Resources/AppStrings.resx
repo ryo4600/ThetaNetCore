@@ -214,11 +214,35 @@ Check the connection.</value>
   <data name="Title_Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
+  <data name="Title_ColorTemperature" xml:space="preserve">
+    <value>Color Temperature</value>
+  </data>
   <data name="Title_ConfirmDelete" xml:space="preserve">
     <value>Delte files</value>
   </data>
   <data name="Title_DownloadFolder" xml:space="preserve">
     <value>Download Folder</value>
+  </data>
+  <data name="Title_ExposureAperture" xml:space="preserve">
+    <value>Aperture priority</value>
+  </data>
+  <data name="Title_ExposureDelay" xml:space="preserve">
+    <value>Self-timer (sec)</value>
+  </data>
+  <data name="Title_ExposureISO" xml:space="preserve">
+    <value>ISO priority</value>
+  </data>
+  <data name="Title_ExposureManual" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="Title_ExposureNormal" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="Title_ExposureProgram" xml:space="preserve">
+    <value>Exposure Settings</value>
+  </data>
+  <data name="Title_ExposureShutter" xml:space="preserve">
+    <value>Shutter priority</value>
   </data>
   <data name="Title_Firmware" xml:space="preserve">
     <value>Firmware Version</value>
@@ -238,11 +262,17 @@ Check the connection.</value>
   <data name="Title_Info" xml:space="preserve">
     <value>Information</value>
   </data>
+  <data name="Title_Iso_Sensitivity" xml:space="preserve">
+    <value>ISO sensitivity</value>
+  </data>
   <data name="Title_Manufacturer" xml:space="preserve">
     <value>Manufacturer</value>
   </data>
   <data name="Title_Model" xml:space="preserve">
     <value>Model</value>
+  </data>
+  <data name="Title_OffDelay" xml:space="preserve">
+    <value>Power off delay (min)</value>
   </data>
   <data name="Title_PhotoFolder" xml:space="preserve">
     <value>Photo View Folder</value>
@@ -316,6 +346,9 @@ Check the connection.</value>
   <data name="Title_ShutterVolume" xml:space="preserve">
     <value>Shutter Volume</value>
   </data>
+  <data name="Title_SleepDelay" xml:space="preserve">
+    <value>Sleep delay (min)</value>
+  </data>
   <data name="Title_SpherePhotoView" xml:space="preserve">
     <value>Theta Win App Photo Viewer</value>
   </data>
@@ -327,6 +360,42 @@ Check the connection.</value>
   </data>
   <data name="Title_Video" xml:space="preserve">
     <value>Video</value>
+  </data>
+  <data name="Title_WB_Auto" xml:space="preserve">
+    <value>Automatic</value>
+  </data>
+  <data name="Title_WB_BulbFluorescent" xml:space="preserve">
+    <value>Fluorescent Light 4 (light bulb color)</value>
+  </data>
+  <data name="Title_WB_Cloudy" xml:space="preserve">
+    <value>Cloudy</value>
+  </data>
+  <data name="Title_WB_ColorTemperature" xml:space="preserve">
+    <value>Color Temperature setting</value>
+  </data>
+  <data name="Title_WB_DayLight" xml:space="preserve">
+    <value>Outdoor</value>
+  </data>
+  <data name="Title_WB_DayLightFluorescent" xml:space="preserve">
+    <value>Fluorescent Light 1 (daylight)</value>
+  </data>
+  <data name="Title_WB_Fluorescent" xml:space="preserve">
+    <value>Fluorescent Light 3 (white)</value>
+  </data>
+  <data name="Title_WB_Incandescent" xml:space="preserve">
+    <value>Incandescent Light 1</value>
+  </data>
+  <data name="Title_WB_Shade" xml:space="preserve">
+    <value>Shade</value>
+  </data>
+  <data name="Title_WB_WarmWhite" xml:space="preserve">
+    <value>Incandescent Light 2</value>
+  </data>
+  <data name="Title_WB_WhiteFluorescent" xml:space="preserve">
+    <value>Fluorescent Light 2 (natural white)</value>
+  </data>
+  <data name="Title_WhiteBalance" xml:space="preserve">
+    <value>White Balance</value>
   </data>
   <data name="ToolTip_Preview" xml:space="preserve">
     <value>toggle preview</value>

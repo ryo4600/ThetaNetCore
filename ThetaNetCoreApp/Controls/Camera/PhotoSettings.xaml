@@ -12,11 +12,17 @@
 		<core:Double x:Key="HeaderWidth">150</core:Double>
 	</UserControl.Resources>
 	<StackPanel Margin="10">
-		<!--<StackPanel Orientation="Horizontal">
-			<TextBlock Text="{x:Static strings:AppStrings.Title_ShutterSpeed}" VerticalAlignment="Center" Margin="10" Width="{StaticResource HeaderWidth}" />
-			<ComboBox ItemsSource="{Binding}" x:Name="cmbSpeed" SelectionChanged="ShutterSpeed_SelectionChanged"
-							  DisplayMemberPath="Key" SelectedValuePath="Value"/>
-		</StackPanel>-->
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<TextBlock Text="{x:Static strings:AppStrings.Title_ExposureDelay}" VerticalAlignment="Center" Margin="10" Width="{StaticResource HeaderWidth}" />
+			<Slider Grid.Column="1" x:Name="sliderSelfTimer" Minimum="0" Maximum="10" SmallChange="1" LargeChange="2" ValueChanged="sliderSelfTimer_ValueChanged" Orientation="Horizontal" 
+					VerticalAlignment="Center"/>
+			<TextBlock Grid.Column="2" Text="{Binding ElementName=sliderSelfTimer, Path=Value}" VerticalAlignment="Center" Margin="10,0" Width="50" />
+		</Grid>
 		<Grid>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto" />
@@ -28,5 +34,32 @@
 					VerticalAlignment="Center"/>
 			<TextBlock Grid.Column="2" Text="{Binding ElementName=sliderVolume, Path=Value}" VerticalAlignment="Center" Margin="10,0" Width="50" />
 		</Grid>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<TextBlock Text="{x:Static strings:AppStrings.Title_SleepDelay}" VerticalAlignment="Center" Margin="10" Width="{StaticResource HeaderWidth}" />
+			<ToggleButton x:Name="tglSleepDelay" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" Margin="10" />
+			<Slider Grid.Column="2" x:Name="sliderSleep" Minimum="0" Maximum="100" SmallChange="1" LargeChange="5" ValueChanged="sliderSleep_ValueChanged" Orientation="Horizontal" 
+					VerticalAlignment="Center" IsEnabled="{Binding ElementName=tglSleepDelay, Path=IsChecked}" />
+			<TextBlock Grid.Column="3" Text="{Binding ElementName=sliderSleep, Path=Value}" VerticalAlignment="Center" Margin="10,0" Width="50" />
+		</Grid>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition Width="Auto" />
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto" />
+			</Grid.ColumnDefinitions>
+			<TextBlock Text="{x:Static strings:AppStrings.Title_OffDelay}" VerticalAlignment="Center" Margin="10" Width="{StaticResource HeaderWidth}" />
+			<ToggleButton x:Name="tglOffDelay" Grid.Column="1" Style="{StaticResource MaterialDesignSwitchToggleButton}" Margin="10" IsThreeState="False"  />
+			<Slider Grid.Column="2" x:Name="sliderOffDelay" Minimum="0" Maximum="100" SmallChange="1" LargeChange="5" ValueChanged="sliderOff_ValueChanged" Orientation="Horizontal" 
+					VerticalAlignment="Center" IsEnabled="{Binding ElementName=tglOffDelay, Path=IsChecked}"/>
+			<TextBlock Grid.Column="3" Text="{Binding ElementName=sliderOffTimer, Path=Value}" VerticalAlignment="Center" Margin="10,0" Width="50" />
+		</Grid>
+
 	</StackPanel>
 </UserControl>

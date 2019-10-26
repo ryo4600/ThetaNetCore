@@ -1,21 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using ThetaNetCore.Wifi;
-using static ThetaNetCore.Wifi.InfoResponse;
 
 namespace ThetaNetCoreApp.Controls.Camera
 {
@@ -26,9 +15,15 @@ namespace ThetaNetCoreApp.Controls.Camera
 	{
 		#region Members and Properties
 		private ThetaWifiConnect _theta = null;
-		DispatcherTimer _delayLoadTimer = null;
-
 		bool _isInitialized = false;
+
+		/// <summary>
+		/// This timer is to prevent from updating values in short time interval.
+		/// Executes if 1 second has passed, after the last change.
+		/// </summary>
+		DispatcherTimer _delayUpdateTimer = null;
+
+		const int TIMER_DISABLED = 65535;
 		#endregion
 
 		/// <summary>
@@ -38,9 +33,9 @@ namespace ThetaNetCoreApp.Controls.Camera
 		{
 			InitializeComponent();
 			this.IsEnabled = false;
-			_delayLoadTimer = new DispatcherTimer();
-			_delayLoadTimer.Interval = new TimeSpan(0, 0, 1);
-			_delayLoadTimer.Tick += _delayLoadTimer_Tick;
+			_delayUpdateTimer = new DispatcherTimer();
+			_delayUpdateTimer.Interval = new TimeSpan(0, 0, 1);
+			_delayUpdateTimer.Tick += _delayUpdateTimer_Tick;
 
 		}
 
@@ -64,96 +59,19 @@ namespace ThetaNetCoreApp.Controls.Camera
 			if (DesignerProperties.GetIsInDesignMode(this))
 				return;
 
-			InitThetaValues();
+			InitControlsValues();
 		}
 
 		/// <summary>
 		/// Initialize contorls bases
 		/// </summary>
-		async private void InitThetaValues()
+		async private void InitControlsValues()
 		{
-			var optionsParam = new GetOptionsParam() { ShutterSpeed = true, ShutterVolume = true };
+			var optionsParam = new GetOptionsParam() { ExposureDelay = true, ShutterVolume = true, SleepDelay = true, OffDelay = true };
 			var options = await _theta.ThetaApi.GetOptionsAsync(optionsParam);
 
-			#region ShutterSpeed level
-			//List<KeyValuePair<string, float>> speedValues = new List<KeyValuePair<string, float>>();
-			//if (CameraSharedInfo.Instance.Info.ThetaModel >= THETA_MODEL.V)
-			//{
-			//	speedValues.Add(new KeyValuePair<string, float>("1/25000", 0.00004f));
-			//	speedValues.Add(new KeyValuePair<string, float>("1/20000", 0.00005f));
-			//	speedValues.Add(new KeyValuePair<string, float>("1/16000", 0.0000625f));
-			//	speedValues.Add(new KeyValuePair<string, float>("1/12500", 0.00008f));
-			//	speedValues.Add(new KeyValuePair<string, float>("1/10000", 0.00001f));
-			//}
-			//if (CameraSharedInfo.Instance.Info.ThetaModel >= THETA_MODEL.SC)
-			//{
-			//	speedValues.Add(new KeyValuePair<string, float>("1/8000", 0.000125f));
-			//}
-			//speedValues.Add(new KeyValuePair<string, float>("1/6400", 0.00015625f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/5000", 0.0002f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/4000", 0.00025f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/3200", 0.0003125f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/2500", 0.0004f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/2000", 0.0005f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/1600", 0.000625f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/1250", 0.0008f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/1000", 0.001f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/800", 0.00125f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/640", 0.0015625f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/500", 0.002f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/400", 0.0025f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/320", 0.003125f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/250", 0.004f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/200", 0.005f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/160", 0.00625f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/125", 0.008f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/100", 0.01f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/80", 0.0125f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/60", 0.01666666f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/50", 0.02f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/40", 0.025f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/30", 0.03333333f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/25", 0.04f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/20", 0.05f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/15", 0.06666666f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/13", 0.07692307f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/10", 0.1f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/8", 0.125f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/6", 0.16666666f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/5", 0.2f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/4", 0.25f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/3", 0.33333333f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/2.5", 0.4f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/2", 0.5f));
-			//speedValues.Add(new KeyValuePair<string, float>("1/1.6", 0.625f));
-			//speedValues.Add(new KeyValuePair<string, float>("1", 1f));
-			//speedValues.Add(new KeyValuePair<string, float>("1.3", 1.3f));
-			//speedValues.Add(new KeyValuePair<string, float>("1.6", 1.6f));
-			//speedValues.Add(new KeyValuePair<string, float>("2", 2f));
-			//speedValues.Add(new KeyValuePair<string, float>("2.5", 2.5f));
-			//speedValues.Add(new KeyValuePair<string, float>("3.2", 3.2f));
-			//speedValues.Add(new KeyValuePair<string, float>("4", 4f));
-			//speedValues.Add(new KeyValuePair<string, float>("5", 5f));
-			//speedValues.Add(new KeyValuePair<string, float>("6", 6f));
-			//speedValues.Add(new KeyValuePair<string, float>("8", 8f));
-			//speedValues.Add(new KeyValuePair<string, float>("10", 10f));
-			//speedValues.Add(new KeyValuePair<string, float>("13", 13f));
-			//speedValues.Add(new KeyValuePair<string, float>("15", 15f));
-			//speedValues.Add(new KeyValuePair<string, float>("20", 20f));
-			//speedValues.Add(new KeyValuePair<string, float>("25", 25f));
-			//speedValues.Add(new KeyValuePair<string, float>("30", 30f));
-			//speedValues.Add(new KeyValuePair<string, float>("60", 60f));
-			//cmbSpeed.ItemsSource = speedValues;
-
-			//for (int i = 0; i < speedValues.Count; i++)
-			//{
-			//	if (speedValues[i].Value == options.ShutterSpeed)
-			//	{
-			//		cmbSpeed.SelectedIndex = i;
-			//		break;
-			//	}
-			//}
-			#endregion
+			// exposure delay (self timer)
+			sliderSelfTimer.Value = options.ExposureDelay;
 
 			// shutter volume
 			sliderVolume.Value = options.ShutterVolume;
@@ -161,23 +79,29 @@ namespace ThetaNetCoreApp.Controls.Camera
 			_isInitialized = true;
 		}
 
-		///// <summary>
-		///// Shutter sppeds' selection changed event
-		///// </summary>
-		///// <param name="sender"></param>
-		///// <param name="e"></param>
-		//private void ShutterSpeed_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		//{
-		//	if (!_isInitialized)
-		//		return;
+		/// <summary>
+		/// Self timer's value changed event
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void sliderSelfTimer_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			if (!_isInitialized)
+				return;
 
-		//	var options = new OptionValues();
-		//	options.ShutterSpeed = (float)cmbSpeed.SelectedValue;
-		//	Task.Factory.StartNew(new Action(async () =>
-		//	{
-		//		await _theta.ThetaApi.SetOptionsAsync(options);
-		//	}));
-		//}
+			if ((int)e.NewValue != e.NewValue)
+			{
+				sliderSelfTimer.Value = (int)e.NewValue;
+				return;
+			}
+
+			var options = new OptionValues();
+			options.ExposureDelay = (int)e.NewValue;
+			_delayUpdateTimer.Stop();
+			_delayUpdateTimer.Tag = options;
+			_delayUpdateTimer.Start();
+
+		}
 
 		/// <summary>
 		/// Shutter volume's value changed event
@@ -197,9 +121,9 @@ namespace ThetaNetCoreApp.Controls.Camera
 
 			var options = new OptionValues();
 			options.ShutterVolume = (int)e.NewValue;
-			_delayLoadTimer.Stop();
-			_delayLoadTimer.Tag = options;
-			_delayLoadTimer.Start();
+			_delayUpdateTimer.Stop();
+			_delayUpdateTimer.Tag = options;
+			_delayUpdateTimer.Start();
 		}
 
 		/// <summary>
@@ -207,17 +131,65 @@ namespace ThetaNetCoreApp.Controls.Camera
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void _delayLoadTimer_Tick(object sender, EventArgs e)
+		private void _delayUpdateTimer_Tick(object sender, EventArgs e)
 		{
-			_delayLoadTimer.Stop();
-			var options = _delayLoadTimer.Tag as OptionValues;
+			_delayUpdateTimer.Stop();
+			var options = _delayUpdateTimer.Tag as OptionValues;
 			Task.Factory.StartNew(new Action(async () =>
 			{
 				await _theta.ThetaApi.SetOptionsAsync(options);
-				System.Diagnostics.Debug.WriteLine("new option:" + options );
 			}));
 		}
 
+		/// <summary>
+		/// Sleep timer value changed
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void sliderSleep_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			if (!_isInitialized)
+				return;
 
+			if ((int)e.NewValue != e.NewValue)
+			{
+				sliderVolume.Value = (int)e.NewValue;
+				return;
+			}
+
+			UpdateSleepDelayValue();
+		}
+
+		/// <summary>
+		/// Updates sleep delay values
+		/// </summary>
+		private void UpdateSleepDelayValue()
+		{
+			int newValue;
+			if (tglSleepDelay.IsChecked.Value)
+				newValue = TIMER_DISABLED;
+			else
+				newValue = (int)sliderSleep.Value;
+			var options = new OptionValues();
+			options.SleepDelay = newValue;
+			_delayUpdateTimer.Stop();
+			_delayUpdateTimer.Tag = options;
+			_delayUpdateTimer.Start();
+		}
+
+		/// <summary>
+		/// Off timer value changed
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void sliderOff_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+
+		}
+
+		private void UpdateOffDelayValue()
+		{
+
+		}
 	}
 }

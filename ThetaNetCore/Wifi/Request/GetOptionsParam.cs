@@ -23,6 +23,9 @@ namespace ThetaNetCore.Wifi
 		public bool CaptureNumber { get; set; }
 
 		[IgnoreDataMember()]
+		public bool ColorTemperature { get; set; }
+
+		[IgnoreDataMember()]
 		public bool ClientVersion { get; set; }
 
 		[IgnoreDataMember()]
@@ -104,57 +107,59 @@ namespace ThetaNetCore.Wifi
 		private string[] GatherRequests()
 		{
 			var request = new List<String>();
-			if( Aperture)
+			if (Aperture)
 				request.Add("aperture");
-			if( CaptureInterval)
+			if (CaptureInterval)
 				request.Add("captureInterval");
-			if( CaptureMode)
+			if (CaptureMode)
 				request.Add("captureMode");
-			if( CaptureNumber)
+			if (CaptureNumber)
 				request.Add("captureNumber");
-			if( ClientVersion)
+			if (ClientVersion)
 				request.Add("clientVersion");
-			if(DateTimeZone)
+			if (ColorTemperature)
+				request.Add("_colorTemperature");
+			if (DateTimeZone)
 				request.Add("dateTimeZone");
-			if(ExposureCompensation)
+			if (ExposureCompensation)
 				request.Add("exposureCompensation");
-			if(ExposureDelay)
+			if (ExposureDelay)
 				request.Add("exposureDelay");
-			if(ExposureProgram)
+			if (ExposureProgram)
 				request.Add("exposureProgram");
-			if(FileFormat)
+			if (FileFormat)
 				request.Add("fileFormat");
-			if(Filter)
+			if (Filter)
 				request.Add("_filter");
-			if(GpsInfo)
+			if (GpsInfo)
 				request.Add("gpsInfo");
-			if(HDMIReso)
+			if (HDMIReso)
 				request.Add("_HDMIreso");
-			if(Iso)
+			if (Iso)
 				request.Add("iso");
-			if( LatestEnabledExposureDelayTime)
+			if (LatestEnabledExposureDelayTime)
 				request.Add("_latestEnabledExposureDelayTime");
-			if(OffDelay)
+			if (OffDelay)
 				request.Add("offDelay");
-			if(PreviewFormat)
+			if (PreviewFormat)
 				request.Add("previewFormat");
-			if(RemainingPictures)
+			if (RemainingPictures)
 				request.Add("remainingPictures");
-			if(RemainingSpace)
+			if (RemainingSpace)
 				request.Add("remainingSpace");
-			if(RemainingVideoSeconds)
+			if (RemainingVideoSeconds)
 				request.Add("remainingVideoSeconds");
-			if(ShutterSpeed)
+			if (ShutterSpeed)
 				request.Add("shutterSpeed");
-			if(ShutterVolume)
+			if (ShutterVolume)
 				request.Add("_shutterVolume");
-			if(SleepDelay)
+			if (SleepDelay)
 				request.Add("sleepDelay");
-			if(TotalSpace)
+			if (TotalSpace)
 				request.Add("totalSpace");
-			if(WhiteBalance)
+			if (WhiteBalance)
 				request.Add("whiteBalance");
-			if(WlanChannel)
+			if (WlanChannel)
 				request.Add("_wlanChannel");
 
 			return request.ToArray();

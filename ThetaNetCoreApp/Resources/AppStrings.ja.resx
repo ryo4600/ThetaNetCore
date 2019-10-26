@@ -215,11 +215,35 @@
   <data name="Title_Clear" xml:space="preserve">
     <value>クリアー</value>
   </data>
+  <data name="Title_ColorTemperature" xml:space="preserve">
+    <value>色温度</value>
+  </data>
   <data name="Title_ConfirmDelete" xml:space="preserve">
     <value>ファイルの削除</value>
   </data>
   <data name="Title_DownloadFolder" xml:space="preserve">
     <value>ダウンロードフォルダ</value>
+  </data>
+  <data name="Title_ExposureAperture" xml:space="preserve">
+    <value>開口優先</value>
+  </data>
+  <data name="Title_ExposureDelay" xml:space="preserve">
+    <value>セルフタイマー (秒)</value>
+  </data>
+  <data name="Title_ExposureISO" xml:space="preserve">
+    <value>ISO優先</value>
+  </data>
+  <data name="Title_ExposureManual" xml:space="preserve">
+    <value>マニュアル</value>
+  </data>
+  <data name="Title_ExposureNormal" xml:space="preserve">
+    <value>自動</value>
+  </data>
+  <data name="Title_ExposureProgram" xml:space="preserve">
+    <value>露出設定</value>
+  </data>
+  <data name="Title_ExposureShutter" xml:space="preserve">
+    <value>シャッター速度優先</value>
   </data>
   <data name="Title_Firmware" xml:space="preserve">
     <value>ファームウェアのバージョン</value>
@@ -239,11 +263,17 @@
   <data name="Title_Info" xml:space="preserve">
     <value>カメラ情報</value>
   </data>
+  <data name="Title_Iso_Sensitivity" xml:space="preserve">
+    <value>ISO感度</value>
+  </data>
   <data name="Title_Manufacturer" xml:space="preserve">
     <value>メーカー名</value>
   </data>
   <data name="Title_Model" xml:space="preserve">
     <value>型番</value>
+  </data>
+  <data name="Title_OffDelay" xml:space="preserve">
+    <value>電源オフまでの時間 (分)</value>
   </data>
   <data name="Title_PhotoFolder" xml:space="preserve">
     <value>写真表示フォルダ</value>
@@ -317,6 +347,9 @@
   <data name="Title_ShutterVolume" xml:space="preserve">
     <value>シャッター音量</value>
   </data>
+  <data name="Title_SleepDelay" xml:space="preserve">
+    <value>スリープまでの時間 (分)</value>
+  </data>
   <data name="Title_SpherePhotoView" xml:space="preserve">
     <value>Theta Win App フォトビューアー</value>
   </data>
@@ -328,6 +361,42 @@
   </data>
   <data name="Title_Video" xml:space="preserve">
     <value>動画</value>
+  </data>
+  <data name="Title_WB_Auto" xml:space="preserve">
+    <value>自動</value>
+  </data>
+  <data name="Title_WB_BulbFluorescent" xml:space="preserve">
+    <value>蛍光灯 4 (電球色)</value>
+  </data>
+  <data name="Title_WB_Cloudy" xml:space="preserve">
+    <value>曇り空</value>
+  </data>
+  <data name="Title_WB_ColorTemperature" xml:space="preserve">
+    <value>色温度設定</value>
+  </data>
+  <data name="Title_WB_DayLight" xml:space="preserve">
+    <value>屋外</value>
+  </data>
+  <data name="Title_WB_DayLightFluorescent" xml:space="preserve">
+    <value>蛍光灯 1 (屋外)</value>
+  </data>
+  <data name="Title_WB_Fluorescent" xml:space="preserve">
+    <value>蛍光灯 3 (白)</value>
+  </data>
+  <data name="Title_WB_Incandescent" xml:space="preserve">
+    <value>白熱灯 1</value>
+  </data>
+  <data name="Title_WB_Shade" xml:space="preserve">
+    <value>木陰</value>
+  </data>
+  <data name="Title_WB_WarmWhite" xml:space="preserve">
+    <value>白熱灯 2 (暖白)</value>
+  </data>
+  <data name="Title_WB_WhiteFluorescent" xml:space="preserve">
+    <value>蛍光灯 2 (自然な白)</value>
+  </data>
+  <data name="Title_WhiteBalance" xml:space="preserve">
+    <value>ホワイトバランス</value>
   </data>
   <data name="ToolTip_Preview" xml:space="preserve">
     <value>プレビューモードのOn/Off</value>
