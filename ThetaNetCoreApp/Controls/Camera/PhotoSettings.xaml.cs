@@ -23,7 +23,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 		/// </summary>
 		DispatcherTimer _delayUpdateTimer = null;
 
-		const int TIMER_DISABLED = 65535;
+		const int DISABLED_TIMER_VALUE = 65535;
 		#endregion
 
 		/// <summary>
@@ -67,40 +67,50 @@ namespace ThetaNetCoreApp.Controls.Camera
 		/// </summary>
 		async private void InitControlsValues()
 		{
-			var optionsParam = new GetOptionsParam() { ExposureDelay = true, ShutterVolume = true, SleepDelay = true, OffDelay = true };
+			var optionsParam = new GetOptionsParam() { ShutterVolume = true, ExposureDelay = true, SleepDelay = true, OffDelay = true };
 			var options = await _theta.ThetaApi.GetOptionsAsync(optionsParam);
-
-			// exposure delay (self timer)
-			sliderSelfTimer.Value = options.ExposureDelay;
 
 			// shutter volume
 			sliderVolume.Value = options.ShutterVolume;
 
-			_isInitialized = true;
-		}
+			// exposure delay (self timer)
+			tglExposureDelay.IsChecked = options.ExposureDelay > 0;
+			if (tglExposureDelay.IsChecked.Value)
+				sliderSelfTimer.Value = options.ExposureDelay;
 
-		/// <summary>
-		/// Self timer's value changed event
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void sliderSelfTimer_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-			if (!_isInitialized)
-				return;
-
-			if ((int)e.NewValue != e.NewValue)
+			// sleep delay
+			tglSleepDelay.IsChecked = options.SleepDelay != DISABLED_TIMER_VALUE;
+			if (tglSleepDelay.IsChecked.Value)
 			{
-				sliderSelfTimer.Value = (int)e.NewValue;
-				return;
+				sliderSleep.Value = options.SleepDelay;
 			}
 
-			var options = new OptionValues();
-			options.ExposureDelay = (int)e.NewValue;
-			_delayUpdateTimer.Stop();
-			_delayUpdateTimer.Tag = options;
-			_delayUpdateTimer.Start();
+			// off delay
+			tglOffDelay.IsChecked = options.OffDelay != DISABLED_TIMER_VALUE;
+			if (CommonCameraInfo.Instance.Info.ThetaModel >= InfoResponse.THETA_MODEL.V)
+			{
+				sliderOffDelay.Minimum = 600;
+				sliderOffDelay.Maximum = 2592000;
+				sliderOffDelay.SmallChange = 60;
+				sliderOffDelay.LargeChange = 120;
+				if (tglOffDelay.IsChecked.Value)
+				{
+					sliderOffDelay.Value = options.OffDelay;
+				}
+			}
+			else
+			{
+				sliderOffDelay.Minimum = 30;
+				sliderOffDelay.Maximum = 1800;
+				sliderOffDelay.SmallChange = 5;
+				sliderOffDelay.LargeChange = 10;
+				if (tglOffDelay.IsChecked.Value)
+				{
+					sliderOffDelay.Value = options.OffDelay;
+				}
+			}
 
+			_isInitialized = true;
 		}
 
 		/// <summary>
@@ -113,7 +123,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 			if (!_isInitialized)
 				return;
 
-			if((int)e.NewValue != e.NewValue)
+			if ((int)e.NewValue != e.NewValue)
 			{
 				sliderVolume.Value = (int)e.NewValue;
 				return;
@@ -142,36 +152,119 @@ namespace ThetaNetCoreApp.Controls.Camera
 		}
 
 		/// <summary>
+		/// Self timer is On
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void tglExposureDelay_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_isInitialized)
+				return;
+
+			var options = new OptionValues();
+			if (tglExposureDelay.IsChecked.Value)
+			{
+				options.ExposureDelay = (int)sliderSelfTimer.Value;
+			}
+			else
+			{
+				options.ExposureDelay = 0;
+			}
+			_delayUpdateTimer.Stop();
+			_delayUpdateTimer.Tag = options;
+			_delayUpdateTimer.Start();
+		}
+
+		/// <summary>
+		/// Self timer's value changed event
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void sliderSelfTimer_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			if (!_isInitialized || !sliderSelfTimer.IsEnabled)
+				return;
+
+			if ((int)e.NewValue != e.NewValue)
+			{
+				sliderSelfTimer.Value = (int)e.NewValue;
+				return;
+			}
+
+			var options = new OptionValues();
+			options.ExposureDelay = (int)e.NewValue;
+			_delayUpdateTimer.Stop();
+			_delayUpdateTimer.Tag = options;
+			_delayUpdateTimer.Start();
+		}
+
+		/// <summary>
+		/// Tiggle sleep. Off means it does not go into sleep
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void tglSleepDelay_Checked(object sender, RoutedEventArgs e)
+		{
+			if (!_isInitialized)
+				return;
+
+			var options = new OptionValues();
+			if (tglSleepDelay.IsChecked.Value)
+			{
+				options.SleepDelay = (int)sliderSleep.Value;
+			}
+			else
+			{
+				options.SleepDelay = DISABLED_TIMER_VALUE;
+			}
+			_delayUpdateTimer.Stop();
+			_delayUpdateTimer.Tag = options;
+			_delayUpdateTimer.Start();
+		}
+
+		/// <summary>
 		/// Sleep timer value changed
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void sliderSleep_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
-			if (!_isInitialized)
+			if (!_isInitialized || !sliderSleep.IsEnabled)
 				return;
 
 			if ((int)e.NewValue != e.NewValue)
 			{
-				sliderVolume.Value = (int)e.NewValue;
+				var newVal = (int)e.NewValue;
+				sliderSleep.Value = (newVal + 5) / 10 * 10 - 5;
 				return;
 			}
 
-			UpdateSleepDelayValue();
+			var options = new OptionValues();
+			options.SleepDelay = (int)e.NewValue;
+			_delayUpdateTimer.Stop();
+			_delayUpdateTimer.Tag = options;
+			_delayUpdateTimer.Start();
 		}
 
 		/// <summary>
-		/// Updates sleep delay values
+		/// Toggle Off delay. False means camera does not power off itself
 		/// </summary>
-		private void UpdateSleepDelayValue()
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void tglOffDelay_Checked(object sender, RoutedEventArgs e)
 		{
-			int newValue;
-			if (tglSleepDelay.IsChecked.Value)
-				newValue = TIMER_DISABLED;
-			else
-				newValue = (int)sliderSleep.Value;
+			if (!_isInitialized)
+				return;
+
 			var options = new OptionValues();
-			options.SleepDelay = newValue;
+			if (tglOffDelay.IsChecked.Value)
+			{
+				options.OffDelay = (int)sliderOffDelay.Value * 60;
+			}
+			else
+			{
+				options.OffDelay = DISABLED_TIMER_VALUE;
+			}
 			_delayUpdateTimer.Stop();
 			_delayUpdateTimer.Tag = options;
 			_delayUpdateTimer.Start();
@@ -184,12 +277,32 @@ namespace ThetaNetCoreApp.Controls.Camera
 		/// <param name="e"></param>
 		private void sliderOff_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
+			if (!_isInitialized || !sliderOffDelay.IsEnabled)
+				return;
 
+			int multipleOf = 5;
+			int dividedBy = 10;
+			if (CommonCameraInfo.Instance.Info.ThetaModel >= InfoResponse.THETA_MODEL.V)
+			{
+				multipleOf = 60;
+				dividedBy = 100;
+			}
+
+			int newVal = (int)e.NewValue;
+			if ((int)e.NewValue != e.NewValue)
+			{
+				sliderOffDelay.Value = (newVal + multipleOf) / dividedBy * dividedBy - multipleOf;
+				return;
+			}
+
+
+
+			var options = new OptionValues();
+			options.OffDelay = newVal;
+			_delayUpdateTimer.Stop();
+			_delayUpdateTimer.Tag = options;
+			_delayUpdateTimer.Start();
 		}
 
-		private void UpdateOffDelayValue()
-		{
-
-		}
 	}
 }

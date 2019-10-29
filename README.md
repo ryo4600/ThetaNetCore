@@ -102,16 +102,27 @@ Classes in Wifi\Request and Wifi\Respond directory are self explanetory. They ar
     ```
     Set values that you are updating only.  
 
+## NOTE
+ - When you initiate Taking picture action, any other API call will fail until its processing ends. Wait for a success or fail notification before calling other APIs.
+
 ## Version History
 1.0.0 initial release
 
-1.0.1 Fixes: 
+1.0.1  
+Fixes: 
  - App crashed when change the preview format
  - Preview stopped working after taking pictures
  - Download progress was not shown
- - Internally, changed the way accessing THETA to recommended way.
+ - Internally, changed the way accessing THETA to recommended way.+
 
-## ThetaWinApp
+1.1.0  
+New:
+ - Migrated to .Net Core projects  
+
+Fixes
+ - A lot of small fixes
+
+## ThetaNetCoreApp
 
 Windows implementaion of Theta application. It is written with WPF. You will see more examples of how you should implement. 
 

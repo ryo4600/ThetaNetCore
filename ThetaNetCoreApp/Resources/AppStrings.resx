@@ -272,7 +272,7 @@ Check the connection.</value>
     <value>Model</value>
   </data>
   <data name="Title_OffDelay" xml:space="preserve">
-    <value>Power off delay (min)</value>
+    <value>Power off delay (sec)</value>
   </data>
   <data name="Title_PhotoFolder" xml:space="preserve">
     <value>Photo View Folder</value>
@@ -347,7 +347,7 @@ Check the connection.</value>
     <value>Shutter Volume</value>
   </data>
   <data name="Title_SleepDelay" xml:space="preserve">
-    <value>Sleep delay (min)</value>
+    <value>Sleep delay (sec)</value>
   </data>
   <data name="Title_SpherePhotoView" xml:space="preserve">
     <value>Theta Win App Photo Viewer</value>

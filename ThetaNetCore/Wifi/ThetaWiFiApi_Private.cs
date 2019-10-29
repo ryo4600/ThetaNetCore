@@ -17,14 +17,14 @@ namespace ThetaNetCore.Wifi
 		/// <summary>
 		/// HttpClient has to be reused according to the document.
 		/// </summary>
-		static readonly HttpClient _httpClient = new HttpClient();
+		readonly HttpClient _httpClient = new HttpClient();
 
 		/// <summary>
 		/// Common function to send a command.
 		/// </summary>
 		/// <param name="command"></param>
 		/// <returns></returns>
-		async private static Task<HttpResponseMessage> ExecuteCommandAsync<T>(ThetaRequest<T> command, int? timeout = null)
+		async private Task<HttpResponseMessage> ExecuteCommandAsync<T>(ThetaRequest<T> command, int? timeout = null)
 		{
 			return await SendRequestAsync(SEND_TYPE.POST, command, "osc/commands/execute", timeout);
 		}
@@ -34,7 +34,7 @@ namespace ThetaNetCore.Wifi
 		/// </summary>
 		/// <param name="command"></param>
 		/// <returns></returns>
-		async private static Task<HttpResponseMessage> ExecuteStatusAsync<T>(ThetaRequest<T> command)
+		async private Task<HttpResponseMessage> ExecuteStatusAsync<T>(ThetaRequest<T> command)
 		{
 			return await SendRequestAsync(SEND_TYPE.POST, command, "osc/commands/status");
 		}
@@ -49,14 +49,14 @@ namespace ThetaNetCore.Wifi
 		/// <param name="commandPath"></param>
 		/// <returns></returns>
 		/// <exception cref="ThetaWifiConnectException" />
-		async private static Task<HttpResponseMessage> SendRequestAsync<T>(SEND_TYPE sendType, T command, String commandPath, int? timeout = null)
+		async private Task<HttpResponseMessage> SendRequestAsync<T>(SEND_TYPE sendType, T command, String commandPath, int? timeout = null)
 		{
 			var httpClient = _httpClient;
 			//httpClient.Timeout = new TimeSpan(0, 0, 5);
 			var headers = httpClient.DefaultRequestHeaders;
 			headers.Clear();
 			headers.Add("Accept", "application/json");
-
+			
 			StringContent content = null;
 			if (command != null)
 			{

@@ -235,7 +235,7 @@ namespace ThetaNetCore.Wifi
 		/// </summary>
 		/// <param name="uri"></param>
 		/// <returns></returns>
-		async private static Task<HttpResponseMessage> DownloadFileAsync(String uri)
+		async private Task<HttpResponseMessage> DownloadFileAsync(String uri)
 		{
 			return await _httpClient.GetAsync(uri);
 		}

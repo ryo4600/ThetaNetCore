@@ -75,7 +75,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 			if (!(bool)e.NewValue)
 			{
 				// Collapsed
-				CameraSharedInfo.Instance.RestartPreviewRequested -= OnRestartPreviewRequested;
+				CommonCameraInfo.Instance.RestartPreviewRequested -= OnRestartPreviewRequested;
 
 				if (_settingsWnd != null && _settingsWnd.Visibility == Visibility.Visible)
 					_settingsWnd.Visibility = Visibility.Collapsed;
@@ -83,7 +83,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 			else
 			{
 				// Visible
-				CameraSharedInfo.Instance.RestartPreviewRequested += OnRestartPreviewRequested;
+				CommonCameraInfo.Instance.RestartPreviewRequested += OnRestartPreviewRequested;
 				UpdateStatusTexts();
 			}
 		}
@@ -206,6 +206,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 		{
 			txtProgress.Text = AppStrings.Msg_TakingAPicture;
 			pnlPrgress.Visibility = Visibility.Visible;
+			_settingsWnd.IsEnabled = false;
 			await _theta.TakePictureAsync();
 			txtProgress.Text = AppStrings.Msg_Processing;
 		}
@@ -223,6 +224,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 				var stream = await _theta.ThetaApi.GetImageAsync(fileUrl);
 				thumbImg.Source = BitmapFrame.Create(stream);
 
+				this._settingsWnd.IsEnabled = true;
 				((Storyboard)this.FindResource("OpenThumbnail")).Begin();
 				OnRestartPreviewRequested();
 				UpdateStatusTexts();
@@ -237,6 +239,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 		{
 			this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(delegate
 			{
+				this._settingsWnd.IsEnabled = true;
 				pnlPrgress.Visibility = Visibility.Collapsed;
 			}));
 		}

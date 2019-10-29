@@ -106,7 +106,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 
 			var info = await _theta.ThetaApi.InfoAsync();
 			infoSection.DataContext = info;
-			CameraSharedInfo.Instance.Info = info;
+			CommonCameraInfo.Instance.Info = info;
 
 			if(info.ThetaModel >= InfoResponse.THETA_MODEL.V)
 			{

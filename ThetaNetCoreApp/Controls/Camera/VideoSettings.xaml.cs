@@ -74,7 +74,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 		/// </summary>
 		private void InitializeControls()
 		{
-			if (CameraSharedInfo.Instance.Info.ThetaModel >= THETA_MODEL.V)
+			if (CommonCameraInfo.Instance.Info.ThetaModel >= THETA_MODEL.V)
 			{
 				cmbPreview.ItemsSource = new PreviewFormat[]
 				{
@@ -156,7 +156,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 			Task.Factory.StartNew(new Action(async () =>
 			{
 				await _theta.ThetaApi.SetOptionsAsync(options);
-				CameraSharedInfo.Instance.FireRestartPreview();
+				CommonCameraInfo.Instance.FireRestartPreview();
 			}));
 			Settings settings = Settings.Default;
 			settings.LastSelectedPreviewResolution = cmbPreview.SelectedIndex;

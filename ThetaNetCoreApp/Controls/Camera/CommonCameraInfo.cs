@@ -12,10 +12,10 @@ namespace ThetaNetCoreApp.Controls.Camera
 	/// Keep data needed for other components. <br />
 	/// I prepared this because of overhead for talking Theta all the time.
 	/// </summary>
-	class CameraSharedInfo
+	class CommonCameraInfo
 	{
-		private static CameraSharedInfo _instance = new CameraSharedInfo();
-		public static CameraSharedInfo Instance { get { return _instance; } }
+		private static CommonCameraInfo _instance = new CommonCameraInfo();
+		public static CommonCameraInfo Instance { get { return _instance; } }
 
 		/// <summary>
 		/// Preview needs to be restarted

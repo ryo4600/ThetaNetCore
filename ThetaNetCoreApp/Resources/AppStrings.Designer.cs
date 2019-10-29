@@ -521,7 +521,7 @@ namespace ThetaNetCoreApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Power off delay (min).
+        ///   Looks up a localized string similar to Power off delay (sec).
         /// </summary>
         public static string Title_OffDelay {
             get {
@@ -746,7 +746,7 @@ namespace ThetaNetCoreApp.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sleep delay (min).
+        ///   Looks up a localized string similar to Sleep delay (sec).
         /// </summary>
         public static string Title_SleepDelay {
             get {

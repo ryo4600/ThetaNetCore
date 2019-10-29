@@ -273,7 +273,7 @@
     <value>型番</value>
   </data>
   <data name="Title_OffDelay" xml:space="preserve">
-    <value>電源オフまでの時間 (分)</value>
+    <value>電源オフまでの時間 (秒)</value>
   </data>
   <data name="Title_PhotoFolder" xml:space="preserve">
     <value>写真表示フォルダ</value>
@@ -348,7 +348,7 @@
     <value>シャッター音量</value>
   </data>
   <data name="Title_SleepDelay" xml:space="preserve">
-    <value>スリープまでの時間 (分)</value>
+    <value>スリープまでの時間 (秒)</value>
   </data>
   <data name="Title_SpherePhotoView" xml:space="preserve">
     <value>Theta Win App フォトビューアー</value>

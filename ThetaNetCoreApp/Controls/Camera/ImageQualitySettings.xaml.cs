@@ -1,18 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using ThetaNetCore.Wifi;
 using ThetaNetCoreApp.Resources;
@@ -117,7 +108,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 			List<KeyValuePair<string, EXPOSURE_PROGRAM>> programValues = new List<KeyValuePair<string, EXPOSURE_PROGRAM>>();
 			programValues.Add(new KeyValuePair<string, EXPOSURE_PROGRAM>(AppStrings.Title_ExposureManual, EXPOSURE_PROGRAM.MANUAL));
 			programValues.Add(new KeyValuePair<string, EXPOSURE_PROGRAM>(AppStrings.Title_ExposureNormal, EXPOSURE_PROGRAM.NORMAL));
-			if (CameraSharedInfo.Instance.Info.ThetaModel >= THETA_MODEL.Z1)
+			if (CommonCameraInfo.Instance.Info.ThetaModel >= THETA_MODEL.Z1)
 				programValues.Add(new KeyValuePair<string, EXPOSURE_PROGRAM>(AppStrings.Title_ExposureAperture, EXPOSURE_PROGRAM.APERTURE));
 			programValues.Add(new KeyValuePair<string, EXPOSURE_PROGRAM>(AppStrings.Title_ExposureShutter, EXPOSURE_PROGRAM.SHUTTER));
 			programValues.Add(new KeyValuePair<string, EXPOSURE_PROGRAM>(AppStrings.Title_ExposureISO, EXPOSURE_PROGRAM.ISO));
@@ -135,7 +126,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 
 			#region Aperture
 			KeyValuePair<string, float>[] apertureValues = null;
-			if (CameraSharedInfo.Instance.Info.ThetaModel >= THETA_MODEL.Z1)
+			if (CommonCameraInfo.Instance.Info.ThetaModel >= THETA_MODEL.Z1)
 			{
 				apertureValues = new KeyValuePair<string, float>[]
 				{
@@ -165,7 +156,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 
 			#region ShutterSpeed level
 			List<KeyValuePair<string, float>> speedValues = new List<KeyValuePair<string, float>>();
-			if (CameraSharedInfo.Instance.Info.ThetaModel >= THETA_MODEL.V)
+			if (CommonCameraInfo.Instance.Info.ThetaModel >= THETA_MODEL.V)
 			{
 				speedValues.Add(new KeyValuePair<string, float>("1/25000", 0.00004f));
 				speedValues.Add(new KeyValuePair<string, float>("1/20000", 0.00005f));
@@ -173,7 +164,7 @@ namespace ThetaNetCoreApp.Controls.Camera
 				speedValues.Add(new KeyValuePair<string, float>("1/12500", 0.00008f));
 				speedValues.Add(new KeyValuePair<string, float>("1/10000", 0.00001f));
 			}
-			if (CameraSharedInfo.Instance.Info.ThetaModel >= THETA_MODEL.SC)
+			if (CommonCameraInfo.Instance.Info.ThetaModel >= THETA_MODEL.SC)
 			{
 				speedValues.Add(new KeyValuePair<string, float>("1/8000", 0.000125f));
 			}
@@ -245,17 +236,17 @@ namespace ThetaNetCoreApp.Controls.Camera
 
 			#region ISO
 			List<int> isoValues = new List<int>(new int[] { 100, 125, 160, 200, 250, 320, 400, 500, 640, 800, 1000, 1250, 1600 });
-			if (CameraSharedInfo.Instance.Info.ThetaModel >= THETA_MODEL.V)
+			if (CommonCameraInfo.Instance.Info.ThetaModel >= THETA_MODEL.V)
 			{
 				isoValues.Insert(0, 80);
 				isoValues.AddRange(new int[] { 2000, 2500, 3200, 4000, 5000 });
 			}
-			if (CameraSharedInfo.Instance.Info.ThetaModel == THETA_MODEL.V)
+			if (CommonCameraInfo.Instance.Info.ThetaModel == THETA_MODEL.V)
 			{
 				isoValues.Insert(0, 64);
 				isoValues.Add(6000);
 			}
-			if (CameraSharedInfo.Instance.Info.ThetaModel >= THETA_MODEL.Z1)
+			if (CommonCameraInfo.Instance.Info.ThetaModel >= THETA_MODEL.Z1)
 			{
 				isoValues.Add(6400);
 			}
